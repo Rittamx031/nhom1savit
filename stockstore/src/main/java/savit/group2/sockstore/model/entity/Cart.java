@@ -3,6 +3,7 @@ package savit.group2.sockstore.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -11,23 +12,20 @@ import java.util.UUID;
 @Setter
 @ToString
 @Entity
-@Table(name = "Account")
-public class Account {
+@Table(name = "Employee")
+public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-   private String password;
-
-    @Column(name = "status")
-    private Boolean status;
-
     @ManyToOne
-    @JoinColumn(name = "id_customer")
-    private Customer customer;
+    @JoinColumn(name = "id_account")
+    private Account account;
+
+    private Date date_create;
+
+    private String note;
+
+    private String status;
 }
