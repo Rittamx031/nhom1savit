@@ -15,10 +15,12 @@ public class Cart_Detail {
     private CartDetailId id;
 
     @ManyToOne
+    @MapsId("id_cart")
     @JoinColumn(name = "id_cart")
     private Cart cart;
 
     @ManyToOne
+    @MapsId("id_sock_detail")
     @JoinColumn(name = "id_sock_detail")
     private Sock_Detail sock_detail;
 
