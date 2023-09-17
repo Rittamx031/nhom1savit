@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-SockstoreApplication<sockstore>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "savit.group2.sockstore.SockstoreApplication",
+      "projectName": "sockstore",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

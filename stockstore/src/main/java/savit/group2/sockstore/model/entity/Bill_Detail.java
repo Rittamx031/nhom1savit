@@ -17,10 +17,12 @@ public class Bill_Detail {
     private BillDetailId id;
 
     @ManyToOne
+    @MapsId("id_bill")
     @JoinColumn(name = "id_bill")
     private Bill bill;
 
     @ManyToOne
+    @MapsId("id_sock_detail")
     @JoinColumn(name = "id_sock_detail")
     private Sock_Detail sock_detail;
 

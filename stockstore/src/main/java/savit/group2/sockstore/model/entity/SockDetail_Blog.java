@@ -15,10 +15,12 @@ public class SockDetail_Blog {
     private SockDetail_BlogID id;
 
     @ManyToOne
+    @MapsId("id_blog")
     @JoinColumn(name = "id_blog")
     private Blog blog;
 
     @ManyToOne
+    @MapsId("id_sock_detail")
     @JoinColumn(name = "id_sock_detail")
     private Sock_Detail sock_detail;
 
