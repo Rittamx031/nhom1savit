@@ -11,23 +11,20 @@ import java.util.UUID;
 @Setter
 @ToString
 @Entity
-@Table(name = "Account")
-public class Account {
+@Table(name = "Image_Sock")
+public class Image_Sock {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "email")
-    private String email;
+    private String code;
 
-    @Column(name = "password")
-   private String password;
-
-    @Column(name = "status")
-    private Boolean status;
+    private String path;
 
     @ManyToOne
-    @JoinColumn(name = "id_customer")
-    private Customer customer;
+    @JoinColumn(name = "id_sock")
+    private Sock sock;
+
+    private Boolean status;
 }
