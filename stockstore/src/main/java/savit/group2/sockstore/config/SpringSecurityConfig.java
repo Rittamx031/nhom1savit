@@ -77,14 +77,30 @@ public class SpringSecurityConfig {
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager)
       throws Exception {
-    http.authorizeHttpRequests((authorize) -> {
-      authorize.requestMatchers("khach-hang/singin").permitAll();
-    })
+    http.
+
+        authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("khach-hang/singin").permitAll();
+        })
         .authorizeHttpRequests((authorize) -> {
           authorize.anyRequest().permitAll();
         })
+        .formLogin(formLogin -> formLogin
+            .loginPage("/login")
+            .loginProcessingUrl("/singin")
+            .failureUrl("/login?error")
+            .defaultSuccessUrl("/homepage")
+            .usernameParameter("username")
+            .passwordParameter("password")
+            .permitAll())
+        .logout(
+            formLogin -> formLogin
+                .logoutUrl("/signOut")
+                .logoutSuccessUrl("/login")
+
+                .permitAll())
         .csrf(AbstractHttpConfigurer::disable)
-        .httpBasic(Customizer.withDefaults())
+        // .httpBasic(Customizer.withDefaults())
         .authenticationManager(authManager);
     return http.build();
   }

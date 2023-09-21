@@ -1,6 +1,5 @@
 package savit.group2.sockstore.config;
 
-
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +17,6 @@ public class MvcConfiguration implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry viewControllerRegistry) {
         viewControllerRegistry.addViewController("/admin").setViewName("redirect:admin/pages/dashboard");
-        viewControllerRegistry.addViewController("/").setViewName("redirect:user/index");
     }
 
 }
