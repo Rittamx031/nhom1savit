@@ -26,10 +26,6 @@ public class SecurityController {
 
   @GetMapping("/homepage")
   public String loggedInPage() {
-    // if(){
-
-    // }
-
     return "redirect:/admin";
   }
 
