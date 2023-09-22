@@ -7,8 +7,8 @@
 
 <body>
 <section layout:fragment="content">
-    <h1>Material</h1>
-    <a th:href="@{/admin/pages/material/view-add}" class="btn btn-primary mb-3">New</a>
+    <h1>Category</h1>
+    <a th:href="@{/admin/pages/category/view-add}" class="btn btn-primary mb-3">New</a>
     <table class="table table-bordered">
         <thead class="">
         <tr>
@@ -19,15 +19,15 @@
             <th scope="col">Function</th>
         </tr>
         </thead>
-        <tbody th:each="material: ${listMaterial}">
+        <tbody th:each="category: ${listCategory}">
         <tr>
             <th scope="row"></th>
-            <td th:text="${material.code}"></td>
-            <td th:text="${material.name}"></td>
-            <td th:text="${material.status}"></td>
+            <td th:text="${category.code}"></td>
+            <td th:text="${category.name}"></td>
+            <td th:text="${category.status}"></td>
             <td>
-                <a th:href="@{/admin/pages/material/delete(id=${material.id})}" class="btn btn-danger">Delete</a>
-                <a th:href="@{/admin/pages/material/view-update(id=${material.id})}" class="btn btn-success">Update</a>
+                <a th:href="@{/admin/pages/category/delete(id=${category.id})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/admin/pages/category/view-update(id=${category.id})}" class="btn btn-success">Update</a>
             </td>
         </tr>
         </tbody>

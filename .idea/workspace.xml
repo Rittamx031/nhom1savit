@@ -4,7 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="692649a1-96d3-4398-94bb-3978983d8141" name="Default Changelist" comment="" />
+    <list default="true" id="692649a1-96d3-4398-94bb-3978983d8141" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/controller/CategoryController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/model/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/model/entity/Category.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/repository/CategoryRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/service/CategoryService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/service/MaterialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/service/MaterialService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stockstore/src/main/resources/templates/admin/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/resources/templates/admin/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/stockstore/src/main/resources/templates/admin/pages/material/hien-thi.html" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/resources/templates/admin/pages/material/hien-thi.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -39,21 +49,24 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/stockstore/src/main/resources/templates/admin/pages/category" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="settings.editor.selected.configurable" value="project.propCompiler" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\FPT_Polytechnic\ThucTap\nhom1savit\stockstore\src\main\resources\templates\admin\pages\category" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -90,6 +103,8 @@
       <workItem from="1695301076179" duration="16000" />
       <workItem from="1695368843837" duration="2251000" />
       <workItem from="1695372572322" duration="5315000" />
+      <workItem from="1695379391365" duration="232000" />
+      <workItem from="1695389761415" duration="2234000" />
     </task>
     <servers />
   </component>

@@ -17,6 +17,7 @@ public class MaterialService {
 
     @Autowired
     private MaterialRepository materialRepository;
+    long millis=System.currentTimeMillis();
 
     public List<Material> getAll(Integer pageNo) {
         Pageable pageable = PageRequest.of(pageNo, 5);
@@ -31,10 +32,9 @@ public class MaterialService {
         Material materialSave = Material.builder()
                 .code(material.getCode())
                 .name(material.getName())
-                .created_at(new Date(0))
-                .updated_at(new Date(0))
+                .created_at(new Date(millis))
                 .created_by("hung")
-                .updated_by("hung")
+                .status(true)
                 .build();
         return materialRepository.save(materialSave);
     }
@@ -45,10 +45,9 @@ public class MaterialService {
             return optional.map(materialUpdate -> {
                         materialUpdate.setCode(material.getCode());
                         materialUpdate.setName(material.getName());
-                        materialUpdate.setCreated_at(new Date(0));
-                        materialUpdate.setUpdated_at(new Date(0));
-                        materialUpdate.setCreated_by("hung");
+                        materialUpdate.setUpdated_at(new Date(millis));
                         materialUpdate.setUpdated_by("hung");
+                        materialUpdate.setStatus(material.getStatus());
                         return materialRepository.save(materialUpdate);
                     }
             ).get();
