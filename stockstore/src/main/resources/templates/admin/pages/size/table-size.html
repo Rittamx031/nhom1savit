@@ -9,10 +9,10 @@
 <body>
     <section layout:fragment="content">
         <div class="container-fluid">
-            <a href="/admin/account/create" class="btn btn-primary">New</a>
+            <a href="/admin/size/create" class="btn btn-primary">New</a>
             <div class="text-lg-end">
                 <div class="text-lg-end">
-                    <form action="#" th:action="@{/admin/account/getcountrow}" method="get">
+                    <form action="#" th:action="@{/admin/size/getcountrow}" method="get">
                         Number of rows
                         <select name="selectedValue">
                             <option value="10">10</option>
@@ -26,43 +26,37 @@
                     <table class="table table-hover">
                         <thead class="position-sticky top-0">
                             <tr>
-                                <th scope="col">Tên Khách Hàng
-                                    <a th:href="@{/admin/account/sort(sortBy=customer.name ,sortDir=true)}"><i
-                                            class="fa-solid fa-sort-up fa-xs"></i></i></a>
-                                    <a th:href="@{/admin/account/sort(sortBy=customer.name ,sortDir=false)}"><i
-                                            class="fa-solid fa-sort-down fa-xs"></i></a>
-                                </th>
+
                                 <th scope="col">Email
-                                    <a th:href="@{/admin/account/sort(sortBy=email ,sortDir=true)}"><i
+                                    <a th:href="@{/admin/size/sort(sortBy=code ,sortDir=true)}"><i
                                             class="fa-solid fa-sort-up fa-xs"></i></i></a>
-                                    <a th:href="@{/admin/account/sort(sortBy=email ,sortDir=false)}"><i
+                                    <a th:href="@{/admin/size/sort(sortBy=code ,sortDir=false)}"><i
                                             class="fa-solid fa-sort-down fa-xs"></i></a>
                                 </th>
                                 <th scope="col">Số điện thoại
-                                    <a th:href="@{/admin/account/sort(sortBy=customer.phone ,sortDir=true)}"><i
+                                    <a th:href="@{/admin/size/sort(sortBy=name ,sortDir=true)}"><i
                                             class="fa-solid fa-sort-up fa-xs"></i></i></a>
-                                    <a th:href="@{/admin/account/sort(sortBy=customer.phone ,sortDir=false)}"><i
+                                    <a th:href="@{/admin/size/sort(sortBy=name ,sortDir=false)}"><i
                                             class="fa-solid fa-sort-down fa-xs"></i></a>
                                 </th>
                                 <th scope="col">Trạng thái
-                                    <a th:href="@{/admin/account/sort(sortBy=status ,sortDir=true)}"><i
+                                    <a th:href="@{/admin/size/sort(sortBy=status ,sortDir=true)}"><i
                                             class="fa-solid fa-sort-up fa-xs"></i></i></a>
-                                    <a th:href="@{/admin/account/sort(sortBy=status ,sortDir=false)}"><i
+                                    <a th:href="@{/admin/size/sort(sortBy=status ,sortDir=false)}"><i
                                             class="fa-solid fa-sort-down fa-xs"></i></a>
                                 </th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="account : ${list}">
-                                <td th:text="${account.name}"></td>
-                                <td th:text="${account.email}"></td>
-                                <td th:text="${account.phoneNumber}"></td>
-                                <td th:text="${account.status}"></td>
+                            <tr th:each="size : ${list}">
+                                <td th:text="${size.code}"></td>
+                                <td th:text="${size.name}"></td>
+                                <td th:text="${size.status}"></td>
                                 <td>
-                                    <a th:href="@{/admin/account/delete(id=${account.idCustomer})}"
+                                    <a th:href="@{/admin/size/delete(id=${size.id})}"
                                         class="btn btn-danger">Delete</a>
-                                    <a th:href="@{/admin/account/edit(id=${account.idCustomer})}"
+                                    <a th:href="@{/admin/size/edit(id=${size.id})}"
                                         class="btn btn-success">Update</a>
                                 </td>
                             </tr>
@@ -76,38 +70,37 @@
                         <ul class="pagination justify-content-center">
                             <div th:if="${crpage-1 < 1}">
                                 <li class="page-item disabled">
-                                    <a class="page-link" th:href="@{/admin/account/page(pageno=${crpage-1})}"
-                                        tabindex="-1" aria-disabled="true">Previous</a>
+                                    <a class="page-link" th:href="@{/admin/size/page(pageno=${crpage-1})}" tabindex="-1"
+                                        aria-disabled="true">Previous</a>
                                 </li>
                             </div>
                             <div th:unless="${crpage-1 < 1}">
                                 <li class="page-item">
-                                    <a class="page-link"
-                                        th:href="@{/admin/account/page(pageno=${crpage-1})}">Previous</a>
+                                    <a class="page-link" th:href="@{/admin/size/page(pageno=${crpage-1})}">Previous</a>
                                 </li>
                             </div>
                             <div th:each="page : ${pagenumber}">
                                 <div th:if="${crpage == page}">
                                     <li class="page-item disabled"><a class="page-link"
-                                            th:href="@{/admin/account/page(pageno=${page})}" th:text="${page}"
+                                            th:href="@{/admin/size/page(pageno=${page})}" th:text="${page}"
                                             tabindex="-1" aria-disabled="true"></a>
                                     </li>
                                 </div>
                                 <div th:unless="${crpage == page}">
                                     <li class="page-item"><a class="page-link"
-                                            th:href="@{/admin/account/page(pageno=${page})}" th:text="${page}"></a>
+                                            th:href="@{/admin/size/page(pageno=${page})}" th:text="${page}"></a>
                                     </li>
                                 </div>
                             </div>
                             <div th:if="${crpage == totalpage}">
                                 <li class="page-item disabled">
-                                    <a class="page-link" th:href="@{/admin/account/page(pageno=${crpage+1})}"
-                                        tabindex="-1" aria-disabled="true">Next</a>
+                                    <a class="page-link" th:href="@{/admin/size/page(pageno=${crpage+1})}" tabindex="-1"
+                                        aria-disabled="true">Next</a>
                                 </li>
                             </div>
                             <div th:unless="${crpage == totalpage}">
                                 <li class="page-item">
-                                    <a class="page-link" th:href="@{/admin/account/page(pageno=${crpage+1})}">Next</a>
+                                    <a class="page-link" th:href="@{/admin/size/page(pageno=${crpage+1})}">Next</a>
                                 </li>
                             </div>
                         </ul>

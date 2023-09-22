@@ -2,6 +2,8 @@ package savit.group2.sockstore.model.request;
 
 import java.util.UUID;
 
+import org.springframework.stereotype.Component;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,6 +17,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@Component
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PatternRequest {
   UUID id;

@@ -9,10 +9,10 @@
 <body>
     <section layout:fragment="content">
         <div class="container-fluid">
-            <a href="/admin/account/create" class="btn btn-primary">New</a>
+            <a href="/admin/sockdetail/create" class="btn btn-primary">New</a>
             <div class="text-lg-end">
                 <div class="text-lg-end">
-                    <form action="#" th:action="@{/admin/account/getcountrow}" method="get">
+                    <form action="#" th:action="@{/admin/sockdetail/getcountrow}" method="get">
                         Number of rows
                         <select name="selectedValue">
                             <option value="10">10</option>
@@ -26,43 +26,90 @@
                     <table class="table table-hover">
                         <thead class="position-sticky top-0">
                             <tr>
-                                <th scope="col">Tên Khách Hàng
-                                    <a th:href="@{/admin/account/sort(sortBy=customer.name ,sortDir=true)}"><i
+                                <th scope="col"></th>
+                                <th scope="col">Tên
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=sock.name ,sortDir=true)}"><i
                                             class="fa-solid fa-sort-up fa-xs"></i></i></a>
-                                    <a th:href="@{/admin/account/sort(sortBy=customer.name ,sortDir=false)}"><i
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=sock.name ,sortDir=false)}"><i
                                             class="fa-solid fa-sort-down fa-xs"></i></a>
                                 </th>
-                                <th scope="col">Email
-                                    <a th:href="@{/admin/account/sort(sortBy=email ,sortDir=true)}"><i
+                                <th scope="col">Màu Sắc
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=color.name ,sortDir=true)}"><i
                                             class="fa-solid fa-sort-up fa-xs"></i></i></a>
-                                    <a th:href="@{/admin/account/sort(sortBy=email ,sortDir=false)}"><i
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=color.name ,sortDir=false)}"><i
                                             class="fa-solid fa-sort-down fa-xs"></i></a>
                                 </th>
-                                <th scope="col">Số điện thoại
-                                    <a th:href="@{/admin/account/sort(sortBy=customer.phone ,sortDir=true)}"><i
+                                <th scope="col">Loại 
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=category.name ,sortDir=true)}"><i
                                             class="fa-solid fa-sort-up fa-xs"></i></i></a>
-                                    <a th:href="@{/admin/account/sort(sortBy=customer.phone ,sortDir=false)}"><i
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=category.name ,sortDir=false)}"><i
+                                            class="fa-solid fa-sort-down fa-xs"></i></a>
+
+                                </th>
+                                <th scope="col">Kiểu Dáng
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=pattern.name ,sortDir=true)}"><i
+                                            class="fa-solid fa-sort-up fa-xs"></i></i></a>
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=pattern.name ,sortDir=false)}"><i
+                                            class="fa-solid fa-sort-down fa-xs"></i></a>
+                                </th>
+                                <th scope="col">Chất Liệu
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=meterial.name ,sortDir=true)}"><i
+                                            class="fa-solid fa-sort-up fa-xs"></i></i></a>
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=meterial.name ,sortDir=false)}"><i
+                                            class="fa-solid fa-sort-down fa-xs"></i></a>
+                                </th>
+                                <th scope="col">Nhà Sản Xuất
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=producer.name ,sortDir=true)}"><i
+                                            class="fa-solid fa-sort-up fa-xs"></i></i></a>
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=producer.name ,sortDir=false)}"><i
+                                            class="fa-solid fa-sort-down fa-xs"></i></a>
+                                </th>
+                                <th scope="col">Kích Thước
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=size.name ,sortDir=true)}"><i
+                                            class="fa-solid fa-sort-up fa-xs"></i></i></a>
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=size.name ,sortDir=false)}"><i
+                                            class="fa-solid fa-sort-down fa-xs"></i></a>
+                                </th>
+                                <th scope="col">Số Lượng
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=quantity ,sortDir=true)}"><i
+                                            class="fa-solid fa-sort-up fa-xs"></i></i></a>
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=quantity ,sortDir=false)}"><i
+                                            class="fa-solid fa-sort-down fa-xs"></i></a>
+                                </th>
+                                <th scope="col">Giá Cơ bản
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=unit_base_price ,sortDir=true)}"><i
+                                            class="fa-solid fa-sort-up fa-xs"></i></i></a>
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=unit_base_price ,sortDir=false)}"><i
                                             class="fa-solid fa-sort-down fa-xs"></i></a>
                                 </th>
                                 <th scope="col">Trạng thái
-                                    <a th:href="@{/admin/account/sort(sortBy=status ,sortDir=true)}"><i
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=status ,sortDir=true)}"><i
                                             class="fa-solid fa-sort-up fa-xs"></i></i></a>
-                                    <a th:href="@{/admin/account/sort(sortBy=status ,sortDir=false)}"><i
+                                    <a th:href="@{/admin/sockdetail/sort(sortBy=status ,sortDir=false)}"><i
                                             class="fa-solid fa-sort-down fa-xs"></i></a>
                                 </th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="account : ${list}">
-                                <td th:text="${account.name}"></td>
-                                <td th:text="${account.email}"></td>
-                                <td th:text="${account.phoneNumber}"></td>
-                                <td th:text="${account.status}"></td>
+                            <tr th:each="sockdetail : ${list}">
                                 <td>
-                                    <a th:href="@{/admin/account/delete(id=${account.idCustomer})}"
+                                    <img th:src="@{${sockdetail.image_sock_detail}}" alt="sock image">
+                                </td>
+                                <td th:text="${sockdetail.sock}"></td>
+                                <td th:text="${sockdetail.color}"></td>
+                                <td th:text="${sockdetail.category}"></td>
+                                <td th:text="${sockdetail.pattern}"></td>
+                                <td th:text="${sockdetail.meterial}"></td>
+                                <td th:text="${sockdetail.producer}"></td>
+                                <td th:text="${sockdetail.size}"></td>
+                                <td th:text="${sockdetail.quantity}"></td>
+                                <td th:text="${sockdetail.unit_base_price}"></td>
+                                <td th:text="${sockdetail.status}"></td>
+                                <td>
+                                    <a th:href="@{/admin/sockdetail/delete(id=${sockdetail.id})}"
                                         class="btn btn-danger">Delete</a>
-                                    <a th:href="@{/admin/account/edit(id=${account.idCustomer})}"
+                                    <a th:href="@{/admin/sockdetail/edit(id=${sockdetail.id})}"
                                         class="btn btn-success">Update</a>
                                 </td>
                             </tr>
@@ -76,38 +123,38 @@
                         <ul class="pagination justify-content-center">
                             <div th:if="${crpage-1 < 1}">
                                 <li class="page-item disabled">
-                                    <a class="page-link" th:href="@{/admin/account/page(pageno=${crpage-1})}"
+                                    <a class="page-link" th:href="@{/admin/sockdetail/page(pageno=${crpage-1})}"
                                         tabindex="-1" aria-disabled="true">Previous</a>
                                 </li>
                             </div>
                             <div th:unless="${crpage-1 < 1}">
                                 <li class="page-item">
                                     <a class="page-link"
-                                        th:href="@{/admin/account/page(pageno=${crpage-1})}">Previous</a>
+                                        th:href="@{/admin/sockdetail/page(pageno=${crpage-1})}">Previous</a>
                                 </li>
                             </div>
                             <div th:each="page : ${pagenumber}">
                                 <div th:if="${crpage == page}">
                                     <li class="page-item disabled"><a class="page-link"
-                                            th:href="@{/admin/account/page(pageno=${page})}" th:text="${page}"
+                                            th:href="@{/admin/sockdetail/page(pageno=${page})}" th:text="${page}"
                                             tabindex="-1" aria-disabled="true"></a>
                                     </li>
                                 </div>
                                 <div th:unless="${crpage == page}">
                                     <li class="page-item"><a class="page-link"
-                                            th:href="@{/admin/account/page(pageno=${page})}" th:text="${page}"></a>
+                                            th:href="@{/admin/sockdetail/page(pageno=${page})}" th:text="${page}"></a>
                                     </li>
                                 </div>
                             </div>
                             <div th:if="${crpage == totalpage}">
                                 <li class="page-item disabled">
-                                    <a class="page-link" th:href="@{/admin/account/page(pageno=${crpage+1})}"
+                                    <a class="page-link" th:href="@{/admin/sockdetail/page(pageno=${crpage+1})}"
                                         tabindex="-1" aria-disabled="true">Next</a>
                                 </li>
                             </div>
                             <div th:unless="${crpage == totalpage}">
                                 <li class="page-item">
-                                    <a class="page-link" th:href="@{/admin/account/page(pageno=${crpage+1})}">Next</a>
+                                    <a class="page-link" th:href="@{/admin/sockdetail/page(pageno=${crpage+1})}">Next</a>
                                 </li>
                             </div>
                         </ul>
