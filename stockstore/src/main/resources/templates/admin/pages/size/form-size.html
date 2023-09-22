@@ -9,53 +9,30 @@
 <body>
   <section layout:fragment="content">
     <div class="container">
-      <!-- Form to store new cuahang -->
-      <form enctype="multipart/form-data" th:action="@{/admin/pages/account/store}" th:object="${accountRequest}"
+      <!-- Form to store new SizeRequest -->
+      <form enctype="multipart/form-data" th:action="@{/admin/pages/size/store}" th:object="${sizeRequest}"
         method="post" class="form">
+        <input type="hidden" class="form-control" id="id" th:field="*{id}" />
+
         <div class="form-floating mb-3">
-          <select class="form-control" th:field="*{idCustomer}">
-            <option value="">Chọn Khách Hàng</option>
-            <option th:each="customer : ${listCustomer}" th:value="${customer.id}" th:text="${customer.name}">
-            </option>
-          </select>
-          <label for="idCustomer">Khách Hàng:</label>
-          <div th:if="${#fields.hasErrors('idCustomer')}" class="errors text-danger form-text"
-            th:errors="*{idCustomer}">
+          <input type="text" class="form-control" id="code" th:field="*{code}" placeholder="Size Code" />
+          <label for="code">Size Code:</label>
+          <div th:if="${#fields.hasErrors('code')}" class="errors text-danger form-text" th:errors="*{code}">
           </div>
         </div>
-        <div class=" form-group mb-2">
-          <div class="form-floating">
-            <input type="email" class="form-control" id="floatingEmail" th:field="*{email}" placeholder="Your Email" />
-            <label for="floatingEmail">Your Email</label>
-          </div>
-          <div th:if="${#fields.hasErrors('email')}" class="errors text-danger form-text" th:errors="*{email}">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Size Name" />
+          <label for="name">Size Name:</label>
+          <div th:if="${#fields.hasErrors('name')}" class="errors text-danger form-text" th:errors="*{name}">
           </div>
         </div>
         <div class="form-group mb-2">
-          <!-- <div class="form-floating"> -->
-          <label for="status">Trạng Thái:</label>
-          <input type="radio" value="-1" id="VoHieuHoa" class="m-2" th:field="*{status}" />
-          <label for="VoHieuHoa">Vô Hiệu Hóa</label>
-          <input type="radio" value="0" id="DangSuDung"  class="m-2" th:field="*{status}" />
-          <label for="DangSuDung">Được Phép</label>
-          <input type="radio" value="1" id="DaXoa" class="m-2" th:field="*{status}" />
-          <label for="DaXoa">Đã Xóa</label>
+          <label for="status">Status:</label>
+          <input type="radio" value="true" id="statusActive" class="m-2" th:field="*{status}" />
+          <label for="statusActive">Active</label>
+          <input type="radio" value="false" id="statusInactive" class="m-2" th:field="*{status}" />
+          <label for="statusInactive">Inactive</label>
           <div th:if="${#fields.hasErrors('status')}" class="errors text-danger form-text" th:errors="*{status}">
-          </div>
-          <!-- </div> -->
-        </div>
-        <div class="form-group form-floating  mb-2">
-          <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Mật Khẩu" />
-          <label for="password">Mật khẩu:</label>
-          <div th:if="${#fields.hasErrors('password')}" class="errors text-danger form-text" th:errors="*{password}">
-          </div>
-        </div>
-        <div class="form-group form-floating  mb-2">
-          <input type="password" class="form-control" id="passwordRepeat" th:field="*{passwordRepeat}"
-            placeholder="Nhập lại mật khẩu" />
-          <label for="passwordRepeat">Nhập lại mật khẩu:</label>
-          <div th:if="${#fields.hasErrors('passwordRepeat')}" class="errors text-danger form-text"
-            th:errors="*{passwordRepeat}">
           </div>
         </div>
         <div class="text-center">
@@ -64,6 +41,7 @@
         </div>
       </form>
     </div>
+
   </section>
 </body>
 

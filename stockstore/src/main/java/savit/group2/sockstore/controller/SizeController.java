@@ -5,12 +5,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import jakarta.validation.Valid;
 import savit.group2.sockstore.model.reponse.AccountResponse;
 import savit.group2.sockstore.model.reponse.SizeResponse;
+import savit.group2.sockstore.model.request.SizeRequest;
 import savit.group2.sockstore.model.request.SizeRequest;
 import savit.group2.sockstore.service.SizeService;
 
@@ -79,7 +84,8 @@ public class SizeController {
     model.addAttribute("list", list);
     return "/admin/pages/size/table-size.html";
   }
-    @GetMapping("index")
+
+  @GetMapping("index")
   public String getAccountIndexpages(Model model) {
     this.pageno = 1;
     List<SizeResponse> list = service.getPageNo(this.pageno, rowcount, sortBy, sortDir);
@@ -92,4 +98,54 @@ public class SizeController {
     return "/admin/pages/size/table-size.html";
   }
 
+  // cud
+  @ModelAttribute("sizeRequest")
+  public SizeRequest setSignUpForm() {
+    return sizeRequest;
+  }
+
+  @GetMapping("create")
+  public String goToCreateForm(Model model) {
+    sizeRequest = new SizeRequest();
+    sizeRequest.setStatus(true);
+    // model.addAttribute("listCustomer", customerService.getComboBox());
+    model.addAttribute("sizeRequest", sizeRequest);
+    return "/admin/pages/size/form-size.html";
+  }
+
+  @GetMapping("delete")
+  public String deletePattern(Model model, @RequestParam("id") String id) {
+    // service.deletePattern(UUID.fromString(id));
+    return "redirect:index";
+  }
+
+  @GetMapping("edit")
+  public String editPattern(Model model, @RequestParam("id") String id) {
+    // model.addAttribute("sizeRequest",
+    // service.getPatternRequetById(UUID.fromString(id)));
+    // model.addAttribute("listCustomer", customerService.getAllCustomers());
+    return "/admin/pages/size/form-size.html";
+  }
+
+  @PostMapping("store")
+  public String storePattern(Model model, @Valid @ModelAttribute("sizeRequest") SizeRequest sizeRequest,
+      BindingResult theBindingResult) {
+    if (theBindingResult.hasErrors()) {
+      // model.addAttribute("listCustomer", customerService.getComboBox());
+      return "/admin/pages/size/form-size.html";
+    } else {
+      // service.savePattern(sizeRequest);
+      return "redirect:index";
+    }
+  }
+
+  @PostMapping("update")
+  public String update(@Valid @ModelAttribute("sizeRequest") SizeRequest sizeRequest,
+      BindingResult theBindingResult, Model model) {
+    if (theBindingResult.hasErrors()) {
+      return "/admin/pages/size/form-size.html";
+    }
+    // service.updatePattern(sizeRequest);
+    return "redirect:index";
+  }
 }
