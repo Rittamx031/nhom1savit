@@ -12,6 +12,6 @@ import java.util.UUID;
 
 @Repository
 public interface SizeRepository extends JpaRepository<Size, UUID> {
-  @Query(value = "SELECT new savit.group2.sockstore.model.reponse.SizeResponse(pattern.id ,pattern.code ,pattern.name ,pattern.status) FROM Size pattern")
+  @Query(value = "SELECT new savit.group2.sockstore.model.reponse.SizeResponse(size.id ,size.code ,size.name ,size.status) FROM Size size")
   Page<SizeResponse> getResposePage(Pageable pageable);
 }
