@@ -42,7 +42,7 @@ public class Sock_Detail {
 
     @ManyToOne
     @JoinColumn(name = "id_meterial")
-    private Meterial meterial;
+    private Material material;
 
     @ManyToOne
     @JoinColumn(name = "id_size")

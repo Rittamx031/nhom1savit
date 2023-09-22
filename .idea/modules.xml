@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/nhom1savit.iml" filepath="$PROJECT_DIR$/.idea/nhom1savit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stockstore/sockstore.iml" filepath="$PROJECT_DIR$/stockstore/sockstore.iml" />
+    </modules>
+  </component>
+</project>

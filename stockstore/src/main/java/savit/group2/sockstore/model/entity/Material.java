@@ -12,8 +12,9 @@ import java.util.UUID;
 @Setter
 @ToString
 @Entity
+@Builder
 @Table(name = "Meterial")
-public class Meterial {
+public class Material {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
