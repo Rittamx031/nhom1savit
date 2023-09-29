@@ -5,15 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="692649a1-96d3-4398-94bb-3978983d8141" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/controller/CategoryController.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/controller/CategoryController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/model/entity/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/model/entity/Category.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/repository/CategoryRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/repository/CategoryRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/service/CategoryService.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/service/CategoryService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/service/MaterialService.java" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/java/savit/group2/sockstore/service/MaterialService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stockstore/src/main/resources/templates/admin/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/resources/templates/admin/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/stockstore/src/main/resources/templates/admin/pages/material/hien-thi.html" beforeDir="false" afterPath="$PROJECT_DIR$/stockstore/src/main/resources/templates/admin/pages/material/hien-thi.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +96,7 @@
       <workItem from="1695368843837" duration="2251000" />
       <workItem from="1695372572322" duration="5315000" />
       <workItem from="1695379391365" duration="232000" />
-      <workItem from="1695389761415" duration="2234000" />
+      <workItem from="1695389761415" duration="2544000" />
     </task>
     <servers />
   </component>
