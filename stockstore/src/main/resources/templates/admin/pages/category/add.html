@@ -9,7 +9,7 @@
 <section layout:fragment="content">
     <div>
         <h1 class="center">Create Material</h1>
-        <form th:action="@{/admin/pages/material/add}" th:object="${material}" method="post" class="form">
+        <form th:action="@{/admin/pages/category/add}" th:object="${category}" method="post" class="form">
             <div class="form-group">
                 <label class="form-label">Code: </label>
                 <input type="text"  class="form-control mb-3"  th:field="*{code}" />

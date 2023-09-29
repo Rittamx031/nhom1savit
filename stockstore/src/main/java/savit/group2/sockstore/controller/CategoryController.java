@@ -45,7 +45,7 @@ public class CategoryController {
     @GetMapping("view-update")
     public String viewUpdate(Model model, @RequestParam("id") String id) {
         Category category=categoryService.getOne(UUID.fromString(id));
-        model.addAttribute("cagory",category);
+        model.addAttribute("category",category);
         return "admin/pages/category/update.html";
     }
 
@@ -57,7 +57,7 @@ public class CategoryController {
     }
 
     @PostMapping("update")
-    public String update( @ModelAttribute("material") Category category,@RequestParam("id") String id ) {
+    public String update( @ModelAttribute("category") Category category,@RequestParam("id") String id ) {
         categoryService.update(category,UUID.fromString(id));
         return "redirect:get-all";
     }
