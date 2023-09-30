@@ -34,13 +34,6 @@ public class JwtTokenProvider {
         .setExpiration(expiryDate)
         .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
         .compact();
-    // .setClaims(claims)
-    // return Jwts.builder()
-    // .setSubject(subject)
-    // .setIssuedAt(createdDate)
-    // .setExpiration(expirationDate)
-    // .signWith(SignatureAlgorithm.HS512, JwtConstants.SECRET)
-    // .compact();
   }
 
   // Lấy thông tin user từ jwt

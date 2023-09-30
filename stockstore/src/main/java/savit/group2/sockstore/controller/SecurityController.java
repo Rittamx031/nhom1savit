@@ -15,8 +15,8 @@ public class SecurityController {
   public String loginPage(Model model, @RequestParam(value = "error", required = false) Boolean error,
       RedirectAttributes redirAttrs) {
     if (error == null) {
-      LoginRequest login = new LoginRequest();
-      model.addAttribute("login", login);
+      // LoginRequest login = new LoginRequest();
+      // model.addAttribute("login", login);
     } else {
       redirAttrs.addFlashAttribute("message", "Đăng Nhập không thành công");
       model.addAttribute("loginError", true);
