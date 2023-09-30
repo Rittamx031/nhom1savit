@@ -5,19 +5,22 @@ import lombok.*;
 
 import java.sql.Date;
 import java.util.UUID;
-
+@Entity
+@Table(name = "Customer")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@Entity
-@Table(name = "Customer")
+@Builder
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
+
+//    @Column(name = "code")
+//    private String code;
 
     @Column(name = "name")
     private String name;

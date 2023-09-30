@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Home</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <h1>Customer</h1>
+    <a th:href="@{/admin/pages/customer/view-add}" class="btn btn-primary mb-3">New</a>
+    <table class="table table-bordered">
+        <thead class="">
+        <tr>
+            <th scope="col">STT</th>
+<!--            <th scope="col">Code</th>-->
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Day of Birth</th>
+            <th scope="col">Status</th>
+            <th scope="col">Function</th>
+        </tr>
+        </thead>
+        <tbody th:each="customer: ${customerList}">
+        <tr>
+            <th scope="row"></th>
+<!--            <td th:text="${customer.code}"></td>-->
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.phone}"></td>
+            <td th:text="${customer.birthday}"></td>
+            <td th:text="${customer.status?'Hoạt động':'Không hoạt động'}"></td>
+            <td>
+                <a th:href="@{/admin/pages/customer/delete(id=${customer.id})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/admin/pages/customer/view-update(id=${customer.id})}" class="btn btn-success">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+
+</html>

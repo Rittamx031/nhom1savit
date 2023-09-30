@@ -24,7 +24,7 @@
             <th scope="row"></th>
             <td th:text="${category.code}"></td>
             <td th:text="${category.name}"></td>
-            <td th:text="${category.status}"></td>
+            <td th:text="${category.status?'Hoạt động':'Không hoạt động'}"></td>
             <td>
                 <a th:href="@{/admin/pages/category/delete(id=${category.id})}" class="btn btn-danger">Delete</a>
                 <a th:href="@{/admin/pages/category/view-update(id=${category.id})}" class="btn btn-success">Update</a>

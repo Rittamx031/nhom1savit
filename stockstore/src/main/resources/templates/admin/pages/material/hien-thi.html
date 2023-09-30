@@ -24,7 +24,7 @@
             <th scope="row"></th>
             <td th:text="${material.code}"></td>
             <td th:text="${material.name}"></td>
-            <td th:text="${material.status}"></td>
+            <td th:text="${material.status?'Hoạt động':'Không hoạt động'}"></td>
             <td>
                 <a th:href="@{/admin/pages/material/delete(id=${material.id})}" class="btn btn-danger">Delete</a>
                 <a th:href="@{/admin/pages/material/view-update(id=${material.id})}" class="btn btn-success">Update</a>
