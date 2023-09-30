@@ -1,13 +1,16 @@
 package savit.group2.sockstore.config;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,11 +29,12 @@ import savit.group2.sockstore.security.service.EmployeInfoService;
 @EnableWebSecurity
 public class SpringSecurityConfig {
   @Bean
-  AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
-    return http.getSharedObject(AuthenticationManagerBuilder.class)
-        .authenticationProvider(authenticationNVProvider())
-        .authenticationProvider(authenticationKHProvider())
-        .build();
+  AuthenticationManager authenticationManager() throws Exception {
+    List<AuthenticationProvider> listProviders = new ArrayList<>();
+    listProviders.add(authenticationNVProvider());
+    listProviders.add(authenticationKHProvider());
+    ProviderManager providerManagers = new ProviderManager(listProviders);
+    return providerManagers;
   }
 
   @Autowired
@@ -97,10 +101,9 @@ public class SpringSecurityConfig {
             formLogin -> formLogin
                 .logoutUrl("/signOut")
                 .logoutSuccessUrl("/login")
-
                 .permitAll())
         .csrf(AbstractHttpConfigurer::disable)
-        // .httpBasic(Customizer.withDefaults())
+        .httpBasic(Customizer.withDefaults())
         .authenticationManager(authManager);
     return http.build();
   }

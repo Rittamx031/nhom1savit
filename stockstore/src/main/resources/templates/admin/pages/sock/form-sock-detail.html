@@ -9,53 +9,82 @@
 <body>
   <section layout:fragment="content">
     <div class="container">
-      <!-- Form to store new cuahang -->
-      <form enctype="multipart/form-data" th:action="@{/admin/pages/account/store}" th:object="${accountRequest}"
+      <!-- Form to store new SockDetailRequest -->
+      <form enctype="multipart/form-data" th:action="@{/admin/pages/sockdetail/store}" th:object="${sockDetailRequest}"
         method="post" class="form">
         <div class="form-floating mb-3">
-          <select class="form-control" th:field="*{idCustomer}">
-            <option value="">Chọn Khách Hàng</option>
-            <option th:each="customer : ${listCustomer}" th:value="${customer.id}" th:text="${customer.name}">
-            </option>
-          </select>
-          <label for="idCustomer">Khách Hàng:</label>
-          <div th:if="${#fields.hasErrors('idCustomer')}" class="errors text-danger form-text"
-            th:errors="*{idCustomer}">
-          </div>
+          <input type="hidden" class="form-control" id="id" th:field="*{id}" />
         </div>
-        <div class=" form-group mb-2">
-          <div class="form-floating">
-            <input type="email" class="form-control" id="floatingEmail" th:field="*{email}" placeholder="Your Email" />
-            <label for="floatingEmail">Your Email</label>
-          </div>
-          <div th:if="${#fields.hasErrors('email')}" class="errors text-danger form-text" th:errors="*{email}">
-          </div>
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="quantity" th:field="*{quantity}" placeholder="Quantity" />
+          <label for="quantity">Quantity:</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" class="form-control" id="unitBasePrice" th:field="*{unit_base_price}"
+            placeholder="Unit Base Price" />
+          <label for="unitBasePrice">Unit Base Price:</label>
+        </div>
+        <div class="form-floating mb-3">
+          <select class="form-control" id="producer" th:field="*{producer}">
+            <option value="">Select Producer</option>
+            <option th:each="producer : ${producerList}" th:value="${producer.id}" th:text="${producer.name}"></option>
+          </select>
+          <label for="producer">Producer:</label>
+        </div>
+        <div class="form-floating mb-3">
+          <select class="form-control" id="category" th:field="*{category}">
+            <option value="">Select Category</option>
+            <option th:each="category : ${categoryList}" th:value="${category.id}" th:text="${category.name}"></option>
+          </select>
+          <label for="category">Category:</label>
+        </div>
+        <div class="form-floating mb-3">
+          <select class="form-control" id="sock" th:field="*{sock}">
+            <option value="">Select Sock</option>
+            <option th:each="sock : ${sockList}" th:value="${sock.id}" th:text="${sock.name}"></option>
+          </select>
+          <label for="sock">Sock:</label>
+        </div>
+        <div class="form-floating mb-3">
+          <select class="form-control" id="pattern" th:field="*{pattern}">
+            <option value="">Select Pattern</option>
+            <option th:each="pattern : ${patternList}" th:value="${pattern.id}" th:text="${pattern.name}"></option>
+          </select>
+          <label for="pattern">Pattern:</label>
+        </div>
+        <div class="form-floating mb-3">
+          <select class="form-control" id="material" th:field="*{material}">
+            <option value="">Select Material</option>
+            <option th:each="material : ${materialList}" th:value="${material.id}" th:text="${material.name}"></option>
+          </select>
+          <label for="material">Material:</label>
+        </div>
+        <div class="form-floating mb-3">
+          <select class="form-control" id="size" th:field="*{size}">
+            <option value="">Select Size</option>
+            <option th:each="size : ${sizeList}" th:value="${size.id}" th:text="${size.name}"></option>
+          </select>
+          <label for="size">Size:</label>
+        </div>
+        <div class="form-floating mb-3">
+          <select class="form-control" id="color" th:field="*{color}">
+            <option value="">Select Coler</option>
+            <option th:each="color : ${colorList}" th:value="${color.id}" th:text="${color.name}"></option>
+          </select>
+          <label for="color">Coler:</label>
+        </div>
+        <!-- Add similar select elements for  color, and image_sock_detail fields -->
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="image_sock_detail" th:field="*{image_sock_detail}" placeholder="Image" />
+          <label for="image_sock_detail">Image:</label>
         </div>
         <div class="form-group mb-2">
-          <!-- <div class="form-floating"> -->
-          <label for="status">Trạng Thái:</label>
-          <input type="radio" value="-1" id="VoHieuHoa" class="m-2" th:field="*{status}" />
-          <label for="VoHieuHoa">Vô Hiệu Hóa</label>
-          <input type="radio" value="0" id="DangSuDung"  class="m-2" th:field="*{status}" />
-          <label for="DangSuDung">Được Phép</label>
-          <input type="radio" value="1" id="DaXoa" class="m-2" th:field="*{status}" />
-          <label for="DaXoa">Đã Xóa</label>
+          <label for="status">Status:</label>
+          <input type="radio" value="true" id="statusActive" class="m-2" th:field="*{status}" />
+          <label for="statusActive">Active</label>
+          <input type="radio" value="false" id="statusInactive" class="m-2" th:field="*{status}" />
+          <label for="statusInactive">Inactive</label>
           <div th:if="${#fields.hasErrors('status')}" class="errors text-danger form-text" th:errors="*{status}">
-          </div>
-          <!-- </div> -->
-        </div>
-        <div class="form-group form-floating  mb-2">
-          <input type="password" class="form-control" id="password" th:field="*{password}" placeholder="Mật Khẩu" />
-          <label for="password">Mật khẩu:</label>
-          <div th:if="${#fields.hasErrors('password')}" class="errors text-danger form-text" th:errors="*{password}">
-          </div>
-        </div>
-        <div class="form-group form-floating  mb-2">
-          <input type="password" class="form-control" id="passwordRepeat" th:field="*{passwordRepeat}"
-            placeholder="Nhập lại mật khẩu" />
-          <label for="passwordRepeat">Nhập lại mật khẩu:</label>
-          <div th:if="${#fields.hasErrors('passwordRepeat')}" class="errors text-danger form-text"
-            th:errors="*{passwordRepeat}">
           </div>
         </div>
         <div class="text-center">
@@ -64,6 +93,7 @@
         </div>
       </form>
     </div>
+
   </section>
 </body>
 

@@ -21,8 +21,6 @@ public class TestController {
 
   @PostMapping(value = "singup")
   public ResponseEntity<Account> postMethodName(@RequestBody SingupRequest entity) {
-    // TODO: process POST request
-
     return ResponseEntity.ok().body(accountService.singup(entity));
   }
 }
