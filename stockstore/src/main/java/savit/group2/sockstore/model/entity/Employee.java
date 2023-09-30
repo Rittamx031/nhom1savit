@@ -21,6 +21,9 @@ public class Employee {
 
     private String name;
 
+    private String email;
+    private String password;
+
     private String birthday;
 
     private String phone;
@@ -30,6 +33,5 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role role;
-
 
 }
