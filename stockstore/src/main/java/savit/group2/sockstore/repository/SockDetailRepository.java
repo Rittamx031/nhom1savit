@@ -12,7 +12,7 @@ import java.util.UUID;
 
 @Repository
 public interface SockDetailRepository extends JpaRepository<Sock_Detail, UUID> {
-  @Query(value = "SELECT new savit.group2.sockstore.model.reponse.SockDetailResponse(detail.id ,detail.quantity ,detail.unit_base_price ,detail.producer.name,detail.category.name,detail.sock.name,detail.pattern.name,detail.meterial.name,detail.size.name,detail.color.name,detail.image_sock_detail.path ,detail.status) FROM Sock_Detail detail")
+  @Query(value = "SELECT new savit.group2.sockstore.model.reponse.SockDetailResponse(detail.id ,detail.quantity ,detail.unit_base_price ,detail.producer.name,detail.category.name,detail.sock.name,detail.pattern.name,detail.material.name,detail.size.name,detail.color.name,detail.image_sock_detail.path ,detail.status) FROM Sock_Detail detail")
   Page<SockDetailResponse> getResposePage(Pageable pageable);
 }
 // UUID id;

@@ -11,7 +11,7 @@ import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import savit.group2.sockstore.model.entity.Color;
 import savit.group2.sockstore.model.entity.Image_Sock_Detail;
-import savit.group2.sockstore.model.entity.Meterial;
+import savit.group2.sockstore.model.entity.Material;
 import savit.group2.sockstore.model.entity.Sock;
 
 @Getter

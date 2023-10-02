@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <div class="pagetitle">
+            <h1>Color</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Product</li>
+                    <li class="breadcrumb-item active">Color</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <section class="section">
+            <button type="button" class="btn btn-outline-success mb-2" data-bs-toggle="modal" data-bs-target="#modalAdd">
+                Add Color</button>
+            <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-1"></i>
+                <span th:text="${success}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div th:classappend="${error == true} ? 'showAdd'" class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create color</h5>
+                            <a th:href="@{/product/color}"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></a>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{/product/color/add}" th:object="${color_create}" method="post">
+                                <div class="row mb-3">
+                                    <label for="inputCode" class="col-sm-2 col-form-label">Code</label>
+                                    <div class="col-sm-10">
+                                        <input th:field="*{code}" id="inputCode" type="text" class="form-control">
+                                        <div th:if="${#fields.hasErrors('code')}" class="error-message text-danger
+                                        form-text" th:errors="*{code}"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input th:field="*{name}" id="inputName" type="text" class="form-control">
+                                        <div th:if="${#fields.hasErrors('name')}" class="error-message text-danger
+                                        form-text" th:errors="*{name}"></div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <a th:href="@{/product/color}"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Update -->
+            <div th:classappend="${errorUpdate == true} ? 'showAdd'" class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create color</h5>
+                            <a th:href="@{|/product/color?page=${page.number + 1}|}"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></a>
+                        </div>
+                        <div class="modal-body">
+                            <form th:action="@{|/product/color/update/${color_update.id}?page=${page.number + 1}|}" th:object="${color_update}" method="post">
+                                <div class="row mb-3">
+                                    <label for="updateCode" class="col-sm-2 col-form-label">Code</label>
+                                    <div class="col-sm-10">
+                                        <input th:field="*{code}" id="updateCode" type="text" class="form-control">
+                                        <div th:if="${#fields.hasErrors('code')}" class="error-message text-danger
+                                        form-text" th:errors="*{code}"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="updateName" class="col-sm-2 col-form-label">Name</label>
+                                    <div class="col-sm-10">
+                                        <input th:field="*{name}" id="updateName" type="text" class="form-control">
+                                        <div th:if="${#fields.hasErrors('name')}" class="error-message text-danger
+                                        form-text" th:errors="*{name}"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <legend class="col-form-label col-sm-2 pt-0">Status</legend>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input class="form-check-input" th:field="*{status}" type="checkbox" id="status">
+                                            <label class="form-check-label" for="status">
+                                                True
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <a th:href="@{|/product/color?page=${page.number + 1}|}"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Code</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="color : ${page.content}">
+                                <td th:text="${color.code}"></td>
+                                <td th:text="${color.name}"></td>
+                                <td th:text="${color.status}"></td>
+                                <td>
+                                    <a th:href="@{|/product/color/load/${color.id}?page=${page.number+1}&showModal=true|}" class="btn btn-info editButton"><i class="ri-refresh-line"></i></a>
+                                    <a th:href="@{|/product/color/delete/${color.id}|}"><button type="button" class="btn btn-danger"><i class="ri-delete-bin-fill"></i></button></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item" th:classappend="${page.number > 0} ? '' : 'disabled'">
+                                <a class="page-link" th:href="@{|?page=1|}">First</a>
+                            </li>
+                            <li class="page-item" th:if="${(page.number + 1) > 1}">
+                                <a class="page-link" th:href="@{|?page=${(page.number + 1) - 1}|}">&lt;</a>
+                            </li>
+                            <th:block th:if="${page.totalPages <= 10}">
+                                <li class="page-item" th:each="i: ${#numbers.sequence(1, page.totalPages)}"
+                                    th:classappend="${i == page.number + 1} ? 'active' : ''">
+                                    <a th:href="@{|?page=${i}|}" class="page-link" th:text="${i}"></a>
+                                </li>
+                            </th:block>
+                            <th:block th:if="${page.totalPages > 10}">
+                                <th:block th:if="${(page.number + 1) < 5 || (page.number + 1) > page.totalPages - 4}">
+                                    <li class="page-item" th:each="i: ${#numbers.sequence(1, 5)}"
+                                        th:classappend="${i == page.number + 1} ? 'active' : ''">
+                                        <a th:href="@{|?page=${i}|}" class="page-link" th:text="${i}"></a>
+                                    </li>
+                                    <a th:href="@{?page=6}" class="page-link">...</a>
+                                    <li class="page-item" th:each="i: ${#numbers.sequence(page.totalPages - 4, page.totalPages)}"
+                                        th:classappend="${i == page.number + 1} ? 'active' : ''">
+                                        <a th:href="@{|?page=${i}|}" class="page-link" th:text="${i}"></a>
+                                    </li>
+                                </th:block>
+                                <th:block th:if="${(page.number + 1) >= 5 && (page.number + 1) <= page.totalPages - 4}">
+                                    <a th:href="@{|?page=${page.number - 5}|}" class="page-link">...</a>
+                                    <li class="page-item" th:each="i: ${#numbers.sequence((page.number + 1) - 4, (page.number + 1) + 4)}"
+                                        th:classappend="${i == page.number + 1} ? 'active' : ''">
+                                        <a th:href="@{|?page=${i}|}" class="page-link" th:text="${i}"></a>
+                                    </li>
+                                    <a th:href="@{|?page=${page.number + 5}|}" class="page-link">...</a>
+                                </th:block>
+                            </th:block>
+                            <li class="page-item" th:if="${(page.number + 1) < page.totalPages}">
+                                <a class="page-link" th:href="@{|?page=${(page.number + 1) + 1}|}">&gt;</a>
+                            </li>
+                            <li class="page-item" th:classappend="${page.number + 1 < page.totalPages} ? '' : 'disabled'">
+                                <a class="page-link" th:href="@{|?page=${page.totalPages}|}">Last</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </section>
+        <script>
+                $(document).ready(function() {
+                    $('.showAdd').modal('show');
+                    var showModal = new URLSearchParams(window.location.search).get('showModal');
+
+                    if (showModal === 'true') {
+                        // Nếu showModal là true, thì hiển thị modal
+                        $('#modalUpdate').modal('show');
+                    }
+
+                });
+
+        </script>
+    </main>
+</body>
+</html>

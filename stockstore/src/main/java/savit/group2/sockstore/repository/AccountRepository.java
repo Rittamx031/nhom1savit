@@ -12,6 +12,6 @@ import java.util.UUID;
 
 @Repository
 public interface AccountRepository extends JpaRepository<Account, UUID> {
-  @Query(value = "SELECT savit.group2.sockstore.model.reponse.AccountResponse(acc.id,acc.customer.name ,acc.customer.phone, acc.email, acc.status) FROM Account acc")
+  @Query(value = "SELECT new savit.group2.sockstore.model.reponse.AccountResponse(acc.id ,acc.customer.name ,acc.customer.phone, acc.email, acc.status) FROM Account acc")
   Page<AccountResponse> getPageAccountRepose(Pageable page);
 }
