@@ -530,13 +530,13 @@ a.cart-btn {
 }
 
 .breadcrumb-section {
-  padding: 150px 0;
+  padding: 50px 0;
   background-size: cover;
   background-position: center center;
   position: relative;
   z-index: 1;
   background-attachment: fixed;
-  padding-top: 200px;
+  padding-top: 100px;
 }
 
 .breadcrumb-section:after {
@@ -904,7 +904,7 @@ a.mobile-show {
 .footer-area {
   background-color: #051922;
   color: #fff;
-  padding: 150px 0;
+  padding: 50px 0;
 }
 
 h2.widget-title {
@@ -2682,12 +2682,14 @@ button.sock-button-solid {
   outline: 0;
   border: 0;
 }
-span.total-price{
+
+span.total-price {
   font-size: 20px;
   line-height: 24px;
   margin-left: 5px;
   color: #ee4d2d;
 }
+
 .cart-buttons {
   margin-top: 30px;
 }
@@ -2851,4 +2853,28 @@ table.order-details tbody td {
   display: table-cell;
   vertical-align: middle;
   width: 100%;
+}
+
+.user-section {
+  font-size: 24px;
+}
+
+.user-section img.user-image {
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  height: 48px;
+  display: block;
+}
+
+.image-update{
+  border-left: 1px solid #d2cccc;
+}
+
+.btn-chon-anh{
+  font-size: 14px;
+  background-color: transparent;
+  border: 1px solid #d2cccc;
+  padding: 4px 10px;
+  border-radius: 3px;
 }
