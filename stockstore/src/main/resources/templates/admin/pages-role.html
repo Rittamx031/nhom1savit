@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <main layout:fragment="content" ng-app="app" ng-controller="product-ctrl">
+        <div class="pagetitle">
+            <h1>Color</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item">Product</li>
+                    <li class="breadcrumb-item active">Role</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <section class="section">
+            <button type="button" class="btn btn-outline-success mb-2" data-bs-toggle="modal" data-bs-target="#modalAdd">
+                Add Role</button>
+            <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create Role</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row mb-3">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputName" type="text" class="form-control">
+                                        <div class="error-message text-danger form-text"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputPermissions" class="col-sm-3 col-form-label">Permissions </label>
+                                    <div class="col-sm-9">
+                                        <input id="inputPermissions" type="text" class="form-control">
+                                        <div class="error-message text-danger form-text"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputRoles" class="col-sm-3 col-form-label">Roles</label>
+                                    <div class="col-sm-9">
+                                        <input id="inputRoles" type="text" class="form-control">
+                                        <div class="error-message text-danger form-text"></div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Update -->
+            <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Update Role</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form>
+                                <div class="row mb-3">
+                                    <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                                    <div class="col-sm-9">
+                                        <input ng-model="form.name" type="text" class="form-control">
+                                        <div class="error-message text-danger form-text"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputPermissions" class="col-sm-3 col-form-label">Permissions</label>
+                                    <div class="col-sm-9">
+                                        <input ng-model="form.permissions" type="text" class="form-control">
+                                        <div class="error-message text-danger form-text"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="inputRoles" class="col-sm-3 col-form-label">Roles</label>
+                                    <div class="col-sm-9">
+                                        <input ng-model="form.roles" type="text" class="form-control">
+                                        <div class="error-message text-danger form-text"></div>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <legend class="col-form-label col-sm-3 pt-0">Status</legend>
+                                    <div class="col-sm-9">
+                                        <div class="form-check">
+                                            <input ng-model="form.status" class="form-check-input" type="checkbox" id="status">
+                                            <label class="form-check-label" for="status">
+                                                True
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Modal Update -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Permissions</th>
+                            <th scope="col">Roles</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="role in roles">
+                                <td>{{role.name}}</td>
+                                <td>{{role.permissions}}</td>
+                                <td>{{role.roles}}</td>
+                                <td>{{role.status ? 'Yes' : 'No'}}</td>
+                                <td>
+                                    <button ng-click="edit(role)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
+                                    <button type="button" class="btn btn-danger"><i class="ri-delete-bin-fill"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>
