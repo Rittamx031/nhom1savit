@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout}">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <main layout:fragment="content" ng-app="app" ng-controller="product-ctrl">
+        <main layout:fragment="content" ng-app="app" ng-controller="product-ctrl">
         <div class="pagetitle">
             <h1>Color</h1>
             <nav>
@@ -19,7 +19,11 @@
         <section class="section">
             <button type="button" class="btn btn-outline-success mb-2" data-bs-toggle="modal" data-bs-target="#modalAdd">
                 Add Role</button>
-            <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+            <div class="alert border-success alert-dismissible fade show" role="alert" ng-show="showAlert">
+                {{alertMessage}}
+                <button type="button" class="btn-close" ng-click="closeAlert()" aria-label="Close"></button>
+            </div>
+            <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -27,30 +31,40 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form name="formAddRole" ng-submit="formAddRole.$valid && create()" novalidate>
                                 <div class="row mb-3">
                                     <label for="inputName" class="col-sm-3 col-form-label">Name</label>
                                     <div class="col-sm-9">
-                                        <input id="inputName" type="text" class="form-control">
-                                        <div class="error-message text-danger form-text"></div>
+                                        <input ng-model="formInput.name" name="name" id="inputName" type="text" class="form-control" required>
+                                        <span ng-show="formAddRole.$submitted">
+                                            <div ng-show="formAddRole.name.$invalid" class="error-message text-danger form-text">
+                                            Name cannot be blank</div>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPermissions" class="col-sm-3 col-form-label">Permissions </label>
+                                    <label for="inputPermissions" class="col-sm-3 col-form-label">Permissions</label>
                                     <div class="col-sm-9">
-                                        <input id="inputPermissions" type="text" class="form-control">
-                                        <div class="error-message text-danger form-text"></div>
+                                        <input ng-model="formInput.permissions" name="permissions" id="inputPermissions" type="text" class="form-control" required>
+                                        <span ng-show="formAddRole.$submitted">
+                                            <div ng-show="formAddRole.permissions.$invalid" class="error-message text-danger form-text">
+                                            Permissions cannot be blank</div>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <label for="inputRoles" class="col-sm-3 col-form-label">Roles</label>
                                     <div class="col-sm-9">
-                                        <input id="inputRoles" type="text" class="form-control">
-                                        <div class="error-message text-danger form-text"></div>
+                                        <input ng-model="formInput.roles" name="roles" id="inputRoles" type="text" class="form-control" required>
+                                        <span ng-show="formAddRole.$submitted">
+                                            <div ng-show="formAddRole.roles.$invalid" class="error-message text-danger form-text">
+                                            Roles cannot be blank</div>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Save</button>
+                                    <button ng-click="resetFormInput()" type="button" class="btn btn-warning">Reset</button>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </form>
@@ -59,7 +73,7 @@
                 </div>
             </div>
             <!-- Modal Update -->
-            <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+            <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -67,33 +81,42 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <form>
+                            <form name="formUpdateRole" ng-submit="formUpdateRole.$valid && update()" novalidate>
                                 <div class="row mb-3">
-                                    <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                                    <label for="updateName" class="col-sm-3 col-form-label">Name</label>
                                     <div class="col-sm-9">
-                                        <input ng-model="form.name" type="text" class="form-control">
-                                        <div class="error-message text-danger form-text"></div>
+                                        <input ng-model="formUpdate.name" id="updateName" name="name" type="text" class="form-control" required>
+                                        <span ng-show="formUpdateRole.$submitted">
+                                            <div ng-show="formUpdateRole.name.$invalid" class="error-message text-danger form-text">
+                                            Name cannot be blank</div>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputPermissions" class="col-sm-3 col-form-label">Permissions</label>
+                                    <label for="updatePermissions" class="col-sm-3 col-form-label">Permissions</label>
                                     <div class="col-sm-9">
-                                        <input ng-model="form.permissions" type="text" class="form-control">
-                                        <div class="error-message text-danger form-text"></div>
+                                        <input ng-model="formUpdate.permissions" id="updatePermissions" name="permissions" type="text" class="form-control" required>
+                                        <span ng-show="formUpdateRole.$submitted">
+                                            <div ng-show="formUpdateRole.permissions.$invalid" class="error-message text-danger form-text">
+                                            Permissions cannot be blank</div>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="inputRoles" class="col-sm-3 col-form-label">Roles</label>
+                                    <label for="updateRoles" class="col-sm-3 col-form-label">Roles</label>
                                     <div class="col-sm-9">
-                                        <input ng-model="form.roles" type="text" class="form-control">
-                                        <div class="error-message text-danger form-text"></div>
+                                        <input ng-model="formUpdate.roles" id="updateRoles" type="text" class="form-control" required>
+                                        <span ng-show="formUpdateRole.$submitted">
+                                            <div ng-show="formUpdateRole.roles.$invalid" class="error-message text-danger form-text">
+                                            Roles cannot be blank</div>
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
                                     <legend class="col-form-label col-sm-3 pt-0">Status</legend>
                                     <div class="col-sm-9">
                                         <div class="form-check">
-                                            <input ng-model="form.status" class="form-check-input" type="checkbox" id="status">
+                                            <input ng-model="formUpdate.status" class="form-check-input" type="checkbox" id="status">
                                             <label class="form-check-label" for="status">
                                                 True
                                             </label>
@@ -102,6 +125,7 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Update</button>
+                                    <button ng-click="resetFormUpdate()" type="button" class="btn btn-warning">Reset</button>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                 </div>
                             </form>
@@ -123,18 +147,40 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="role in roles">
+                            <tr ng-repeat="role in paper.items">
                                 <td>{{role.name}}</td>
                                 <td>{{role.permissions}}</td>
                                 <td>{{role.roles}}</td>
                                 <td>{{role.status ? 'Yes' : 'No'}}</td>
                                 <td>
                                     <button ng-click="edit(role)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
-                                    <button type="button" class="btn btn-danger"><i class="ri-delete-bin-fill"></i></button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="ri-delete-bin-fill"></i></button>
+                                    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa không?</h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button ng-click="delete(role)" type="button" class="btn btn-primary" data-bs-dismiss="modal">Delete</button>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><button ng-click="paper.first()" class="page-link">First</button></li>
+                            <li class="page-item"><button ng-click="paper.prev()" class="page-link">Previous</button></li>
+                            <li class="page-item"><a class="page-link">{{paper.page + 1}} of {{paper.count}}</a></li>
+                            <li class="page-item"><button ng-click="paper.next()" class="page-link">Next</button></li>
+                            <li class="page-item"><button ng-click="paper.last()" class="page-link">Last</button></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </section>
