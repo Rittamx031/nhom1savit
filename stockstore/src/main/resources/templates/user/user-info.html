@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+  layout:decorate="~{user/layout}">
+
+<head>
+</head>
+
+<body layout:fragment="content">
+  <!-- breadcrumb-section -->
+  <div class="breadcrumb-section breadcrumb-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 offset-lg-2 text-center">
+          <div class="breadcrumb-text">
+            <p>Welcome!!! </p>
+            <h1>That dep trai</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- end breadcrumb section -->
+  <div class="user-section mt-150 mb-150 container">
+    <div class="row">
+      <div class="d-flex flex-column flex-shrink-0 p-3 text-dark col-3">
+        <div class="user-info d-flex">
+          <img class="user-image" src="https://down-vn.img.susercontent.com/file/ba697210724fcf9a75288aee1f883d03_tn"
+            alt="" srcset="">
+          <div style="margin-left: 10px;">
+            <span> That dep trai</span><br>
+            <a href="">Update Info</a>
+          </div>
+        </div>
+        <ul class="nav nav-pills flex-column mb-auto">
+          <li>
+            <a href="#" class="nav-link text-dark  text-lg-start">
+              Change password
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-dark  text-lg-start">
+              Update address
+            </a>
+          </li>
+          <li>
+            <a href="#" class="nav-link text-dark  text-lg-start">
+              Purchase history
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="form-update-user-info col-9 shadow px-5  rounded">
+        <div class="form-title">
+          <div class="">Quản lý thông tin hồ sơ để bảo mật tài khoản</div>
+          <hr>
+        </div>
+        <form action="" method="post">
+          <div class="row">
+            <div class="col-8">
+              <div class="form-outline mb-4">
+                <label class="form-label" for="form4Example1">Name</label>
+                <input type="text" id="form4Example1" class="form-control" />
+              </div>
+              <!-- Email input -->
+              <div class="form-outline mb-4">
+                <label class="form-label" for="form4Example2">Email address</label>
+                <input type="email" id="form4Example2" class="form-control" />
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="form4Example2">Email address</label>
+                <input type="email" id="form4Example2" class="form-control" />
+              </div>
+              <div class="form-outline mb-4">
+                <label class="form-label" for="form4Example2">Email address</label>
+                <input type="email" id="form4Example2" class="form-control" />
+              </div>
+
+              <!-- Submit button -->
+              <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
+            </div>
+            <div class="col-4 ">
+              <div class="image-update text-center">
+                <div class="image d-flex align-items-center justify-content-center">
+                  <label for="fileInput">
+                    <img class="rounded-circle" src="https://down-vn.img.susercontent.com/file/ba697210724fcf9a75288aee1f883d03_tn" alt="">
+                  </label>
+                </div>
+                <input id="fileInput" class="" type="file" accept=".jpg,.jpeg,.png" style="display: none;">
+                <label for="fileInput" class="mt-3 btn-chon-anh">Chọn ảnh</label>
+                <div class="noted text-center text-black-50 text-sm">
+                    Ảnh tải lên không quá 1 MB và phải là dịnh dạng .jpg, .jpeg, .png
+                </div>
+              </div>  
+            </div>
+          </div>
+          <!-- Name input -->
+
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- update infor form -->
+  <!-- end update infor form -->
+</body>
+
+</html>
