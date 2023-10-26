@@ -9,19 +9,24 @@ import lombok.*;
 @Setter
 @ToString
 @Entity
-@Table(name = "SockDetail_Blog")
-public class SockDetail_Blog {
+@Table(name = "Discount_SockDetail")
+public class Discount_SockDetail {
     @EmbeddedId
-    private SockDetail_BlogID id;
-
-    @ManyToOne
-    @MapsId("id_blog")
-    @JoinColumn(name = "id_blog")
-    private Blog blog;
+    private Discount_SockDetail_Id id;
 
     @ManyToOne
     @MapsId("id_sock_detail")
     @JoinColumn(name = "id_sock_detail")
     private Sock_Detail sock_detail;
+
+    @ManyToOne
+    @MapsId("id_discount")
+    @JoinColumn(name = "id_discount")
+    private Discount discount;
+
+    private Double unit_base_price;
+
+    private Double money_return;
+
 
 }

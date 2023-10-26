@@ -6,8 +6,10 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Embeddable
-public class SockDetail_BlogID implements Serializable {
-    private UUID id_blog;
+public class Discount_SockDetail_Id implements Serializable {
 
     private UUID id_sock_detail;
+
+    private UUID id_discount;
+
 }

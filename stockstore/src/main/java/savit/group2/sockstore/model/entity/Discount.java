@@ -20,31 +20,21 @@ public class Discount {
     @Column(name = "id")
     private UUID id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_sock")
-    private Sock sock;
-
     private String coupon_code;
 
-    private BigDecimal discount_value;
+    private String name;
 
-    private String discount_unit;
+    private String description;
 
-    private BigDecimal mininum_order_value;
+    private Date valid_from;
 
-    private BigDecimal maximun_discount_value;
+    private Date valid_until;
 
-    private Date valid_form;
+    private Double cash_discount;
 
-    private Date valid_unit;
+    private Integer percent_discount;
 
-    private Date created_at;
+    private String discount_type;
 
-    private Date updated_at;
-
-    private String created_by;
-
-    private String updated_by;
-
-    private  Boolean status;
+    private Boolean status;
 }

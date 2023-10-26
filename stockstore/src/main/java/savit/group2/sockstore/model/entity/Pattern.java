@@ -25,18 +25,6 @@ public class Pattern {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "created_at")
-    private Date created_at;
-
-    @Column(name = "updated_at")
-    private Date updated_at;
-
-    @Column(name = "created_by")
-    private String created_by;
-
-    @Column(name = "updated_by")
-    private String updated_by;
-
     @Column(name = "status")
     private Boolean status;
 }

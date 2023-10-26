@@ -1,5 +1,5 @@
-let app = angular.module("app", []);
-app.controller("product-ctrl", function ($scope, $http, $timeout){
+let app_role = angular.module("role", []);
+app_role.controller("role-ctrl", function ($scope, $http, $timeout){
     $scope.roles = [];
     $scope.formUpdate = {};
     $scope.formInput = {};
@@ -38,7 +38,7 @@ app.controller("product-ctrl", function ($scope, $http, $timeout){
     $scope.update = function() {
         let item = angular.copy($scope.formUpdate);
         $http.put(`/rest/roles/${item.id}`, item).then(resp => {
-            $scope.showSuccessMessage("Create role successfully!")
+            $scope.showSuccessMessage("Update role successfully!")
             $scope.resetFormUpdate();
             $scope.initialize();
             $('#modalUpdate').modal('hide');
@@ -58,6 +58,8 @@ app.controller("product-ctrl", function ($scope, $http, $timeout){
 
     $scope.resetFormUpdate = function () {
         $scope.formUpdate = {};
+        $scope.formUpdateRole.$setPristine();
+        $scope.formUpdateRole.$setUntouched();
     }
 
     $scope.resetFormInput = function () {

@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-        <main layout:fragment="content" ng-app="app" ng-controller="product-ctrl">
+        <main layout:fragment="content" ng-app="role" ng-controller="role-ctrl">
         <div class="pagetitle">
             <h1>Color</h1>
             <nav>
@@ -105,22 +105,11 @@
                                 <div class="row mb-3">
                                     <label for="updateRoles" class="col-sm-3 col-form-label">Roles</label>
                                     <div class="col-sm-9">
-                                        <input ng-model="formUpdate.roles" id="updateRoles" type="text" class="form-control" required>
+                                        <input ng-model="formUpdate.roles" name="roles" id="updateRoles" type="text" class="form-control" required>
                                         <span ng-show="formUpdateRole.$submitted">
                                             <div ng-show="formUpdateRole.roles.$invalid" class="error-message text-danger form-text">
                                             Roles cannot be blank</div>
                                         </span>
-                                    </div>
-                                </div>
-                                <div class="row mb-3">
-                                    <legend class="col-form-label col-sm-3 pt-0">Status</legend>
-                                    <div class="col-sm-9">
-                                        <div class="form-check">
-                                            <input ng-model="formUpdate.status" class="form-check-input" type="checkbox" id="status">
-                                            <label class="form-check-label" for="status">
-                                                True
-                                            </label>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -142,7 +131,6 @@
                             <th scope="col">Name</th>
                             <th scope="col">Permissions</th>
                             <th scope="col">Roles</th>
-                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                         </thead>
@@ -151,7 +139,6 @@
                                 <td>{{role.name}}</td>
                                 <td>{{role.permissions}}</td>
                                 <td>{{role.roles}}</td>
-                                <td>{{role.status ? 'Yes' : 'No'}}</td>
                                 <td>
                                     <button ng-click="edit(role)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
                                     <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="ri-delete-bin-fill"></i></button>
@@ -173,7 +160,7 @@
                         </tbody>
                     </table>
                     <nav aria-label="Page navigation example">
-                        <ul class="pagination">
+                        <ul class="pagination justify-content-center">
                             <li class="page-item"><button ng-click="paper.first()" class="page-link">First</button></li>
                             <li class="page-item"><button ng-click="paper.prev()" class="page-link">Previous</button></li>
                             <li class="page-item"><a class="page-link">{{paper.page + 1}} of {{paper.count}}</a></li>

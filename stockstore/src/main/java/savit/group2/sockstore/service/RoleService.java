@@ -15,7 +15,7 @@ public class RoleService {
     private RoleRepository repository;
 
     public List<Role> getAll() {
-        return repository.findAll();
+        return repository.getAllByStatus(true);
     }
 
     public Role create(Role role) {
@@ -29,7 +29,6 @@ public class RoleService {
             o.setName(role.getName());
             o.setPermissions(role.getPermissions());
             o.setRoles(role.getRoles());
-            o.setStatus(role.getStatus());
             return repository.save(role);
         }).orElse(null);
     }
@@ -37,8 +36,8 @@ public class RoleService {
     public Role delete(UUID id) {
         Optional<Role> optional = repository.findById(id);
         return optional.map(o -> {
-            repository.delete(o);
-            return o;
+            o.setStatus(false);
+            return repository.save(o);
         }).orElse(null);
     }
 }

@@ -29,9 +29,5 @@ public class Blog {
 
     private String content;
 
-    private String created_by;
-
-    private String updated_by;
-
     private Boolean status;
 }

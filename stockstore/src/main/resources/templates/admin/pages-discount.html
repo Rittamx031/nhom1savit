@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main layout:fragment="content" ng-app="discount" ng-controller="discount-ctrl">
+    <div class="pagetitle">
+        <h1>Voucher</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Voucher</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <button type="button" class="btn btn-outline-success mb-2" data-bs-toggle="modal" data-bs-target="#modalAdd">
+            Add Voucher</button>
+        <div class="alert border-success alert-dismissible fade show" role="alert" ng-show="showAlert">
+            {{alertMessage}}
+            <button type="button" class="btn-close" ng-click="closeAlert()" aria-label="Close"></button>
+        </div>
+        <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create Voucher</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form name="formAddVoucher" ng-submit="formAddVoucher.$valid && create()" novalidate>
+                            <div class="row mb-3">
+                                <label for="inputCode" class="col-sm-3 col-form-label">Code</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="formInput.coupon_code" name="coupon_code" id="inputCode" type="text" class="form-control" required>
+                                    <span ng-show="formAddVoucher.$submitted">
+                                            <div ng-show="formAddVoucher.coupon_code.$invalid" class="error-message text-danger form-text">
+                                            Code cannot be blank</div>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputName" class="col-sm-3 col-form-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="formInput.name" name="name" id="inputName" type="text" class="form-control" required>
+                                    <span ng-show="formAddVoucher.$submitted">
+                                            <div ng-show="formAddVoucher.name.$invalid" class="error-message text-danger form-text">
+                                            Name cannot be blank</div>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea ng-model="formInput.description" id="inputDescription" class="form-control" style="height: 100px"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputValidFrom" class="col-sm-3 col-form-label">Valid From</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="formInput.valid_from" name="valid_from" id="inputValidFrom" type="date" class="form-control" required>
+                                    <span ng-show="formAddVoucher.$submitted">
+                                            <div ng-show="formAddVoucher.valid_from.$invalid" class="error-message text-danger form-text">
+                                            Valid from cannot be blank</div>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputValidUntil" class="col-sm-3 col-form-label">Valid Until</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="formInput.valid_until" name="valid_until" id="inputValidUntil" type="date" class="form-control" required>
+                                    <span ng-show="formAddVoucher.$submitted">
+                                            <div ng-show="formAddVoucher.valid_until.$invalid" class="error-message text-danger form-text">
+                                            Valid until cannot be blank</div>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputDiscount" class="col-sm-3 col-form-label">Discount Value</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input ng-model="formInput.discountValue" id="inputDiscount" name="discountValue" type="number" class="form-control" min="1" max="99" required>
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                    <span ng-show="formAddVoucher.$submitted">
+                                             <div ng-show="formAddVoucher.discountValue.$invalid" class="error-message text-danger form-text">
+                                                <span ng-show="formAddVoucher.discountValue.$error.required">Discount value cannot be blank</span>
+                                                <span ng-show="formAddVoucher.discountValue.$error.number">Discount value must be a number</span>
+                                                <span ng-show="formAddVoucher.discountValue.$error.min || formAddVoucher.discountValue.$error.max">Discount value must be between 1% and 99%</span>
+                                            </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button ng-click="resetFormInput()" type="button" class="btn btn-warning">Reset</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Update -->
+        <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Voucher</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form name="formUpdateVoucher" ng-submit="formUpdateVoucher.$valid && update()" novalidate>
+                            <div class="row mb-3">
+                                <label for="updateCode" class="col-sm-3 col-form-label">Code</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="formUpdate.coupon_code" name="coupon_code" id="updateCode" type="text" class="form-control" required>
+                                    <span ng-show="formUpdateVoucher.$submitted">
+                                            <div ng-show="formUpdateVoucher.coupon_code.$invalid" class="error-message text-danger form-text">
+                                            Code cannot be blank</div>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="updateName" class="col-sm-3 col-form-label">Name</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="formUpdate.name" name="name" id="updateName" type="text" class="form-control" required>
+                                    <span ng-show="formUpdateVoucher.$submitted">
+                                            <div ng-show="formUpdateVoucher.name.$invalid" class="error-message text-danger form-text">
+                                            Name cannot be blank</div>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="updateDescription" class="col-sm-3 col-form-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea ng-model="formUpdate.description" id="updateDescription" class="form-control" style="height: 100px"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="updateValidFrom" class="col-sm-3 col-form-label">Valid From</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="formUpdate.valid_from" name="valid_from" id="updateValidFrom" type="date" class="form-control" required>
+                                    <span ng-show="formUpdateVoucher.$submitted">
+                                            <div ng-show="formUpdateVoucher.valid_from.$invalid" class="error-message text-danger form-text">
+                                            Valid from cannot be blank</div>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="updateValidUntil" class="col-sm-3 col-form-label">Valid Until</label>
+                                <div class="col-sm-9">
+                                    <input ng-model="formUpdate.valid_until" name="valid_until" id="updateValidUntil" type="date" class="form-control" required>
+                                    <span ng-show="formUpdateVoucher.$submitted">
+                                            <div ng-show="formUpdateVoucher.valid_until.$invalid" class="error-message text-danger form-text">
+                                            Valid until cannot be blank</div>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="updateDiscount" class="col-sm-3 col-form-label">Discount Value</label>
+                                <div class="col-sm-9">
+                                    <div class="input-group">
+                                        <input ng-model="formUpdate.discountValue" id="updateDiscount" name="discountValue" type="number" class="form-control" min="1" max="99" required>
+                                        <span class="input-group-text">%</span>
+                                    </div>
+                                    <span ng-show="formAddVoucher.$submitted">
+                                             <div ng-show="formUpdateVoucher.discountValue.$invalid" class="error-message text-danger form-text">
+                                                <span ng-show="formUpdateVoucher.discountValue.$error.required">Discount value cannot be blank</span>
+                                                <span ng-show="formUpdateVoucher.discountValue.$error.number">Discount value must be a number</span>
+                                                <span ng-show="formUpdateVoucher.discountValue.$error.min || formUpdateVoucher.discountValue.$error.max">Discount value must be between 1% and 99%</span>
+                                            </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary">Update</button>
+                                <button ng-click="resetFormUpdate()" type="button" class="btn btn-warning">Reset</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Modal Update -->
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Code</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Valid from</th>
+                        <th scope="col">Valid until</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="dis in paper.items">
+                        <td>{{dis.coupon_code}}</td>
+                        <td>{{dis.name}}</td>
+                        <td>{{dis.valid_from}}</td>
+                        <td>{{dis.valid_until}}</td>
+                        <td>{{dis.discountValue}}</td>
+                        <td>
+                            <button ng-click="edit(dis)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="ri-delete-bin-fill"></i></button>
+                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa không?</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button ng-click="delete(dis)" type="button" class="btn btn-primary" data-bs-dismiss="modal">Delete</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><button ng-click="paper.first()" class="page-link">First</button></li>
+                        <li class="page-item"><button ng-click="paper.prev()" class="page-link">Previous</button></li>
+                        <li class="page-item"><a class="page-link">{{paper.page + 1}} of {{paper.count}}</a></li>
+                        <li class="page-item"><button ng-click="paper.next()" class="page-link">Next</button></li>
+                        <li class="page-item"><button ng-click="paper.last()" class="page-link">Last</button></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
