@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{admin/layout}">
 <head>
     <meta charset="UTF-8">
@@ -7,17 +7,17 @@
 <body>
 <main layout:fragment="content" ng-app="discount" ng-controller="discount-ctrl">
     <div class="pagetitle">
-        <h1>Voucher</h1>
+        <h1>Discount</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item">Voucher</li>
+                <li class="breadcrumb-item">Discount</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
     <section class="section">
         <button type="button" class="btn btn-outline-success mb-2" data-bs-toggle="modal" data-bs-target="#modalAdd">
-            Add Voucher</button>
+            Add Discount</button>
         <div class="alert border-success alert-dismissible fade show" role="alert" ng-show="showAlert">
             {{alertMessage}}
             <button type="button" class="btn-close" ng-click="closeAlert()" aria-label="Close"></button>
@@ -26,14 +26,14 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Create Voucher</h5>
+                        <h5 class="modal-title">Create Discount</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form name="formAddVoucher" ng-submit="formAddVoucher.$valid && create()" novalidate>
                             <div class="row mb-3">
-                                <label for="inputCode" class="col-sm-3 col-form-label">Code</label>
-                                <div class="col-sm-9">
+                                <label for="inputCode" class="col-sm-4 col-form-label">Code</label>
+                                <div class="col-sm-8">
                                     <input ng-model="formInput.coupon_code" name="coupon_code" id="inputCode" type="text" class="form-control" required>
                                     <span ng-show="formAddVoucher.$submitted">
                                             <div ng-show="formAddVoucher.coupon_code.$invalid" class="error-message text-danger form-text">
@@ -42,8 +42,8 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputName" class="col-sm-3 col-form-label">Name</label>
-                                <div class="col-sm-9">
+                                <label for="inputName" class="col-sm-4 col-form-label">Name</label>
+                                <div class="col-sm-8">
                                     <input ng-model="formInput.name" name="name" id="inputName" type="text" class="form-control" required>
                                     <span ng-show="formAddVoucher.$submitted">
                                             <div ng-show="formAddVoucher.name.$invalid" class="error-message text-danger form-text">
@@ -52,14 +52,14 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputDescription" class="col-sm-3 col-form-label">Description</label>
-                                <div class="col-sm-9">
+                                <label for="inputDescription" class="col-sm-4 col-form-label">Description</label>
+                                <div class="col-sm-8">
                                     <textarea ng-model="formInput.description" id="inputDescription" class="form-control" style="height: 100px"></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputValidFrom" class="col-sm-3 col-form-label">Valid From</label>
-                                <div class="col-sm-9">
+                                <label for="inputValidFrom" class="col-sm-4 col-form-label">Valid From</label>
+                                <div class="col-sm-8">
                                     <input ng-model="formInput.valid_from" name="valid_from" id="inputValidFrom" type="date" class="form-control" required>
                                     <span ng-show="formAddVoucher.$submitted">
                                             <div ng-show="formAddVoucher.valid_from.$invalid" class="error-message text-danger form-text">
@@ -68,8 +68,8 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputValidUntil" class="col-sm-3 col-form-label">Valid Until</label>
-                                <div class="col-sm-9">
+                                <label for="inputValidUntil" class="col-sm-4 col-form-label">Valid Until</label>
+                                <div class="col-sm-8">
                                     <input ng-model="formInput.valid_until" name="valid_until" id="inputValidUntil" type="date" class="form-control" required>
                                     <span ng-show="formAddVoucher.$submitted">
                                             <div ng-show="formAddVoucher.valid_until.$invalid" class="error-message text-danger form-text">
@@ -78,19 +78,43 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputDiscount" class="col-sm-3 col-form-label">Discount Value</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <input ng-model="formInput.discountValue" id="inputDiscount" name="discountValue" type="number" class="form-control" min="1" max="99" required>
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                    <span ng-show="formAddVoucher.$submitted">
-                                             <div ng-show="formAddVoucher.discountValue.$invalid" class="error-message text-danger form-text">
-                                                <span ng-show="formAddVoucher.discountValue.$error.required">Discount value cannot be blank</span>
-                                                <span ng-show="formAddVoucher.discountValue.$error.number">Discount value must be a number</span>
-                                                <span ng-show="formAddVoucher.discountValue.$error.min || formAddVoucher.discountValue.$error.max">Discount value must be between 1% and 99%</span>
+                                <label class="col-sm-4 col-form-label">Discount Type</label>
+                                <div class="col-sm-8 w-25">
+                                    <select class="form-select" aria-label="Default select example" ng-model="formInput.discount_type" ng-init="formInput.discount_type = '%'">
+                                        <option value="%">%</option>
+                                        <option value="VND">VND</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-4 col-form-label">Discount Value</label>
+                                <div class="col-sm-8">
+                                        <span ng-if="formInput.discount_type == 'VND'">
+                                            <div class="input-group">
+                                                <input ng-model="formInput.cash_discount" name="cash_discount" type="number" class="form-control" min="1000" required>
+                                                <span class="input-group-text">VND</span>
                                             </div>
-                                    </span>
+                                            <span ng-show="formAddVoucher.$submitted">
+                                                <div ng-show="formAddVoucher.cash_discount.$invalid" class="error-message text-danger form-text">
+                                                    <span ng-show="formAddVoucher.cash_discount.$error.required">Discount value cannot be blank</span>
+                                                    <span ng-show="formAddVoucher.cash_discount.$error.number">Discount value must be a number</span>
+                                                    <span ng-show="formAddVoucher.cash_discount.$error.min">Discount value must be >= 1000 VND</span>
+                                                </div>
+                                            </span>
+                                        </span>
+                                        <span ng-if="formInput.discount_type == '%'">
+                                            <div class="input-group">
+                                                <input ng-model="formInput.percent_discount" name="percent_discount" type="number" class="form-control" min="1" max="99" required>
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                            <span ng-show="formAddVoucher.$submitted">
+                                                     <div ng-show="formAddVoucher.percent_discount.$invalid" class="error-message text-danger form-text">
+                                                        <span ng-show="formAddVoucher.percent_discount.$error.required">Discount value cannot be blank</span>
+                                                        <span ng-show="formAddVoucher.percent_discount.$error.number">Discount value must be a number</span>
+                                                        <span ng-show="formAddVoucher.percent_discount.$error.min || formAddVoucher.percent_discount.$error.max">Discount value must be between 1% and 99%</span>
+                                                    </div>
+                                            </span>
+                                        </span>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -108,14 +132,14 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Update Voucher</h5>
+                        <h5 class="modal-title">Update Discount</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form name="formUpdateVoucher" ng-submit="formUpdateVoucher.$valid && update()" novalidate>
                             <div class="row mb-3">
-                                <label for="updateCode" class="col-sm-3 col-form-label">Code</label>
-                                <div class="col-sm-9">
+                                <label for="updateCode" class="col-sm-4 col-form-label">Code</label>
+                                <div class="col-sm-8">
                                     <input ng-model="formUpdate.coupon_code" name="coupon_code" id="updateCode" type="text" class="form-control" required>
                                     <span ng-show="formUpdateVoucher.$submitted">
                                             <div ng-show="formUpdateVoucher.coupon_code.$invalid" class="error-message text-danger form-text">
@@ -124,8 +148,8 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="updateName" class="col-sm-3 col-form-label">Name</label>
-                                <div class="col-sm-9">
+                                <label for="updateName" class="col-sm-4 col-form-label">Name</label>
+                                <div class="col-sm-8">
                                     <input ng-model="formUpdate.name" name="name" id="updateName" type="text" class="form-control" required>
                                     <span ng-show="formUpdateVoucher.$submitted">
                                             <div ng-show="formUpdateVoucher.name.$invalid" class="error-message text-danger form-text">
@@ -134,14 +158,14 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="updateDescription" class="col-sm-3 col-form-label">Description</label>
-                                <div class="col-sm-9">
+                                <label for="updateDescription" class="col-sm-4 col-form-label">Description</label>
+                                <div class="col-sm-8">
                                     <textarea ng-model="formUpdate.description" id="updateDescription" class="form-control" style="height: 100px"></textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="updateValidFrom" class="col-sm-3 col-form-label">Valid From</label>
-                                <div class="col-sm-9">
+                                <label for="updateValidFrom" class="col-sm-4 col-form-label">Valid From</label>
+                                <div class="col-sm-8">
                                     <input ng-model="formUpdate.valid_from" name="valid_from" id="updateValidFrom" type="date" class="form-control" required>
                                     <span ng-show="formUpdateVoucher.$submitted">
                                             <div ng-show="formUpdateVoucher.valid_from.$invalid" class="error-message text-danger form-text">
@@ -150,8 +174,8 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="updateValidUntil" class="col-sm-3 col-form-label">Valid Until</label>
-                                <div class="col-sm-9">
+                                <label for="updateValidUntil" class="col-sm-4 col-form-label">Valid Until</label>
+                                <div class="col-sm-8">
                                     <input ng-model="formUpdate.valid_until" name="valid_until" id="updateValidUntil" type="date" class="form-control" required>
                                     <span ng-show="formUpdateVoucher.$submitted">
                                             <div ng-show="formUpdateVoucher.valid_until.$invalid" class="error-message text-danger form-text">
@@ -160,19 +184,52 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="updateDiscount" class="col-sm-3 col-form-label">Discount Value</label>
-                                <div class="col-sm-9">
-                                    <div class="input-group">
-                                        <input ng-model="formUpdate.discountValue" id="updateDiscount" name="discountValue" type="number" class="form-control" min="1" max="99" required>
-                                        <span class="input-group-text">%</span>
-                                    </div>
-                                    <span ng-show="formAddVoucher.$submitted">
-                                             <div ng-show="formUpdateVoucher.discountValue.$invalid" class="error-message text-danger form-text">
-                                                <span ng-show="formUpdateVoucher.discountValue.$error.required">Discount value cannot be blank</span>
-                                                <span ng-show="formUpdateVoucher.discountValue.$error.number">Discount value must be a number</span>
-                                                <span ng-show="formUpdateVoucher.discountValue.$error.min || formUpdateVoucher.discountValue.$error.max">Discount value must be between 1% and 99%</span>
+                                <label class="col-sm-4 col-form-label">Discount Type</label>
+                                <div class="col-sm-8 w-25">
+                                    <select class="form-select" aria-label="Default select example" ng-model="formUpdate.discount_type">
+                                        <option value="%">%</option>
+                                        <option value="VND">VND</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-4 col-form-label">Discount Value</label>
+                                <div class="col-sm-8">
+                                        <span ng-if="formUpdate.discount_type == 'VND'">
+                                            <div class="input-group">
+                                                <input ng-model="formUpdate.cash_discount" name="cash_discount" type="number" class="form-control" min="1000" required>
+                                                <span class="input-group-text">VND</span>
                                             </div>
-                                    </span>
+                                            <span ng-show="formUpdateVoucher.$submitted">
+                                                <div ng-show="formUpdateVoucher.cash_discount.$invalid" class="error-message text-danger form-text">
+                                                    <span ng-show="formUpdateVoucher.cash_discount.$error.required">Discount value cannot be blank</span>
+                                                    <span ng-show="formUpdateVoucher.cash_discount.$error.number">Discount value must be a number</span>
+                                                    <span ng-show="formUpdateVoucher.cash_discount.$error.min">Discount value must be >= 1000 VND</span>
+                                                </div>
+                                            </span>
+                                        </span>
+                                        <span ng-if="formUpdate.discount_type == '%'">
+                                            <div class="input-group">
+                                                <input ng-model="formUpdate.percent_discount" name="percent_discount" type="number" class="form-control" min="1" max="99" required>
+                                                <span class="input-group-text">%</span>
+                                            </div>
+                                            <span ng-show="formUpdateVoucher.$submitted">
+                                                     <div ng-show="formUpdateVoucher.percent_discount.$invalid" class="error-message text-danger form-text">
+                                                        <span ng-show="formUpdateVoucher.percent_discount.$error.required">Discount value cannot be blank</span>
+                                                        <span ng-show="formUpdateVoucher.percent_discount.$error.number">Discount value must be a number</span>
+                                                        <span ng-show="formUpdateVoucher.percent_discount.$error.min || formUpdateVoucher.percent_discount.$error.max">Discount value must be between 1% and 99%</span>
+                                                    </div>
+                                            </span>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label class="col-sm-4 col-form-label">Status</label>
+                                <div class="col-sm-8 w-50">
+                                    <select class="form-select" aria-label="Default select example" ng-model="formUpdate.status">
+                                        <option ng-value="true">Applying</option>
+                                        <option ng-value="false">Stop Applying</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -186,6 +243,42 @@
             </div>
         </div>
         <!-- End Modal Update -->
+<!--        <div class="modal fade" id="modal-product" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
+<!--            <div class="modal-dialog">-->
+<!--                <div class="modal-content">-->
+<!--                    <div class="modal-header">-->
+<!--                        <h5 class="modal-title" id="exampleModalLabel">Product</h5>-->
+<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+<!--                    </div>-->
+<!--                    <div class="modal-body">-->
+<!--                        <table class="table">-->
+<!--                            <thead>-->
+<!--                                <tr>-->
+<!--                                    <th scope="col">#</th>-->
+<!--                                    <th scope="col">Name</th>-->
+<!--                                    <th scope="col">Position</th>-->
+<!--                                    <th scope="col">Age</th>-->
+<!--                                    <th scope="col">Start Date</th>-->
+<!--                                </tr>-->
+<!--                            </thead>-->
+<!--                            <tbody>-->
+<!--                                <tr>-->
+<!--                                    <th scope="row">1</th>-->
+<!--                                    <td>Brandon Jacob</td>-->
+<!--                                    <td>Designer</td>-->
+<!--                                    <td>28</td>-->
+<!--                                    <td>2016-05-25</td>-->
+<!--                                </tr>-->
+<!--                            </tbody>-->
+<!--                        </table>-->
+<!--                    </div>-->
+<!--                    <div class="modal-footer">-->
+<!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
+<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="row">
             <div class="col-lg-12">
                 <table class="table">
@@ -195,7 +288,9 @@
                         <th scope="col">Name</th>
                         <th scope="col">Valid from</th>
                         <th scope="col">Valid until</th>
-                        <th scope="col">Discount</th>
+                        <th scope="col">Discount Value</th>
+                        <th scope="col">Discount Type</th>
+                        <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
@@ -205,23 +300,12 @@
                         <td>{{dis.name}}</td>
                         <td>{{dis.valid_from}}</td>
                         <td>{{dis.valid_until}}</td>
-                        <td>{{dis.discountValue}}</td>
+                        <td>{{dis.discount_type == '%' ? dis.percent_discount : dis.cash_discount}}</td>
+                        <td>{{dis.discount_type}}</td>
+                        <td>{{dis.status ? 'Applying' : 'Stop Applying'}}</td>
                         <td>
                             <button ng-click="edit(dis)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="ri-delete-bin-fill"></i></button>
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa không?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button ng-click="delete(dis)" type="button" class="btn btn-primary" data-bs-dismiss="modal">Delete</button>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+
                         </td>
                     </tr>
                     </tbody>

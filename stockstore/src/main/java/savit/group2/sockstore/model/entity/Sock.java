@@ -23,8 +23,6 @@ public class Sock {
 
     private String name;
 
-    private String description;
-
     @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
@@ -32,6 +30,10 @@ public class Sock {
     @ManyToOne
     @JoinColumn(name = "id_producer")
     private Producer producer;
+
+    @ManyToOne
+    @JoinColumn(name = "id_meterial")
+    private Material material;
 
     private String path;
 

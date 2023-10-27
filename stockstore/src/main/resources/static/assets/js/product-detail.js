@@ -1,9 +1,9 @@
-let app_product = angular.module("product", []);
-app_product.controller("product-ctrl", function ($scope, $http, $timeout){
+let app_productDTL = angular.module("product-dtl", []);
+app_productDTL.controller("product-dtl-ctrl", function ($scope, $http, $timeout){
+    $scope.productDetails = [];
     $scope.products = [];
-    $scope.cates = [];
-    $scope.producers = [];
-    $scope.materials = [];
+    $scope.sizes = [];
+    $scope.colors = [];
     $scope.formUpdate = {};
     $scope.formInput = {};
     $scope.showAlert = false;
@@ -14,7 +14,7 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
     imgShow("image", "image-preview");
     imgShow("image-update", "image-preview-update");
 
-     function imgShow (textInput, textPreview) {
+    function imgShow (textInput, textPreview) {
         const imageInput = document.getElementById(textInput);
         const imagePreview = document.getElementById(textPreview);
         imageInput.addEventListener("change", function () {
@@ -48,14 +48,14 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
         $http.get("/rest/products").then(resp => {
             $scope.products = resp.data;
         });
-        $http.get("/rest/categories").then(resp => {
-            $scope.cates = resp.data;
+        $http.get("/rest/sizes").then(resp => {
+            $scope.sizes = resp.data;
         })
-        $http.get("/rest/producers").then(resp => {
-            $scope.producers = resp.data;
+        $http.get("/rest/colors").then(resp => {
+            $scope.colors = resp.data;
         })
-        $http.get("/rest/materials").then(resp => {
-            $scope.materials = resp.data;
+        $http.get("/rest/product-detail").then(resp => {
+            $scope.productDetails = resp.data;
         })
     }
     $scope.initialize();
@@ -78,8 +78,8 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
             }).then(resp => {
                 $scope.formInput.path = resp.data.name;
                 let item = angular.copy($scope.formInput);
-                $http.post(`/rest/products`, item).then(resp => {
-                    $scope.showSuccessMessage("Create product successfully!");
+                $http.post(`/rest/product-detail`, item).then(resp => {
+                    $scope.showSuccessMessage("Create product detail successfully!");
                     $scope.initialize();
                     $scope.resetFormInput();
                     $('#modalAdd').modal('hide');
@@ -98,8 +98,8 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
 
     $scope.apiUpdate = function () {
         let item = angular.copy($scope.formUpdate);
-        $http.put(`/rest/products/${item.id}`, item).then(resp => {
-            $scope.showSuccessMessage("Update product successfully!")
+        $http.put(`/rest/product-detail/${item.id}`, item).then(resp => {
+            $scope.showSuccessMessage("Update product detail successfully!")
             $scope.resetFormUpdate();
             $scope.initialize();
             $('#modalUpdate').modal('hide');
@@ -134,8 +134,8 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
     }
 
     $scope.delete = function(item) {
-        $http.delete(`/rest/products/${item.id}`).then(resp => {
-            $scope.showSuccessMessage("Delete product successfully!")
+        $http.delete(`/rest/product-detail/${item.id}`).then(resp => {
+            $scope.showSuccessMessage("Delete product detail successfully!")
             $scope.initialize();
         }).catch(error => {
             console.log("Error", error);
@@ -169,10 +169,10 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
         size: 5,
         get items() {
             let start = this.page * this.size;
-            return $scope.products.slice(start, start + this.size);
+            return $scope.productDetails.slice(start, start + this.size);
         },
         get count() {
-            return Math.ceil(1.0 * $scope.products.length / this.size)
+            return Math.ceil(1.0 * $scope.productDetails.length / this.size)
         },
         first() {
             this.page = 0;

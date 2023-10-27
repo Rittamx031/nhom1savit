@@ -20,9 +20,13 @@ app_discount.controller("discount-ctrl", function ($scope, $http, $timeout){
         });
     }
     $scope.initialize();
-    $scope.edit = function(cate) {
-        $scope.formUpdate = angular.copy(cate);
+
+    $scope.edit = function(discount) {
+        $scope.formUpdate = angular.copy(discount);
+        $scope.formUpdate.valid_from = new Date(discount.valid_from);
+        $scope.formUpdate.valid_until = new Date(discount.valid_until)
     }
+
     $scope.create = function() {
         let item = angular.copy($scope.formInput);
         $http.post(`/rest/discounts`, item).then(resp => {
@@ -45,15 +49,6 @@ app_discount.controller("discount-ctrl", function ($scope, $http, $timeout){
         }).catch(error => {
             console.log("Error", error);
         })
-    }
-
-    $scope.delete = function(item) {
-        $http.delete(`/rest/discounts/${item.id}`).then(resp => {
-            $scope.showSuccessMessage("Delete discount successfully!")
-            $scope.initialize();
-        }).catch(error => {
-            console.log("Error", error);
-        });
     }
 
     $scope.resetFormUpdate = function () {
