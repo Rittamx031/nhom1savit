@@ -29,8 +29,4 @@ public class BlogRestController {
         return service.update(blog, id);
     }
 
-    @DeleteMapping("{id}")
-    public Blog delete(@PathVariable("id") UUID id) {
-        return service.delete(id);
-    }
 }

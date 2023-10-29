@@ -64,25 +64,34 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Category</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formInput.category.id" name="category" class="form-select">
+                                            <select ng-model="formInput.category.id" name="category" class="form-select" required>
                                                 <option ng-repeat="c in cates" ng-value="c.id">{{c.name}}</option>
                                             </select>
+                                            <span ng-if="formAddProduct.$submitted && formAddProduct.category.$invalid" class="error-message text-danger form-text">
+                                                Please choose category
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Producer</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formInput.producer.id" name="producer" class="form-select" aria-label="Default select example">
+                                            <select ng-model="formInput.producer.id" name="producer" class="form-select" aria-label="Default select example" required>
                                                 <option ng-repeat="p in producers" ng-value="p.id">{{p.name}}</option>
                                             </select>
+                                            <span ng-if="formAddProduct.$submitted && formAddProduct.producer.$invalid" class="error-message text-danger form-text">
+                                                Please choose producer
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Material</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formInput.material.id" name="material" class="form-select" aria-label="Default select example">
+                                            <select ng-model="formInput.material.id" name="material" class="form-select" aria-label="Default select example" required>
                                                 <option ng-repeat="m in materials" ng-value="m.id">{{m.name}}</option>
                                             </select>
+                                            <span ng-if="formAddProduct.$submitted && formAddProduct.material.$invalid" class="error-message text-danger form-text">
+                                                Please choose material
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -155,7 +164,7 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Category</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formUpdate.category.id" class="form-select" aria-label="Default select example">
+                                            <select ng-model="formUpdate.category.id" class="form-select" aria-label="Default select example" required>
                                                 <option ng-repeat="c in cates" ng-value="c.id">{{c.name}}</option>
                                             </select>
                                         </div>
@@ -163,7 +172,7 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Producer</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formUpdate.producer.id" class="form-select" aria-label="Default select example">
+                                            <select ng-model="formUpdate.producer.id" class="form-select" aria-label="Default select example" required>
                                                 <option ng-repeat="p in producers" ng-value="p.id">{{p.name}}</option>
                                             </select>
                                         </div>
@@ -206,7 +215,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Picture</th>
+                        <th scope="col">Image</th>
                         <th scope="col">Code</th>
                         <th scope="col">Name</th>
                         <th scope="col">Outstanding</th>

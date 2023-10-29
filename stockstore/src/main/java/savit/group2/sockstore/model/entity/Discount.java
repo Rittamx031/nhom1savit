@@ -32,7 +32,7 @@ public class Discount {
 
     private Double cash_discount;
 
-    private Integer percent_discount;
+    private Float percent_discount;
 
     private String discount_type;
 

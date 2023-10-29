@@ -92,6 +92,7 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
                 })
             }).catch(error => {
                 console.log("Error", error);
+                $scope.unload();
             })
         }
     }

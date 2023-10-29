@@ -243,42 +243,46 @@
             </div>
         </div>
         <!-- End Modal Update -->
-<!--        <div class="modal fade" id="modal-product" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">-->
-<!--            <div class="modal-dialog">-->
-<!--                <div class="modal-content">-->
-<!--                    <div class="modal-header">-->
-<!--                        <h5 class="modal-title" id="exampleModalLabel">Product</h5>-->
-<!--                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
-<!--                    </div>-->
-<!--                    <div class="modal-body">-->
-<!--                        <table class="table">-->
-<!--                            <thead>-->
-<!--                                <tr>-->
-<!--                                    <th scope="col">#</th>-->
-<!--                                    <th scope="col">Name</th>-->
-<!--                                    <th scope="col">Position</th>-->
-<!--                                    <th scope="col">Age</th>-->
-<!--                                    <th scope="col">Start Date</th>-->
-<!--                                </tr>-->
-<!--                            </thead>-->
-<!--                            <tbody>-->
-<!--                                <tr>-->
-<!--                                    <th scope="row">1</th>-->
-<!--                                    <td>Brandon Jacob</td>-->
-<!--                                    <td>Designer</td>-->
-<!--                                    <td>28</td>-->
-<!--                                    <td>2016-05-25</td>-->
-<!--                                </tr>-->
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                    </div>-->
-<!--                    <div class="modal-footer">-->
-<!--                        <button type="button" class="btn btn-primary">Save changes</button>-->
-<!--                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="modal fade" id="modal-product" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Product Applying</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col"></th>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Color</th>
+                                <th scope="col">Image</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="p in productDetails">
+                                <td><input ng-model="p.selected" class="form-check-input" type="checkbox" value="{{p.id}}"></td>
+                                <td>{{p.sock.name}}</td>
+                                <td>{{p.unit_base_price}}</td>
+                                <td>{{p.quantity}}</td>
+                                <td>{{p.size.name}}</td>
+                                <td>{{p.color.name}}</td>
+                                <td><img ng-src="{{p.path}}" width="50px"/></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button ng-click="save()" type="button" class="btn btn-primary">Save</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-lg-12">
                 <table class="table">
@@ -305,7 +309,7 @@
                         <td>{{dis.status ? 'Applying' : 'Stop Applying'}}</td>
                         <td>
                             <button ng-click="edit(dis)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
-
+                            <button ng-click="discountOne(dis)" type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modal-product"><i class="ri-product-hunt-fill"></i></button>
                         </td>
                     </tr>
                     </tbody>

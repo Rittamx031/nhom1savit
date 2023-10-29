@@ -21,7 +21,7 @@ public class Sock_Detail {
 
     private Integer quantity;
 
-    private BigDecimal unit_base_price;
+    private Double unit_base_price;
 
     private String description;
 

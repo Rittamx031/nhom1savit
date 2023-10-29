@@ -198,9 +198,6 @@
                                             <select ng-model="formUpdate.color.id" name="color" class="form-select" aria-label="Default select example" required>
                                                 <option ng-repeat="c in colors" ng-value="c.id">{{c.name}}</option>
                                             </select>
-                                            <span ng-if="formUpdateProduct.$submitted && formUpdateProduct.color.$invalid" class="error-message text-danger form-text">
-                                                Please choose color
-                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -236,7 +233,7 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Picture</th>
+                        <th scope="col">Image</th>
                         <th scope="col">Product Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Quantity</th>

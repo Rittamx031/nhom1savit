@@ -30,15 +30,9 @@ public class BlogService {
             o.setTitle(blog.getTitle());
             o.setPath(blog.getPath());
             o.setContent(blog.getContent());
+            o.setStatus(blog.getStatus());
             return repository.save(blog);
         }).orElse(null);
     }
 
-    public Blog delete(UUID id) {
-        Optional<Blog> optional = repository.findById(id);
-        return optional.map(o -> {
-            o.setStatus(false);
-            return repository.save(o);
-        }).orElse(null);
-    }
 }

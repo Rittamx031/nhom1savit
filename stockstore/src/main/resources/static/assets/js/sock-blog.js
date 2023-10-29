@@ -7,6 +7,8 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
     $scope.formInput = {};
     $scope.showAlert = false;
     $scope.showError = false;
+    $scope.load = function () {$scope.loading=true}
+    $scope.unload = function () {$scope.loading=false}
 
     imgShow("image", "image-preview");
     imgShow("image-update", "image-preview-update");
@@ -62,6 +64,7 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
         } else if (fileInput.files.length > 0) {
             let data = new FormData();
             data.append('file', fileInput.files[0]);
+            $scope.load();
             $http.post('/rest/upload/img', data, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
@@ -69,19 +72,20 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
                 $scope.formInput.path = resp.data.name;
                 let item = angular.copy($scope.formInput);
                 $http.post(`/rest/blogs`, item).then(resp => {
-                    let listProduct = angular.copy($scope.listSockBlog);
-                    $http.post(`/rest/blog-sock/${item.id}`, item, listProduct);
                     $scope.showSuccessMessage("Create blog successfully!");
                     $scope.resetFormInput();
                     $scope.initialize();
                     $('#modalAdd').modal('hide');
                     $scope.showError = false;
+                    $scope.unload();
                 }).catch(error => {
                     console.log("Error", error);
+                    $scope.unload();
                     return;
                 })
             }).catch(error => {
                 console.log("Error", error);
+                $scope.unload();
             })
         }
     }
@@ -107,25 +111,19 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
         } else {
             let data = new FormData();
             data.append('file', fileInput.files[0]);
+            $scope.load();
             $http.post('/rest/upload/img', data, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             }).then(resp => {
                 $scope.formUpdate.path = resp.data.name;
                 $scope.apiUpdate();
+                $scope.unload();
             }).catch(error => {
                 console.log("Error", error);
+                $scope.unload();
             })
         }
-    }
-
-    $scope.delete = function(item) {
-        $http.delete(`/rest/products/${item.id}`).then(resp => {
-            $scope.showSuccessMessage("Delete product successfully!")
-            $scope.initialize();
-        }).catch(error => {
-            console.log("Error", error);
-        });
     }
 
     $scope.resetFormUpdate = function () {
