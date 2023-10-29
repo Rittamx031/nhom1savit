@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description"
+    content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+  <!-- title -->
+  <title>That Pee</title>
+
+  <!-- favicon -->
+  <link rel="shortcut icon" type="image/png" th:href="@{/assets/img/favicon.png}">
+  <!-- google font -->
+  <link th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,400,700}" rel="stylesheet">
+  <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap}" rel="stylesheet">
+  <!-- fontawesome -->
+  <link rel="stylesheet" th:href="@{/assets/css/all.min.css}">
+  <!-- bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+  <!-- owl carousel -->
+  <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.css}">
+  <!-- magnific popup -->
+  <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
+  <!-- animate css -->
+  <link rel="stylesheet" th:href="@{/assets/css/animate.css}">
+  <!-- mean menu css -->
+  <link rel="stylesheet" th:href="@{/assets/css/meanmenu.min.css}">
+  <!-- main style -->
+  <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+  <!-- responsive -->
+  <link rel="stylesheet" th:href="@{/assets/css/responsive.css}">
+</head>
+
+<body>
+
+  <main>
+    <div class="container">
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-8 d-flex flex-column align-items-center justify-content-center">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                    <p class="text-center small">Enter your personal details to create account</p>
+                  </div>
+                  <form enctype="multipart/form-data" th:action="@{/user/signup}" th:object="${signUpRequest}"
+                    method="post" class="row g-3 needs-validation">
+                    <div class="col-12">
+                      <label for="yourName" class="form-label">Your Name</label>
+                      <input type="text" name="name" class="form-control" id="yourName" th:field="*{name}" required>
+                      <div class="invalid-feedback">Please, enter your name!</div>
+                      <div th:if="${#fields.hasErrors('name')}" class="errors text-danger form-text"
+                        th:errors="*{name}">
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="yourEmail" class="form-label">Your Email</label>
+                      <input type="email" name="email" class="form-control" id="yourEmail" th:field="*{email}" required>
+                      <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+                      <div th:if="${#fields.hasErrors('email')}" class="errors text-danger form-text"
+                        th:errors="*{email}">
+                      </div>
+                    </div>
+
+                    <div class="col-12">
+                      <label for="phoneNumber" class="form-label">Your Phone</label>
+                      <input type="text" name="phoneNumber" class="form-control" id="phoneNumber" th:field="*{phone}"
+                        required>
+                      <div class="invalid-feedback">Please, enter your Phone!</div>
+                      <div th:if="${#fields.hasErrors('phone')}" class="errors text-danger form-text"
+                        th:errors="*{phone}">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="birthDay" class="form-label">Your Birthday</label>
+                      <input type="date" name="birthDay" class="form-control" id="birthDay" th:field="*{birthDay}"
+                        required>
+                      <div class="invalid-feedback">Please enter a valid Your Birthday!</div>
+                      <div th:if="${#fields.hasErrors('birthDay')}" class="errors text-danger form-text"
+                        th:errors="*{birthDay}">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="yourPassword" class="form-label">Password</label>
+                      <input type="password" name="password" class="form-control" id="yourPassword"
+                        th:field="*{password}" required>
+                      <div class="invalid-feedback">Please enter your password!</div>
+                      <div th:if="${#fields.hasErrors('password')}" class="errors text-danger form-text"
+                        th:errors="*{password}">
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <label for="passwordrepeat" class="form-label">Password Repeat</label>
+                      <input type="password" name="passwordrepeat" class="form-control" th:field="*{passwordRepeat}"
+                        id="passwordrepeat" required>
+                      <div class="invalid-feedback">Please enter your password Repeat!</div>
+                      <div th:if="${#fields.hasErrors('passwordRepeat')}" class="errors text-danger form-text"
+                        th:errors="*{passwordRepeat}">
+                      </div>
+                    </div>
+                    <div th:if="${message}" class="">
+                      <p class="text-danger" th:text="${message}"></p>
+                    </div>
+                    <div class="col-12">
+                      <div class="form-check">
+                        <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
+                        <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and
+                            conditions</a></label>
+                        <div class="invalid-feedback">You must agree before submitting.</div>
+                      </div>
+                    </div>
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                    </div>
+                    <div class="col-12">
+                      <p class="small mb-0">Already have an account? <a th:href="@{/login}">Log in</a></p>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main><!-- End #main -->
+
+  <!-- jquery -->
+  <script th:src="@{/assets/js/jquery-1.11.3.min.js}"></script>
+  <!-- bootstrap -->
+  <!-- count down -->
+  <script th:src="@{/assets/js/jquery.countdown.js}"></script>
+  <!-- isotope -->
+  <script th:src="@{/assets/js/jquery.isotope-3.0.6.min.js}"></script>
+  <!-- waypoints -->
+  <script th:src="@{/assets/js/waypoints.js}"></script>
+  <!-- owl carousel -->
+  <script th:src="@{/assets/js/owl.carousel.min.js}"></script>
+  <!-- magnific popup -->
+  <script th:src="@{/assets/js/jquery.magnific-popup.min.js}"></script>
+  <!-- mean menu -->
+  <script th:src="@{/assets/js/jquery.meanmenu.min.js}"></script>
+  <!-- sticker js -->
+  <script th:src="@{/assets/js/sticker.js}"></script>
+  <!-- main js -->
+  <script th:src="@{/assets/js/main2.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

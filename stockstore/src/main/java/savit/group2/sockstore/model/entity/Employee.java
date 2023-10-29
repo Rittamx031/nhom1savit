@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -24,7 +25,7 @@ public class Employee {
     private String email;
     private String password;
 
-    private String birthday;
+    private LocalDate birthday;
 
     private String phone;
 

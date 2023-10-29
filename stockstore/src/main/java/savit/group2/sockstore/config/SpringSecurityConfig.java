@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,6 +29,9 @@ import savit.group2.sockstore.security.service.EmployeInfoService;
 @EnableMethodSecurity
 @EnableWebSecurity
 public class SpringSecurityConfig {
+  @Value("${max-age-token-cookie}")
+  private int maxAge;
+
   @Bean
   AuthenticationManager authenticationManager() throws Exception {
     List<AuthenticationProvider> listProviders = new ArrayList<>();
@@ -40,14 +44,14 @@ public class SpringSecurityConfig {
   @Autowired
   EmployeeInfoRepository nvifrepository;
 
-  EmployeInfoService nhanVienServer() {
+  EmployeInfoService nhanVienService() {
     return new EmployeInfoService(nvifrepository);
   }
 
   @Bean
   AuthenticationProvider authenticationNVProvider() {
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-    authenticationProvider.setUserDetailsService(nhanVienServer());
+    authenticationProvider.setUserDetailsService(nhanVienService());
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     return authenticationProvider;
   }
@@ -55,7 +59,7 @@ public class SpringSecurityConfig {
   @Autowired
   AccountInforRepository khifrepository;
 
-  AccountInforService KhachHangServer() {
+  AccountInforService khachHangService() {
     return new AccountInforService(khifrepository);
   }
 
@@ -67,7 +71,7 @@ public class SpringSecurityConfig {
   @Bean
   AuthenticationProvider authenticationKHProvider() {
     DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-    authenticationProvider.setUserDetailsService(KhachHangServer());
+    authenticationProvider.setUserDetailsService(khachHangService());
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     return authenticationProvider;
   }
@@ -81,10 +85,17 @@ public class SpringSecurityConfig {
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager)
       throws Exception {
-    http.
-
-        authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("khach-hang/singin").permitAll();
+    http.authorizeHttpRequests((authorize) -> {
+      authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
+    })
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN");
+        })
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("user/singin", "employee/signin").permitAll();
+        })
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("employee/singin").permitAll();
         })
         .authorizeHttpRequests((authorize) -> {
           authorize.anyRequest().permitAll();
@@ -93,7 +104,7 @@ public class SpringSecurityConfig {
             .loginPage("/login")
             .loginProcessingUrl("/singin")
             .failureUrl("/login?error")
-            .defaultSuccessUrl("/homepage")
+            .successHandler(new CustomAuthenticationSuccessHandler())
             .usernameParameter("username")
             .passwordParameter("password")
             .permitAll())
@@ -103,9 +114,12 @@ public class SpringSecurityConfig {
                 .logoutSuccessUrl("/login")
                 .permitAll())
         .csrf(AbstractHttpConfigurer::disable)
+        .rememberMe((remember) -> remember.key("fefe").tokenValiditySeconds(maxAge)
+            .userDetailsService(khachHangService()))
+        .rememberMe((remember) -> remember.key("faewfaewf").tokenValiditySeconds(maxAge)
+            .userDetailsService(nhanVienService()))
         .httpBasic(Customizer.withDefaults())
         .authenticationManager(authManager);
     return http.build();
   }
-
 }

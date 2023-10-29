@@ -92,8 +92,34 @@
                       <button class="btn btn-primary w-100" type="submit">Login</button>
                     </div>
                     <div class="col-12">
-                      <p class="small mb-0">Don't have account? <a th:href="@{/pages-register.html}">Create an
-                          account</a></p>
+                      <p class="small mb-0">Don't have account? <button type="button" class="btn-0 btn"
+                          data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                          Sign Up
+                        </button></p>
+                      <!-- Button trigger modal -->
+
+                      <!-- Modal -->
+                      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                        tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="staticBackdropLabel">Sign up AS</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="d-flex justify-content-around">
+                                <a th:href="@{user/signup}" class="btn btn-outline-secondary">User</a>
+                                <a th:href="@{employee/signup}" class="btn btn-outline-warning">Employee</a>
+                              </div>
+                            </div>
+                            <div class="modal-footer text-center">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </form>
 
