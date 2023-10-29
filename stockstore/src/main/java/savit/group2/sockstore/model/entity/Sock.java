@@ -23,12 +23,22 @@ public class Sock {
 
     private String name;
 
-    private String description;
+    @ManyToOne
+    @JoinColumn(name = "id_category")
+    private Category category;
 
-    private Date created_at;
+    @ManyToOne
+    @JoinColumn(name = "id_producer")
+    private Producer producer;
 
+    @ManyToOne
+    @JoinColumn(name = "id_meterial")
+    private Material material;
 
-    private Date updated_at;
+    private String path;
+
+    private Boolean outstanding;
 
     private Boolean status;
+
 }

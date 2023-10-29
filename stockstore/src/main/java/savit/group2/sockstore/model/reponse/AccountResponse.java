@@ -21,5 +21,5 @@ public class AccountResponse {
   String name;
   String phoneNumber;
   String email;
-  int status;
+  boolean status;
 }

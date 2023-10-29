@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml" layout:decorate="~{admin/layout}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main layout:fragment="content" ng-app="blog" ng-controller="blog-ctrl">
+    <div class="overlay" ng-show="loading">
+        <div class="spinner-border" role="status" style="position: absolute;left: 50%;top: 50%;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+    <div class="pagetitle">
+        <h1>Blog</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Blog</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <section class="section">
+        <button type="button" class="btn btn-outline-success mb-2" data-bs-toggle="modal" data-bs-target="#modalAdd">
+            Add Blog</button>
+        <div class="alert border-success alert-dismissible fade show" role="alert" ng-show="showAlert">
+            {{alertMessage}}
+            <button type="button" class="btn-close" ng-click="closeAlert()" aria-label="Close"></button>
+        </div>
+        <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create Blog</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="image">
+                                    <img src="/assets/img/no-img.svg" id="image-preview" style="width: 250px" />
+                                </label>
+                            </div>
+                            <div class="col-sm-8">
+                                <form name="formAddBlog" ng-submit="formAddBlog.$valid && create()" novalidate>
+                                    <div class="row mb-3">
+                                        <label for="inputTitle" class="col-sm-3 col-form-label">Title</label>
+                                        <div class="col-sm-9">
+                                            <input ng-model="formInput.title" name="title" id="inputTitle" type="text" class="form-control" required>
+                                            <span ng-show="formAddBlog.$submitted">
+                                            <div ng-show="formAddBlog.title.$invalid" class="error-message text-danger form-text">
+                                            Title cannot be blank</div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="inputContent" class="col-sm-3 col-form-label">Content</label>
+                                        <div class="col-sm-9">
+                                            <textarea ng-model="formInput.content" name="content" id="inputContent" class="form-control" style="height: 100px" required></textarea>
+                                            <span ng-show="formAddBlog.$submitted">
+                                            <div ng-show="formAddBlog.content.$invalid" class="error-message text-danger form-text">
+                                            Content cannot be blank</div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="image" class="col-sm-3 col-form-label">File Upload</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="path" type="file" id="image"  />
+                                            <span ng-show="showError">
+                                                <div class="error-message text-danger form-text">
+                                                {{alertErrorImg}}</div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button ng-click="resetFormInput()" type="button" class="btn btn-warning">Reset</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--         Modal Update-->
+        <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Update Product</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label for="image">
+                                    <img id="image-preview-update" ng-src="{{formUpdate.path ? '/assets/img/' + formUpdate.path : '/assets/img/no-img.svg'}}" style="width: 250px" />
+                                </label>
+                            </div>
+                            <div class="col-sm-8">
+                                <form name="formUpdateBlog" ng-submit="formUpdateBlog.$valid && create()" novalidate>
+                                    <div class="row mb-3">
+                                        <label for="updateTitle" class="col-sm-3 col-form-label">Title</label>
+                                        <div class="col-sm-9">
+                                            <input ng-model="formUpdate.title" name="title" id="updateTitle" type="text" class="form-control" required>
+                                            <span ng-show="formUpdateBlog.$submitted">
+                                            <div ng-show="formUpdateBlog.title.$invalid" class="error-message text-danger form-text">
+                                            Title cannot be blank</div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="updateContent" class="col-sm-3 col-form-label">Content</label>
+                                        <div class="col-sm-9">
+                                            <textarea ng-model="formInput.content" name="content" id="updateContent" class="form-control" style="height: 100px" required></textarea>
+                                            <span ng-show="formUpdateBlog.$submitted">
+                                            <div ng-show="formUpdateBlog.content.$invalid" class="error-message text-danger form-text">
+                                            Content cannot be blank</div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="image" class="col-sm-3 col-form-label">File Upload</label>
+                                        <div class="col-sm-9">
+                                            <input class="form-control" name="path" type="file" id="image-update"  />
+                                            <span ng-show="showError">
+                                                <div class="error-message text-danger form-text">
+                                                {{alertErrorImg}}</div>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button ng-click="resetFormInput()" type="button" class="btn btn-warning">Reset</button>
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!--         End Modal Update-->
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Picture</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Date Create</th>
+                        <th scope="col">Date Update</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="blog in paper.items">
+                        <td><img ng-src="{{blog.path}}" width="50px"/></td>
+                        <td>{{blog.title}}</td>
+                        <td>{{blog.date_create}}</td>
+                        <td>{{blog.date_update}}</td>
+                        <td>
+                            <button ng-click="edit(blog)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item"><button ng-click="paper.first()" class="page-link">First</button></li>
+                        <li class="page-item"><button ng-click="paper.prev()" class="page-link">Previous</button></li>
+                        <li class="page-item"><a class="page-link">{{paper.page + 1}} of {{paper.count}}</a></li>
+                        <li class="page-item"><button ng-click="paper.next()" class="page-link">Next</button></li>
+                        <li class="page-item"><button ng-click="paper.last()" class="page-link">Last</button></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </section>
+</main>
+</body>
+</html>
