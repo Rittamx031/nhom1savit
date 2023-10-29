@@ -3,184 +3,192 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+    <!-- title -->
+    <title>That Pee</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" th:href="@{/assets/img/favicon.png}">
+    <!-- google font -->
+    <link th:href="@{https://fonts.googleapis.com/css?family=Open+Sans:300,400,700}" rel="stylesheet">
+    <link th:href="@{https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap}" rel="stylesheet">
+    <!-- fontawesome -->
+    <link rel="stylesheet" th:href="@{/assets/css/all.min.css}">
+    <!-- bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <!-- owl carousel -->
+    <link rel="stylesheet" th:href="@{/assets/css/owl.carousel.css}">
+    <!-- magnific popup -->
+    <link rel="stylesheet" th:href="@{/assets/css/magnific-popup.css}">
+    <!-- animate css -->
+    <link rel="stylesheet" th:href="@{/assets/css/animate.css}">
+    <!-- mean menu css -->
+    <link rel="stylesheet" th:href="@{/assets/css/meanmenu.min.css}">
+    <!-- main style -->
+    <link rel="stylesheet" th:href="@{/assets/css/main.css}">
+    <!-- responsive -->
+    <link rel="stylesheet" th:href="@{/assets/css/responsive.css}">
+
 </head>
 
 <body>
-    <div class="container-scroller">
 
-        <!-- partial:partials/_navbar.html -->
-        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-                <a class="navbar-brand brand-logo" href="index.html">
-                    <img th:src="@{/images/logo.svg}" alt="logo" />
-                </a>
-                <a class="navbar-brand brand-logo-mini" href="index.html">
-                    <img th:src="@{/images/logo-mini.svg}" alt="logo" />
-                </a>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center">
-                <button class="navbar-toggler navbar-toggler d-none d-lg-block navbar-dark align-self-center mr-3"
-                    type="button" data-toggle="minimize">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <ul class="navbar-nav navbar-nav-right">
-                    <li class="nav-item dropdown d-none d-xl-inline-block">
-                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown"
-                            aria-expanded="false">
-                            <span class="profile-text">Hello, Richard V.Welsh !</span>
-                            <img class="img-xs rounded-circle" th:src="@{/images/faces/face1.jpg}" alt="Profile image">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                            <a class="dropdown-item mt-2">
-                                Manage Accounts
-                            </a>
-                            <a class="dropdown-item">
-                                Change Password
-                            </a>
-                            <a class="dropdown-item">
-                                Sign Out
-                            </a>
-                        </div>
-                    </li>
-                </ul>
-                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-                    data-toggle="offcanvas">
-                    <span class="icon-menu"></span>
-                </button>
-            </div>
-        </nav>
-
-        <!-- partial -->
-        <div class="container-fluid page-body-wrapper">
-            <!-- partial:partials/_sidebar.html -->
-            <nav class="sidebar sidebar-offcanvas" id="sidebar">
-                <ul class="nav">
-                    <li class="nav-item nav-profile">
-                        <div class="nav-link">
-                            <div class="user-wrapper">
-                                <div class="profile-image">
-                                    <img th:src="@{/images/faces/face1.jpg}" alt="profile image">
-                                </div>
-                                <div class="text-wrapper">
-                                    <p class="profile-name">Richard V.Welsh</p>
-                                    <div>
-                                        <small class="designation text-muted">Manager</small>
-                                        <span class="status-indicator online"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button class="btn btn-success btn-block">New Project
-                                <i class="mdi mdi-plus"></i>
-                            </button>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{dashboard}">
-                            <i class="menu-icon mdi mdi-television"></i>
-                            <span class="menu-title">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
-                            aria-controls="ui-basic">
-                            <i class="menu-icon mdi mdi-content-copy"></i>
-                            <span class="menu-title">Basic UI Elements</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="ui-basic">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Buttons</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Typography</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{form-elements}">
-                            <i class="menu-icon mdi mdi-backup-restore"></i>
-                            <span class="menu-title">Form elements</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="menu-icon mdi mdi-chart-line"></i>
-                            <span class="menu-title">Charts</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{table-elements}">
-                            <i class="menu-icon mdi mdi-table"></i>
-                            <span class="menu-title">Tables</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="menu-icon mdi mdi-sticker"></i>
-                            <span class="menu-title">Icons</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-toggle="collapse" href="#auth" aria-expanded="false"
-                            aria-controls="auth">
-                            <i class="menu-icon mdi mdi-restart"></i>
-                            <span class="menu-title">User Pages</span>
-                            <i class="menu-arrow"></i>
-                        </a>
-                        <div class="collapse" id="auth">
-                            <ul class="nav flex-column sub-menu">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> Blank Page </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> Login </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> Register </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> 404 </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#"> 500 </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </nav>
-
-            <!-- partial -->
-            <div class="main-panel">
-                <div class="content-wrapper" layout:fragment="content">
-                    Content is Here!
-                </div>
-                <!-- content-wrapper ends -->
-
-                <!-- partial:partials/_footer.html -->
-                <footer class="footer">
-                    <div class="container-fluid clearfix">
-                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2018
-                            <a href="http://www.bootstrapdash.com/" target="_blank">Bootstrapdash</a>. All rights
-                            reserved.</span>
-                        <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made
-                            with
-                            <i class="mdi mdi-heart text-danger"></i>
-                        </span>
-                    </div>
-                </footer>
-                <!-- partial -->
-            </div>
-            <!-- main-panel ends -->
-
+    <!--PreLoader-->
+    <div class="loader">
+        <div class="loader-inner">
+            <div class="circle"></div>
         </div>
-
-        <!-- page-body-wrapper ends -->
     </div>
+    <!--PreLoader Ends-->
+
+    <!-- header -->
+    <div class="top-header-area" id="sticker">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 text-center">
+                    <div class="main-menu-wrap">
+                        <!-- logo -->
+                        <div class="site-logo">
+                            <a th:href="@{index.html}">
+                                <img th:src="@{/assets/img/logo.png}" alt="">
+                            </a>
+                        </div>
+                        <!-- logo -->
+
+                        <!-- menu start -->
+                        <nav class="main-menu">
+                            <ul>
+                                <li class="current-list-item"><a th:href="@{#}">Home</a>
+                                    <!-- <ul class="sub-menu">
+										<li><a th:href="@{index.html">Static Home</a></li>
+									</ul> -->
+                                </li>
+                                <li><a th:href="@{about.html}">Sock</a></li>
+                                <li><a th:href="@{news.html}">News</a>
+                                </li>
+                                <li>
+                                    <div class="header-icons">
+                                        <a class="mobile-hide search-bar-icon" th:href="@{#}"><i
+                                                class="fas fa-search"></i></a>
+                                        <a class="shopping-cart" th:href="@{cart.html}"><i
+                                                class="fas fa-shopping-cart"></i></a>
+                                        <a class="shopping-cart" th:href="@{cart.html}"><i class="fas fa-user"></i></a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </nav>
+                        <a class="mobile-show search-bar-icon" th:href="@{#}"><i class="fas fa-search"></i></a>
+                        <div class="mobile-menu"></div>
+                        <!-- menu end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end header -->
+
+    <!-- search area -->
+    <div class="search-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <span class="close-btn"><i class="fas fa-window-close"></i></span>
+                    <div class="search-bar">
+                        <div class="search-bar-tablecell">
+                            <h3>Search For:</h3>
+                            <form action="">
+                                <input type="text" placeholder="Keywords">
+                                <button type="submit">Search <i class="fas fa-search"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end search area -->
+
+    <!-- content area -->
+    <div layout:fragment="content">
+    </div>
+    <!--end content area -->
+    <!-- footer -->
+    <div class="footer-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box about-widget">
+                        <h2 class="widget-title">About us</h2>
+                        <p>Ut enim ad minim veniam perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                            doloremque
+                            laudantium, totam rem aperiam, eaque ipsa quae.</p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box get-in-touch">
+                        <h2 class="widget-title">Get in Touch</h2>
+                        <ul>
+                            <li>34/8, East Hukupara, Gifirtok, Sadan.</li>
+                            <li>support@fruitkha.com</li>
+                            <li>+00 111 222 3333</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box pages">
+                        <h2 class="widget-title">Pages</h2>
+                        <ul>
+                            <li><a th:href="@{index.html}">Home</a></li>
+                            <li><a th:href="@{about.html}">About</a></li>
+                            <li><a th:href="@{services.html}">Shop</a></li>
+                            <li><a th:href="@{news.html}">News</a></li>
+                            <li><a th:href="@{contact.html}">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box subscribe">
+                        <h2 class="widget-title">Subscribe</h2>
+                        <p>Subscribe to our mailing list to get the latest updates.</p>
+                        <form action="index.html">
+                            <input type="email" placeholder="Email">
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end footer -->
+
+    <!-- jquery -->
+    <script th:src="@{/assets/js/jquery-1.11.3.min.js}"></script>
+    <!-- bootstrap -->
+    <!-- count down -->
+    <script th:src="@{/assets/js/jquery.countdown.js}"></script>
+    <!-- isotope -->
+    <script th:src="@{/assets/js/jquery.isotope-3.0.6.min.js}"></script>
+    <!-- waypoints -->
+    <script th:src="@{/assets/js/waypoints.js}"></script>
+    <!-- owl carousel -->
+    <script th:src="@{/assets/js/owl.carousel.min.js}"></script>
+    <!-- magnific popup -->
+    <script th:src="@{/assets/js/jquery.magnific-popup.min.js}"></script>
+    <!-- mean menu -->
+    <script th:src="@{/assets/js/jquery.meanmenu.min.js}"></script>
+    <!-- sticker js -->
+    <script th:src="@{/assets/js/sticker.js}"></script>
+    <!-- main js -->
+    <script th:src="@{/assets/js/main2.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -25,10 +25,18 @@ public class Sock {
 
     private String description;
 
-    private Date created_at;
+    @ManyToOne
+    @JoinColumn(name = "id_category")
+    private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "id_producer")
+    private Producer producer;
 
-    private Date updated_at;
+    private String path;
+
+    private Boolean outstanding;
 
     private Boolean status;
+
 }

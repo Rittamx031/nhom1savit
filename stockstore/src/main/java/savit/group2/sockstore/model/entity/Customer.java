@@ -4,7 +4,11 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
+
+import org.springframework.cglib.core.Local;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,8 +33,10 @@ public class Customer {
     private String phone;
 
     @Column(name = "birthday")
-    private Date birthday;
+    private LocalDate birthday;
 
     @Column(name = "status")
     private Boolean status;
+    @Column(name = "updated_at")
+    private LocalDateTime updateAt;
 }

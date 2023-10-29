@@ -1,5 +1,7 @@
 package savit.group2.sockstore.service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +21,11 @@ import savit.group2.sockstore.model.entity.Account;
 import savit.group2.sockstore.model.entity.Customer;
 import savit.group2.sockstore.model.reponse.AccountResponse;
 import savit.group2.sockstore.model.request.AccountRequest;
-import savit.group2.sockstore.model.request.SingupRequest;
+import savit.group2.sockstore.model.request.UserSingupRequest;
 import savit.group2.sockstore.repository.AccountRepository;
 import savit.group2.sockstore.repository.CustomerRepository;
 import savit.group2.sockstore.service.interfaceservice.PanigationInterface;
+import savit.group2.sockstore.util.CheckEmailHelper;
 
 @Service
 public class AccountService implements PanigationInterface<AccountResponse> {
@@ -32,21 +35,29 @@ public class AccountService implements PanigationInterface<AccountResponse> {
   CustomerRepository cusrepository;
   @Autowired
   PasswordEncoder encoder;
+  @Autowired
+  CheckEmailHelper emailHelper;
 
-  public Account singup(SingupRequest request) {
-    Optional<Customer> customer = cusrepository.findById(request.getId_customer());
-    if (!customer.isPresent() || customer == null) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+  public Account singup(UserSingupRequest request) {
+    if (emailHelper.isEmailNotExsits(request.getEmail())) {
+      Customer customer = new Customer();
+      customer.setBirthday(request.getBirthDay());
+      customer.setEmail(request.getEmail());
+      customer.setPhone(request.getPhone());
+      customer.setName(request.getName());
+      customer.setStatus(true);
+      customer.setUpdateAt(LocalDateTime.now());
+      customer = cusrepository.save(customer);
+      Account account = new Account();
+      account.setCustomer(customer);
+      account.setEmail(request.getEmail());
+      account.setPassword(encoder.encode(request.getPassword()));
+      account.setStatus(true);
+      account.setUpdateAt(LocalDateTime.now());
+      return repository.save(account);
     }
-    System.out.println(request.getId_customer());
-    System.out.println(request.getEmail());
-    System.out.println(request.getPassword());
-    Account account = new Account();
-    account.setCustomer(customer.get());
-    account.setEmail(request.getEmail());
-    account.setPassword(encoder.encode(request.getPassword()));
-    account.setStatus(true);
-    return repository.save(account);
+    // throw exeption email Email already exists
+    return null;
   }
 
   // admin

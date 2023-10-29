@@ -3,6 +3,7 @@ package savit.group2.sockstore.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -22,7 +23,7 @@ public class Account {
     private String email;
 
     @Column(name = "password")
-   private String password;
+    private String password;
 
     @Column(name = "status")
     private Boolean status;
@@ -30,4 +31,6 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "id_customer")
     private Customer customer;
+    @Column(name = "updated_at")
+    private LocalDateTime updateAt;
 }
