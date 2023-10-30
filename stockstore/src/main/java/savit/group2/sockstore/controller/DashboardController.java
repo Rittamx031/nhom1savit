@@ -36,6 +36,11 @@ public class DashboardController {
         return "admin/pages-product";
     }
 
+    @GetMapping(value = "admin/product-detail")
+    public String viewProductDetail() {
+        return "admin/pages-product-detail";
+    }
+
     @GetMapping(value = "admin/product/color")
     public String viewColor() {
         return "admin/pages-color";
@@ -56,7 +61,7 @@ public class DashboardController {
         return "admin/pages-size";
     }
 
-    @GetMapping(value = "admin/voucher")
+    @GetMapping(value = "admin/discount")
     public String viewDiscount() {
         return "admin/pages-discount";
     }

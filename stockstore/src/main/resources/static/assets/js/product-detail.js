@@ -1,8 +1,9 @@
-let app_blog = angular.module("blog", []);
-app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
-    $scope.blogs = [];
+let app_productDTL = angular.module("product-dtl", []);
+app_productDTL.controller("product-dtl-ctrl", function ($scope, $http, $timeout){
+    $scope.productDetails = [];
     $scope.products = [];
-    $scope.listSockBlog = [];
+    $scope.sizes = [];
+    $scope.colors = [];
     $scope.formUpdate = {};
     $scope.formInput = {};
     $scope.showAlert = false;
@@ -44,12 +45,18 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
         $scope.showAlert = false;
     }
     $scope.initialize = function() {
-        $http.get("/rest/blogs").then(resp => {
-            $scope.blogs = resp.data;
-        });
         $http.get("/rest/products").then(resp => {
             $scope.products = resp.data;
         });
+        $http.get("/rest/sizes").then(resp => {
+            $scope.sizes = resp.data;
+        })
+        $http.get("/rest/colors").then(resp => {
+            $scope.colors = resp.data;
+        })
+        $http.get("/rest/product-detail").then(resp => {
+            $scope.productDetails = resp.data;
+        })
     }
     $scope.initialize();
 
@@ -71,10 +78,10 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
             }).then(resp => {
                 $scope.formInput.path = resp.data.name;
                 let item = angular.copy($scope.formInput);
-                $http.post(`/rest/blogs`, item).then(resp => {
-                    $scope.showSuccessMessage("Create blog successfully!");
-                    $scope.resetFormInput();
+                $http.post(`/rest/product-detail`, item).then(resp => {
+                    $scope.showSuccessMessage("Create product detail successfully!");
                     $scope.initialize();
+                    $scope.resetFormInput();
                     $('#modalAdd').modal('hide');
                     $scope.showError = false;
                     $scope.unload();
@@ -85,19 +92,19 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
                 })
             }).catch(error => {
                 console.log("Error", error);
-                $scope.unload();
             })
         }
     }
 
     $scope.apiUpdate = function () {
         let item = angular.copy($scope.formUpdate);
-        $http.put(`/rest/products/${item.id}`, item).then(resp => {
-            $scope.showSuccessMessage("Update product successfully!")
+        $http.put(`/rest/product-detail/${item.id}`, item).then(resp => {
+            $scope.showSuccessMessage("Update product detail successfully!")
             $scope.resetFormUpdate();
             $scope.initialize();
             $('#modalUpdate').modal('hide');
             $scope.showError = false;
+            $scope.unload();
         }).catch(error => {
             console.log("Error", error);
             return;
@@ -124,6 +131,15 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
                 $scope.unload();
             })
         }
+    }
+
+    $scope.delete = function(item) {
+        $http.delete(`/rest/product-detail/${item.id}`).then(resp => {
+            $scope.showSuccessMessage("Delete product detail successfully!")
+            $scope.initialize();
+        }).catch(error => {
+            console.log("Error", error);
+        });
     }
 
     $scope.resetFormUpdate = function () {
@@ -153,10 +169,10 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
         size: 5,
         get items() {
             let start = this.page * this.size;
-            return $scope.blogs.slice(start, start + this.size);
+            return $scope.productDetails.slice(start, start + this.size);
         },
         get count() {
-            return Math.ceil(1.0 * $scope.blogs.length / this.size)
+            return Math.ceil(1.0 * $scope.productDetails.length / this.size)
         },
         first() {
             this.page = 0;

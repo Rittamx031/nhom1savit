@@ -40,4 +40,18 @@ public class RoleService {
             return repository.save(o);
         }).orElse(null);
     }
+
+    public Role getEmpRole() {
+        Optional<Role> optional = repository.getEmployeeRoles();
+        if (optional.isPresent()) {
+            return optional.get();
+        } else {
+            Role role = new Role();
+            role.setName("EMPLOYEE");
+            role.setRoles("ADMIN");
+            role.setStatus(true);
+            role.setPermissions("Nhân viên");
+            return repository.save(role);
+        }
+    }
 }

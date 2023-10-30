@@ -28,9 +28,9 @@ public class SockService {
         return optional.map(o -> {
             o.setCode(sock.getCode());
             o.setName(sock.getName());
-            o.setDescription(sock.getDescription());
             o.setCategory(sock.getCategory());
             o.setProducer(sock.getProducer());
+            o.setMaterial(sock.getMaterial());
             o.setPath(sock.getPath());
             return repository.save(sock);
         }).orElse(null);
