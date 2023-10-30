@@ -29,8 +29,4 @@ public class DiscountRestController {
         return service.update(discount, id);
     }
 
-    @DeleteMapping("{id}")
-    public Discount delete(@PathVariable("id") UUID id) {
-        return service.delete(id);
-    }
 }

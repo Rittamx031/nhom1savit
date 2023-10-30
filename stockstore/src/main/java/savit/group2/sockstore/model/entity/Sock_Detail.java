@@ -21,19 +21,13 @@ public class Sock_Detail {
 
     private Integer quantity;
 
-    private BigDecimal unit_base_price;
+    private Double unit_base_price;
+
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "id_sock")
     private Sock sock;
-
-    @ManyToOne
-    @JoinColumn(name = "id_pattern")
-    private Pattern pattern;
-
-    @ManyToOne
-    @JoinColumn(name = "id_meterial")
-    private Material material;
 
     @ManyToOne
     @JoinColumn(name = "id_size")

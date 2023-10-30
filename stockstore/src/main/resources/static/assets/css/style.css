@@ -9,6 +9,20 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+
+.overlay {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+  display: block;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
 :root {
   scroll-behavior: smooth;
 }

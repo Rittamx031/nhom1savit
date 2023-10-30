@@ -3,10 +3,13 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
     $scope.products = [];
     $scope.cates = [];
     $scope.producers = [];
+    $scope.materials = [];
     $scope.formUpdate = {};
     $scope.formInput = {};
     $scope.showAlert = false;
     $scope.showError = false;
+    $scope.load = function () {$scope.loading=true}
+    $scope.unload = function () {$scope.loading=false}
 
     imgShow("image", "image-preview");
     imgShow("image-update", "image-preview-update");
@@ -51,6 +54,9 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
         $http.get("/rest/producers").then(resp => {
             $scope.producers = resp.data;
         })
+        $http.get("/rest/materials").then(resp => {
+            $scope.materials = resp.data;
+        })
     }
     $scope.initialize();
 
@@ -65,6 +71,7 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
         } else if (fileInput.files.length > 0) {
             let data = new FormData();
             data.append('file', fileInput.files[0]);
+            $scope.load();
             $http.post('/rest/upload/img', data, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
@@ -72,17 +79,20 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
                 $scope.formInput.path = resp.data.name;
                 let item = angular.copy($scope.formInput);
                 $http.post(`/rest/products`, item).then(resp => {
-                    $scope.showSuccessMessage("Create product successfully!")
-                    $scope.resetFormInput();
+                    $scope.showSuccessMessage("Create product successfully!");
                     $scope.initialize();
+                    $scope.resetFormInput();
                     $('#modalAdd').modal('hide');
                     $scope.showError = false;
+                    $scope.unload();
                 }).catch(error => {
                     console.log("Error", error);
+                    $scope.unload();
                     return;
                 })
             }).catch(error => {
                 console.log("Error", error);
+                $scope.unload();
             })
         }
     }
@@ -95,6 +105,7 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
             $scope.initialize();
             $('#modalUpdate').modal('hide');
             $scope.showError = false;
+            $scope.unload();
         }).catch(error => {
             console.log("Error", error);
             return;
@@ -108,14 +119,17 @@ app_product.controller("product-ctrl", function ($scope, $http, $timeout){
         } else {
             let data = new FormData();
             data.append('file', fileInput.files[0]);
+            $scope.load();
             $http.post('/rest/upload/img', data, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             }).then(resp => {
                 $scope.formUpdate.path = resp.data.name;
                 $scope.apiUpdate();
+                $scope.unload();
             }).catch(error => {
                 console.log("Error", error);
+                $scope.unload();
             })
         }
     }

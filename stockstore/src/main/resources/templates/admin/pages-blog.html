@@ -6,6 +6,11 @@
 </head>
 <body>
 <main layout:fragment="content" ng-app="blog" ng-controller="blog-ctrl">
+    <div class="overlay" ng-show="loading">
+        <div class="spinner-border" role="status" style="position: absolute;left: 50%;top: 50%;">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
     <div class="pagetitle">
         <h1>Blog</h1>
         <nav>
@@ -51,7 +56,7 @@
                                     <div class="row mb-3">
                                         <label for="inputContent" class="col-sm-3 col-form-label">Content</label>
                                         <div class="col-sm-9">
-                                            <textarea ng-model="formInput.content" name="content" id="inputContent" class="form-control" style="height: 100px"></textarea>
+                                            <textarea ng-model="formInput.content" name="content" id="inputContent" class="form-control" style="height: 100px" required></textarea>
                                             <span ng-show="formAddBlog.$submitted">
                                             <div ng-show="formAddBlog.content.$invalid" class="error-message text-danger form-text">
                                             Content cannot be blank</div>
@@ -66,30 +71,6 @@
                                                 <div class="error-message text-danger form-text">
                                                 {{alertErrorImg}}</div>
                                             </span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div style="max-height: 300px; overflow-y: auto">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">Checkbox</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Category</th>
-                                                    <th scope="col">Producer</th>
-                                                    <th scope="col">Outstanding</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr ng-repeat="product in products">
-                                                    <td><input ng-model="listSockBlog.sock.id" value="{{product.id}}" class="form-check-input" type="checkbox"></td>
-                                                    <td>{{product.name}}</td>
-                                                    <td>{{product.category.name}}</td>
-                                                    <td>{{product.producer.name}}</td>
-                                                    <td>{{product.outstanding}}</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -134,7 +115,7 @@
                                     <div class="row mb-3">
                                         <label for="updateContent" class="col-sm-3 col-form-label">Content</label>
                                         <div class="col-sm-9">
-                                            <textarea ng-model="formInput.content" name="content" id="updateContent" class="form-control" style="height: 100px"></textarea>
+                                            <textarea ng-model="formInput.content" name="content" id="updateContent" class="form-control" style="height: 100px" required></textarea>
                                             <span ng-show="formUpdateBlog.$submitted">
                                             <div ng-show="formUpdateBlog.content.$invalid" class="error-message text-danger form-text">
                                             Content cannot be blank</div>
@@ -149,30 +130,6 @@
                                                 <div class="error-message text-danger form-text">
                                                 {{alertErrorImg}}</div>
                                             </span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div style="max-height: 300px; overflow-y: auto">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th scope="col">Checkbox</th>
-                                                    <th scope="col">Name</th>
-                                                    <th scope="col">Category</th>
-                                                    <th scope="col">Producer</th>
-                                                    <th scope="col">Outstanding</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr ng-repeat="product in products">
-                                                    <td><input ng-model="listSockBlog.sock.id" value="{{product.id}}" class="form-check-input" type="checkbox"></td>
-                                                    <td>{{product.name}}</td>
-                                                    <td>{{product.category.name}}</td>
-                                                    <td>{{product.producer.name}}</td>
-                                                    <td>{{product.outstanding}}</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -196,33 +153,19 @@
                         <th scope="col">Picture</th>
                         <th scope="col">Title</th>
                         <th scope="col">Date Create</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Producer</th>
+                        <th scope="col">Date Update</th>
                         <th scope="col">Status</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="blog in paper.items">
-                        <td>{{blog.path}}</td>
+                        <td><img ng-src="{{blog.path}}" width="50px"/></td>
                         <td>{{blog.title}}</td>
                         <td>{{blog.date_create}}</td>
+                        <td>{{blog.date_update}}</td>
                         <td>
                             <button ng-click="edit(blog)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="ri-delete-bin-fill"></i></button>
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa không?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button ng-click="delete(blog)" type="button" class="btn btn-primary" data-bs-dismiss="modal">Delete</button>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </td>
                     </tr>
                     </tbody>
