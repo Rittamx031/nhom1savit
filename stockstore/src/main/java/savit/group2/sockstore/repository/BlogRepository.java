@@ -8,5 +8,5 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface BlogRepository extends JpaRepository<Blog, UUID> {
-    List<Blog> getAllByStatus(boolean status);
+
 }

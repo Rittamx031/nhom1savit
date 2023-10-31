@@ -5,7 +5,6 @@ app_discount.controller("discount-ctrl", function ($scope, $http, $timeout){
     $scope.discountProductByStatus = [];
     $scope.formUpdate = {};
     $scope.formInput = {};
-    $scope.alldispro = [];
     $scope.showAlert = false;
     $scope.discountById = [];
     $scope.oneDiscount = null;
@@ -103,9 +102,6 @@ app_discount.controller("discount-ctrl", function ($scope, $http, $timeout){
         });
         $http.get("/rest/product-detail").then(resp => {
             $scope.productDetails = resp.data;
-        })
-        $http.get("/rest/discount-sock/getAll").then(resp => {
-            $scope.alldispro = resp.data;
         })
     }
 
