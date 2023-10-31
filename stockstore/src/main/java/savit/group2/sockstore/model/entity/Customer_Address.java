@@ -24,6 +24,9 @@ public class Customer_Address {
 
     private String country;
 
+    private String wardcode;
+
+    private int districtcode;
     @ManyToOne
     @JoinColumn(name = "id_customer")
     private Customer customer;
