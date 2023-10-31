@@ -8,5 +8,8 @@ import java.util.List;
 import java.util.UUID;
 @Repository
 public interface SockRepository extends JpaRepository<Sock, UUID> {
+
     List<Sock> getAllByStatus(boolean status);
+
+    List<Sock> getAllByOutstanding(boolean status);
 }

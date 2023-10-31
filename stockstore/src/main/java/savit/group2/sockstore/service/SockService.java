@@ -18,6 +18,10 @@ public class SockService {
         return repository.getAllByStatus(true);
     }
 
+    public List<Sock> getAllByOutstanding() {
+        return repository.getAllByOutstanding(true);
+    }
+
     public Sock create(Sock sock) {
         sock.setStatus(true);
         return repository.save(sock);
