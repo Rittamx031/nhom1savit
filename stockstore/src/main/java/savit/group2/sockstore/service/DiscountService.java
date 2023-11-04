@@ -3,9 +3,7 @@ package savit.group2.sockstore.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import savit.group2.sockstore.model.entity.Discount;
-import savit.group2.sockstore.model.entity.Discount_SockDetail;
 import savit.group2.sockstore.repository.DiscountRepository;
-import savit.group2.sockstore.repository.DiscountSockDetailRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,12 +14,13 @@ public class DiscountService {
     @Autowired
     private DiscountRepository repository;
 
-    @Autowired
-    private DiscountSockDetailRepository disSockRepository;
-
 
     public List<Discount> getAll() {
         return repository.findAll();
+    }
+
+    public List<Discount> getAllByStatus() {
+        return repository.getAllByStatus(true);
     }
 
     public Discount create(Discount discount) {
@@ -44,13 +43,6 @@ public class DiscountService {
             }
             o.setDiscount_type(discount.getDiscount_type());
             o.setStatus(discount.getStatus());
-            if (discount.getStatus() == false) {
-                List<Discount_SockDetail> list = disSockRepository.getAllByDiscount_Id(discount.getId());
-                for (Discount_SockDetail ds:list) {
-                    ds.setStatus(false);
-                    disSockRepository.save(ds);
-                }
-            }
             return repository.save(discount);
         }).orElse(null);
     }

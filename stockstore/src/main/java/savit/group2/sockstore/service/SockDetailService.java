@@ -30,9 +30,8 @@ public class SockDetailService {
             o.setUnit_base_price(sock_detail.getUnit_base_price());
             o.setDescription(sock_detail.getDescription());
             o.setSock(sock_detail.getSock());
-            o.setSize(sock_detail.getSize());
-            o.setColor(sock_detail.getColor());
             o.setPath(sock_detail.getPath());
+            o.setColor(sock_detail.getColor());
             return repository.save(sock_detail);
         }).orElse(null);
     }

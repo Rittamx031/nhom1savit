@@ -12,12 +12,11 @@ import savit.group2.sockstore.service.SockService;
 public class HomeController {
   @Autowired
   SockService sockService;
-  @GetMapping("index")
+  @GetMapping()
   public String getHomePage(Model model) {
-    model.addAttribute("products", sockService.getAllByOutstanding());
-    return "/user/index.html";
+      model.addAttribute("products", sockService.getAllByOutstanding());
+      return "/user/index.html";
   }
-
 
   
 }

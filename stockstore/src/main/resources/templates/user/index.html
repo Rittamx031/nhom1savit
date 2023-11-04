@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
-  layout:decorate="~{user/layout}">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{user/layout}"  xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 </head>
 <body layout:fragment="content">
@@ -37,29 +36,28 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-3 col-md-6 text-center">
-            <div class="single-product-item">
-              <div class="product-image">
-                <a href="single-product.html"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
+          <div th:each="product: ${products}" class="col-lg-3 col-md-6 text-center">
+            <div th:if="${product.sockDetail.size() > 0}" class="single-product-item">
+              <div  class="product-box-image" th:classappend="${product.sockDetail.size() > 1} ? product-image : ''">
+                <div class="product-img-slider">
+                    <a class="d-flex" th:href="@{|/products/${product.id}|}">
+                        <img th:if="${product.sockDetail.size() > 1}" th:src="${product.sockDetail[1].path}">
+                        <img th:src="${product.sockDetail[0].path}">
+                    </a>
+                </div>
               </div>
-              <h3>Strawberry</h3>
-              <p class="product-price"><span>Category</span> 85$ </p>
-              <div class="hover-container">
-                <div>
-                    <img src="assets/img/products/product-img-1.jpg">
-                </div>
-                <div>
-                  <img src="assets/img/products/product-img-1.jpg">
-                </div>
-                <div>
-                  <img src="assets/img/products/product-img-1.jpg">
-                </div>
-                <div>
-                  <img src="assets/img/products/product-img-1.jpg">
-                </div>
-                <div>
-                  <img src="assets/img/products/product-img-1.jpg">
-                </div>
+             <a href="#"><h3 th:text="${product.name}  + ' ' + ${product.size.name} + ' ' + ${product.material.name}"></h3></a>
+              <span th:text="${product.category.name}"></span>
+              <p th:text="${#numbers.formatDecimal(product.sockDetail[0].unit_base_price, 0, 'COMMA', 0, 'POINT') + '₫'}" class="product-price" style="color: #990d23"></p>
+              <div class="product-info">
+                  <div class="product-icons">
+                      <span>
+                        <i class="ri-shopping-cart-2-fill"></i>
+                      </span>
+                      <span>
+                        <i class="ri-eye-fill"></i>
+                      </span>
+                  </div>
               </div>
             </div>
           </div>

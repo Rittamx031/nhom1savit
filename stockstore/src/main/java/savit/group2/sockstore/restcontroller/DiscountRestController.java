@@ -19,6 +19,11 @@ public class DiscountRestController {
         return service.getAll();
     }
 
+    @RequestMapping("/status")
+    public List<Discount> getAllByStatus() {
+        return service.getAllByStatus();
+    }
+
     @PostMapping
     public Discount create(@RequestBody Discount discount) {
         return service.create(discount);
