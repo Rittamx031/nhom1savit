@@ -93,6 +93,9 @@ public class SpringSecurityConfig {
           authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
         })
         .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("/cart/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
+        })
+        .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN");
         })
         .authorizeHttpRequests((authorize) -> {

@@ -15,7 +15,7 @@ public class BlogService {
     private BlogRepository repository;
 
     public List<Blog> getAll() {
-        return repository.getAllByStatus(true);
+        return repository.findAll();
     }
 
     public Blog create(Blog blog) {

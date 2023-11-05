@@ -19,7 +19,7 @@ html {
 }
 
 body {
-  font-family: "Open Sans", sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-weight: 400;
   font-size: 1rem;
   letter-spacing: 0.1px;
@@ -2867,14 +2867,63 @@ table.order-details tbody td {
   display: block;
 }
 
-.image-update{
-  border-left: 1px solid #d2cccc;
+.single-product-item h3:hover {
+  color: #990d23;
 }
 
-.btn-chon-anh{
-  font-size: 14px;
-  background-color: transparent;
-  border: 1px solid #d2cccc;
-  padding: 4px 10px;
-  border-radius: 3px;
+.product-box-image {
+  overflow: hidden;
+  position: relative;
+  padding: 0;
 }
+
+.product-box-image img {
+  margin-bottom: 20px;
+}
+
+.product-img-slider {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.product-img-slider img {
+  min-width: 100%;
+}
+
+.product-image:hover .product-img-slider {
+  transform: translateX(-100%);
+}
+
+.product-icons {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-icons span {
+  width: 40px;
+  height: 40px;
+  background-color: #eee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.3rem;
+  border: 1px solid #e2e2e2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.product-icons span:hover {
+  background-color: #9e9d9d;
+  color: #fff;
+}
+
+
+
+
+
+
+
+
+

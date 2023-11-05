@@ -2,7 +2,7 @@ let app_productDTL = angular.module("product-dtl", []);
 app_productDTL.controller("product-dtl-ctrl", function ($scope, $http, $timeout){
     $scope.productDetails = [];
     $scope.products = [];
-    $scope.sizes = [];
+    $scope.discounts = [];
     $scope.colors = [];
     $scope.formUpdate = {};
     $scope.formInput = {};
@@ -48,8 +48,8 @@ app_productDTL.controller("product-dtl-ctrl", function ($scope, $http, $timeout)
         $http.get("/rest/products").then(resp => {
             $scope.products = resp.data;
         });
-        $http.get("/rest/sizes").then(resp => {
-            $scope.sizes = resp.data;
+        $http.get("/rest/discounts/status").then(resp => {
+            $scope.discounts = resp.data;
         })
         $http.get("/rest/colors").then(resp => {
             $scope.colors = resp.data;

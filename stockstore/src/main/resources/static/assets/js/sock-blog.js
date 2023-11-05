@@ -2,9 +2,12 @@ let app_blog = angular.module("blog", []);
 app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
     $scope.blogs = [];
     $scope.products = [];
-    $scope.listSockBlog = [];
+    $scope.blogStatus = [];
+    $scope.blogByID = [];
     $scope.formUpdate = {};
     $scope.formInput = {};
+    $scope.valueBlogProduct = {};
+    $scope.oneBlog = null;
     $scope.showAlert = false;
     $scope.showError = false;
     $scope.load = function () {$scope.loading=true}
@@ -24,6 +27,28 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
                 };
                 reader.readAsDataURL(imageInput.files[0]);
             }
+        });
+    }
+
+    $scope.blogOne = function (blog) {
+        $scope.oneBlog = blog;
+        $http.get(`/rest/blog-sock/blog-status/${blog.id}`).then(resp => {
+            $scope.blogStatus = resp.data;
+            $scope.products.forEach(function(product) {
+                product.selected = false;
+            });
+            $scope.blogStatus.forEach(function(blogst) {
+                let matchedProduct = $scope.products.find(function(item) {
+                    return item.id === blogst.sock.id;
+                });
+
+                if (matchedProduct) {
+                    matchedProduct.selected = true;
+                }
+            });
+        })
+        $http.get(`/rest/blog-sock/blog/${blog.id}`).then(resp => {
+            $scope.blogByID = resp.data;
         });
     }
 
@@ -50,6 +75,7 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
         $http.get("/rest/products").then(resp => {
             $scope.products = resp.data;
         });
+
     }
     $scope.initialize();
 
@@ -88,6 +114,57 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
                 $scope.unload();
             })
         }
+    }
+
+    $scope.save = function () {
+        $scope.products.forEach(function (product) {
+            if (product.selected) {
+                let findProduct = $scope.blogByID.find(function (item){
+                    return item.sock.id === product.id;
+                });
+                if (!findProduct) {
+                    $scope.valueBlogProduct.sock = product;
+                    $scope.valueBlogProduct.blog = $scope.oneBlog;
+                    let item = angular.copy($scope.valueBlogProduct);
+                    $http.post(`/rest/blog-sock`, item).then(resp => {
+                        $scope.showSuccessMessage("Applying Product successfully!")
+                        $scope.initialize();
+                        $('#modal-product').modal('hide');
+                    }).catch(error => {
+                        console.log("Error", error);
+                    })
+                } else {
+                    $scope.valueBlogProduct.sock = product;
+                    $scope.valueBlogProduct.blog = $scope.oneBlog;
+                    $scope.valueBlogProduct.status = true;
+                    let item = angular.copy($scope.valueBlogProduct);
+                    $http.put(`/rest/blog-sock`, item).then(resp => {
+                        $scope.showSuccessMessage("Applying Product successfully!")
+                        $scope.initialize();
+                        $('#modal-product').modal('hide');
+                    }).catch(error => {
+                        console.log("Error", error);
+                    })
+                }
+            } else {
+                let findProduct = $scope.blogByID.find(function (item){
+                    return item.sock.id === product.id;
+                });
+                if (findProduct) {
+                    $scope.valueBlogProduct.sock = product;
+                    $scope.valueBlogProduct.blog = $scope.oneBlog;
+                    $scope.valueBlogProduct.status = false;
+                    let item = angular.copy($scope.valueBlogProduct);
+                    $http.put(`/rest/blog-sock`, item).then(resp => {
+                        $scope.showSuccessMessage("Applying Product successfully!")
+                        $scope.initialize();
+                        $('#modal-product').modal('hide');
+                    }).catch(error => {
+                        console.log("Error", error);
+                    })
+                }
+            }
+        })
     }
 
     $scope.apiUpdate = function () {
@@ -133,8 +210,8 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
         imagePreviewUpdate.src = "/assets/img/no-img.svg";
         fileInput.value = "";
         fileInput.type = "file";
-        $scope.formUpdateProduct.$setPristine();
-        $scope.formUpdateProduct.$setUntouched();
+        $scope.formAddBlog.$setPristine();
+        $scope.formAddBlog.$setUntouched();
     }
 
     $scope.resetFormInput = function () {
@@ -144,8 +221,8 @@ app_blog.controller("blog-ctrl", function ($scope, $http, $timeout){
         imagePreview.src = "/assets/img/no-img.svg";
         fileInput.value = "";
         fileInput.type = "file";
-        $scope.formAddProduct.$setPristine();
-        $scope.formAddProduct.$setUntouched();
+        $scope.formUpdateBlog.$setPristine();
+        $scope.formUpdateBlog.$setUntouched();
     }
 
     $scope.paper = {
