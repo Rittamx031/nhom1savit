@@ -2919,6 +2919,17 @@ table.order-details tbody td {
   color: #fff;
 }
 
+.small-img-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+.small-img-col {
+  flex-basis: 24%;
+  cursor: pointer;
+}
+
+
 
 
 
