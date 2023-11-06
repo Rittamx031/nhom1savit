@@ -85,17 +85,21 @@ public class SpringSecurityConfig {
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager)
       throws Exception {
-    http.authorizeHttpRequests((authorize) -> {
-      authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
-    })
+    http
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("/**").permitAll();
+        })
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
+        })
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("/cart/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
+        })
         .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN");
         })
         .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("user/singin", "employee/signin").permitAll();
-        })
-        .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("employee/singin").permitAll();
+          authorize.requestMatchers("user/signup", "employee/signup", "employee/singin").permitAll();
         })
         .authorizeHttpRequests((authorize) -> {
           authorize.anyRequest().permitAll();

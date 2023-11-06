@@ -28,7 +28,7 @@
             <button type="button" class="btn-close" ng-click="closeAlert()" aria-label="Close"></button>
         </div>
         <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Create Product</h5>
@@ -36,12 +36,6 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label for="image">
-                                    <img src="/assets/img/no-img.svg" id="image-preview" style="width: 250px" />
-                                </label>
-                            </div>
-                            <div class="col-sm-8">
                                 <form name="formAddProduct" ng-submit="formAddProduct.$valid && create()" novalidate>
                                     <div class="row mb-3">
                                         <label for="inputCode" class="col-sm-3 col-form-label">Code</label>
@@ -62,6 +56,17 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
+                                        <label class="col-sm-3 col-form-label">Size</label>
+                                        <div class="col-sm-9">
+                                            <select ng-model="formInput.size.id" name="size" class="form-select" required>
+                                                <option ng-repeat="s in sizes" ng-value="s.id">{{s.name}}</option>
+                                            </select>
+                                            <span ng-if="formAddProduct.$submitted && formAddProduct.size.$invalid" class="error-message text-danger form-text">
+                                                Please choose size
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Category</label>
                                         <div class="col-sm-9">
                                             <select ng-model="formInput.category.id" name="category" class="form-select" required>
@@ -75,12 +80,9 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Producer</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formInput.producer.id" name="producer" class="form-select" aria-label="Default select example" required>
+                                            <select ng-model="formInput.producer.id" name="producer" class="form-select" aria-label="Default select example">
                                                 <option ng-repeat="p in producers" ng-value="p.id">{{p.name}}</option>
                                             </select>
-                                            <span ng-if="formAddProduct.$submitted && formAddProduct.producer.$invalid" class="error-message text-danger form-text">
-                                                Please choose producer
-                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -95,22 +97,10 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="image" class="col-sm-3 col-form-label">File Upload</label>
-                                        <div class="col-sm-9">
-                                            <input class="form-control" name="path" type="file" id="image" />
-                                            <span ng-if="showError" class="error-message text-danger form-text">
-                                                {{alertErrorImg}}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <legend class="col-form-label col-sm-3 pt-0">Outstanding</legend>
+                                        <label for="inputChecked" class="col-sm-3 col-form-label">Outstanding</label>
                                         <div class="col-sm-9">
                                             <div class="form-check">
-                                                <input ng-model="formInput.outstanding" class="form-check-input" type="checkbox" id="inp_outstanding">
-                                                <label class="form-check-label" for="inp_outstanding">
-                                                    True
-                                                </label>
+                                                <input ng-model="formInput.outstanding" class="form-check-input" type="checkbox" id="inputChecked">
                                             </div>
                                         </div>
                                     </div>
@@ -120,7 +110,6 @@
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -128,7 +117,7 @@
         </div>
         <!-- Modal Update -->
         <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Update Product</h5>
@@ -136,12 +125,6 @@
                     </div>
                     <div class="modal-body">
                         <div class="row">
-                            <div class="col-sm-4">
-                                <label for="image">
-                                    <img id="image-preview-update" ng-src="{{formUpdate.path ? formUpdate.path : '/assets/img/no-img.svg'}}" style="width: 250px" />
-                                </label>
-                            </div>
-                            <div class="col-sm-8">
                                 <form name="formUpdateProduct" ng-submit="formUpdateProduct.$valid && update()" novalidate>
                                     <div class="row mb-3">
                                         <label for="updateCode" class="col-sm-3 col-form-label">Code</label>
@@ -162,6 +145,14 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
+                                        <label class="col-sm-3 col-form-label">Size</label>
+                                        <div class="col-sm-9">
+                                            <select ng-model="formUpdate.size.id" class="form-select" aria-label="Default select example" required>
+                                                <option ng-repeat="s in sizes" ng-value="s.id">{{s.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Category</label>
                                         <div class="col-sm-9">
                                             <select ng-model="formUpdate.category.id" class="form-select" aria-label="Default select example" required>
@@ -172,28 +163,24 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Producer</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formUpdate.producer.id" class="form-select" aria-label="Default select example" required>
+                                            <select ng-model="formUpdate.producer.id" class="form-select" aria-label="Default select example">
                                                 <option ng-repeat="p in producers" ng-value="p.id">{{p.name}}</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="image-update" class="col-sm-3 col-form-label">File Upload</label>
+                                        <label class="col-sm-3 col-form-label">Material</label>
                                         <div class="col-sm-9">
-                                            <input class="form-control" name="path" type="file" id="image-update" />
-                                            <span ng-if="showError" class="error-message text-danger form-text">
-                                                {{alertErrorImg}}
-                                            </span>
+                                            <select ng-model="formUpdate.material.id" name="material" class="form-select" aria-label="Default select example" required>
+                                                <option ng-repeat="m in materials" ng-value="m.id">{{m.name}}</option>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <legend class="col-form-label col-sm-3 pt-0">Outstanding</legend>
+                                        <label for="updateChecked" class="col-sm-3 col-form-label">Outstanding</label>
                                         <div class="col-sm-9">
                                             <div class="form-check">
-                                                <input ng-model="formUpdate.outstanding" class="form-check-input" type="checkbox" id="upd_outstanding">
-                                                <label class="form-check-label" for="upd_outstanding">
-                                                    True
-                                                </label>
+                                                <input ng-model="formUpdate.outstanding" class="form-check-input" type="checkbox" id="updateChecked">
                                             </div>
                                         </div>
                                     </div>
@@ -203,7 +190,6 @@
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </form>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -215,23 +201,23 @@
                 <table class="table">
                     <thead>
                     <tr>
-                        <th scope="col">Image</th>
                         <th scope="col">Code</th>
                         <th scope="col">Name</th>
-                        <th scope="col">Outstanding</th>
-                        <th scope="col">Category</th>
+                        <th scope="col">Size</th>
+                        <th scope="col">Material</th>
                         <th scope="col">Producer</th>
+                        <th scope="col">Category</th>
                         <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr ng-repeat="product in paper.items">
-                        <td><img ng-src="{{product.path}}" width="50px"/></td>
                         <td>{{product.code}}</td>
                         <td>{{product.name}}</td>
-                        <td>{{product.outstanding ? 'Yes' : 'No'}}</td>
-                        <td>{{product.category.name}}</td>
+                        <td>{{product.size.name}}</td>
+                        <td>{{product.material.name}}</td>
                         <td>{{product.producer.name}}</td>
+                        <td>{{product.category.name}}</td>
                         <td>
                             <button ng-click="edit(product)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
                             <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="ri-delete-bin-fill"></i></button>

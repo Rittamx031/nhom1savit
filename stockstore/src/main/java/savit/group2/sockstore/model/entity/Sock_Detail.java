@@ -1,9 +1,11 @@
 package savit.group2.sockstore.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -26,12 +28,12 @@ public class Sock_Detail {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "id_sock")
-    private Sock sock;
+    @JoinColumn(name = "id_discount")
+    private Discount discount;
 
     @ManyToOne
-    @JoinColumn(name = "id_size")
-    private Size size;
+    @JoinColumn(name = "id_sock")
+    private Sock sock;
 
     @ManyToOne
     @JoinColumn(name = "id_color")
@@ -40,5 +42,6 @@ public class Sock_Detail {
     private String path;
 
     private Boolean status;
+
 
 }

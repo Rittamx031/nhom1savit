@@ -18,6 +18,14 @@ public class SockService {
         return repository.getAllByStatus(true);
     }
 
+    public Sock getSockByID(UUID id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public List<Sock> getAllByOutstanding() {
+        return repository.getAllByOutstanding(true);
+    }
+
     public Sock create(Sock sock) {
         sock.setStatus(true);
         return repository.save(sock);
@@ -28,10 +36,11 @@ public class SockService {
         return optional.map(o -> {
             o.setCode(sock.getCode());
             o.setName(sock.getName());
+            o.setSize(sock.getSize());
             o.setCategory(sock.getCategory());
             o.setProducer(sock.getProducer());
             o.setMaterial(sock.getMaterial());
-            o.setPath(sock.getPath());
+            o.setOutstanding(sock.getOutstanding());
             return repository.save(sock);
         }).orElse(null);
     }

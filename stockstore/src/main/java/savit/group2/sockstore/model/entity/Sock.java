@@ -1,9 +1,11 @@
 package savit.group2.sockstore.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
+import java.util.Set;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -35,10 +37,16 @@ public class Sock {
     @JoinColumn(name = "id_meterial")
     private Material material;
 
-    private String path;
+    @ManyToOne
+    @JoinColumn(name = "id_size")
+    private Size size;
 
     private Boolean outstanding;
 
     private Boolean status;
+
+    @OneToMany(mappedBy = "sock")
+    @JsonIgnore
+    private Set<Sock_Detail> sockDetail;
 
 }

@@ -47,7 +47,7 @@
                                         <label class="col-sm-3 col-form-label">Product</label>
                                         <div class="col-sm-9">
                                             <select ng-model="formInput.sock.id" name="product" class="form-select" aria-label="Default select example" required>
-                                                <option ng-repeat="p in products" ng-value="p.id">{{p.name}}</option>
+                                                <option ng-repeat="p in products" ng-value="p.id">{{p.name + ' ' + p.size.name + ' ' + p.material.name}}</option>
                                             </select>
                                             <span ng-if="formAddProduct.$submitted && formAddProduct.product.$invalid" class="error-message text-danger form-text">
                                                 Please choose product
@@ -80,14 +80,11 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label class="col-sm-3 col-form-label">Size</label>
+                                        <label class="col-sm-3 col-form-label">Discount</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formInput.size.id" name="size" class="form-select" aria-label="Default select example" required>
-                                                <option ng-repeat="s in sizes" ng-value="s.id">{{s.name}}</option>
+                                            <select ng-model="formInput.discount.id" class="form-select" aria-label="Default select example">
+                                                <option ng-repeat="d in discounts" ng-value="d.id">{{d.name}}</option>
                                             </select>
-                                            <span ng-if="formAddProduct.$submitted && formAddProduct.size.$invalid" class="error-message text-danger form-text">
-                                                Please choose size
-                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -149,7 +146,7 @@
                                         <label class="col-sm-3 col-form-label">Product</label>
                                         <div class="col-sm-9">
                                             <select ng-model="formUpdate.sock.id" name="product" class="form-select" aria-label="Default select example" required>
-                                                <option ng-repeat="p in products" ng-value="p.id">{{p.name}}</option>
+                                                <option ng-repeat="p in products" ng-value="p.id">{{p.name + ' ' + p.size.name + ' ' + p.material.name}}</option>
                                             </select>
                                             <span ng-if="formUpdateProduct.$submitted && formUpdateProduct.product.$invalid" class="error-message text-danger form-text">
                                                 Please choose product
@@ -182,14 +179,11 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label class="col-sm-3 col-form-label">Size</label>
+                                        <label class="col-sm-3 col-form-label">Discount</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formUpdate.size.id" name="size" class="form-select" aria-label="Default select example" required>
-                                                <option ng-repeat="s in sizes" ng-value="s.id">{{s.name}}</option>
+                                            <select ng-model="formUpdate.discount.id" class="form-select" aria-label="Default select example">
+                                                <option ng-repeat="d in discounts" ng-value="d.id">{{d.name}}</option>
                                             </select>
-                                            <span ng-if="formUpdateProduct.$submitted && formUpdateProduct.size.$invalid" class="error-message text-danger form-text">
-                                                Please choose size
-                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -237,7 +231,7 @@
                         <th scope="col">Product Name</th>
                         <th scope="col">Price</th>
                         <th scope="col">Quantity</th>
-                        <th scope="col">Size</th>
+                        <th scope="col">Discount</th>
                         <th scope="col">Color</th>
                         <th scope="col">Action</th>
                     </tr>
@@ -245,10 +239,10 @@
                     <tbody>
                     <tr ng-repeat="product in paper.items">
                         <td><img ng-src="{{product.path}}" width="50px"/></td>
-                        <td>{{product.sock.name}}</td>
+                        <td>{{product.sock.name + ' ' + product.sock.size.name + ' ' + product.sock.material.name}}</td>
                         <td>{{product.unit_base_price}}</td>
                         <td>{{product.quantity}}</td>
-                        <td>{{product.size.name}}</td>
+                        <td>{{product.discount.name}}</td>
                         <td>{{product.color.name}}</td>
                         <td>
                             <button ng-click="edit(product)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>

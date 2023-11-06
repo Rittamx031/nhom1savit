@@ -25,7 +25,7 @@ public class DashboardController {
     public String viewCategory() {
         return "admin/pages-category";
     }
-    
+
     @GetMapping(value = "admin/product/producer")
     public String viewProducer() {
         return "admin/pages-producer";
@@ -69,5 +69,10 @@ public class DashboardController {
     @GetMapping(value = "admin/blog")
     public String viewBlog() {
         return "admin/pages-blog";
+    }
+
+    @GetMapping(value = "admin/customer")
+    public String viewAccount() {
+        return "admin/pages-customer";
     }
 }
