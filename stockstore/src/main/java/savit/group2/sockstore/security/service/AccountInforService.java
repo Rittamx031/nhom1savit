@@ -13,12 +13,12 @@ import lombok.RequiredArgsConstructor;
 import savit.group2.sockstore.model.entity.Account;
 import savit.group2.sockstore.model.security.UserInfo;
 import savit.group2.sockstore.model.security.UserInfoUserDetails;
-import savit.group2.sockstore.security.repo.AccountInforRepository;
+import savit.group2.sockstore.security.repo.AccountInfoRepository;
 
 @Component
 @RequiredArgsConstructor
 public class AccountInforService implements UserDetailsService {
-  private final AccountInforRepository repository;
+  private final AccountInfoRepository repository;
   @Autowired
   PasswordEncoder encoder;
 
@@ -28,7 +28,13 @@ public class AccountInforService implements UserDetailsService {
     if (!account.isPresent() || account == null) {
       throw new UsernameNotFoundException("can not find nhan vien with username khachhang");
     }
-    String Roles = "USER";
+    String Roles;
+    if (account.get().getActived()) {
+      Roles = "USER";
+    }
+    {
+      Roles = "NOT_ACCTIVE";
+    }
     UserInfo UserInfo = new UserInfo(account.get().getEmail(), account.get().getPassword(), Roles);
     return new UserInfoUserDetails(UserInfo);
   }

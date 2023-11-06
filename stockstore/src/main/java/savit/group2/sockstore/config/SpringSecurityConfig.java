@@ -19,8 +19,10 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
-import savit.group2.sockstore.security.repo.AccountInforRepository;
+import savit.group2.sockstore.security.repo.AccountInfoRepository;
 import savit.group2.sockstore.security.repo.EmployeeInfoRepository;
 import savit.group2.sockstore.security.service.AccountInforService;
 import savit.group2.sockstore.security.service.EmployeInfoService;
@@ -57,7 +59,7 @@ public class SpringSecurityConfig {
   }
 
   @Autowired
-  AccountInforRepository khifrepository;
+  AccountInfoRepository khifrepository;
 
   AccountInforService khachHangService() {
     return new AccountInforService(khifrepository);
@@ -76,6 +78,16 @@ public class SpringSecurityConfig {
     return authenticationProvider;
   }
 
+  @Bean
+  LogoutSuccessHandler logoutSuccessHandler() {
+    return new CustomLogoutSuccessHandler();
+  }
+
+  @Bean
+  AccessDeniedHandler accessDeniedHandler() {
+    return new CustomAccessDeniedHandler();
+  }
+
   // mã hóa mật khẩu
   @Bean
   PasswordEncoder passwordEncoder() {
@@ -87,7 +99,7 @@ public class SpringSecurityConfig {
       throws Exception {
     http
         .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("/**").permitAll();
+          authorize.requestMatchers("/test/**").permitAll();
         })
         .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
@@ -107,15 +119,17 @@ public class SpringSecurityConfig {
         .formLogin(formLogin -> formLogin
             .loginPage("/login")
             .loginProcessingUrl("/singin")
-            .failureUrl("/login?error")
-            .successHandler(new CustomAuthenticationSuccessHandler())
+            .failureUrl("/login?error=true")
             .usernameParameter("username")
             .passwordParameter("password")
+            .successHandler(new CustomAuthenticationSuccessHandler())
             .permitAll())
         .logout(
             formLogin -> formLogin
                 .logoutUrl("/signOut")
                 .logoutSuccessUrl("/login")
+                // .deleteCookies("JSESSIONID")
+                .logoutSuccessHandler(logoutSuccessHandler())
                 .permitAll())
         .csrf(AbstractHttpConfigurer::disable)
         .rememberMe((remember) -> remember.key("fefe").tokenValiditySeconds(maxAge)
