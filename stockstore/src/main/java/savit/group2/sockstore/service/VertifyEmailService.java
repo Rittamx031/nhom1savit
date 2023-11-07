@@ -37,7 +37,6 @@ public class VertifyEmailService {
       return null;
     } else {
       VertifyEmail newVertifyEmail = repository.save(new VertifyEmail(email));
-      emailService.activeEmailMessage(newVertifyEmail);
       return newVertifyEmail;
     }
   }

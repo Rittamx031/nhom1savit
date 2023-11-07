@@ -27,7 +27,6 @@
       <use xlink:href="#info-fill" />
     </svg>
     <div th:text="${message}">
-      Đăng Nhập không thành công kiểm tra lại tài khoản mật khẩu!!!
     </div>
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
   </div>
@@ -44,14 +43,16 @@
             </div>
             <div class="card mb-3">
               <div class="card-body">
-                <form enctype="multipart/form-data" th:action="@{/vertifyemail}" th:object="${vertifyemail}"
-                  method="post">
-                  <input type="hidden" th:field="*{email}">
-                  <input type="hidden" th:field="*{requestAt}">
-                  <input type="number" th:field="*{code}">
-                  <input type="submit" value="Vertify">
+                <form class="row g-3 needs-validation" novalidate th:action="@{/sendresetpasswordcode}" method="post">
+                  <div class="col-12">
+                    <label for="yourUsername" class="form-label">Email</label>
+                    <div class="input-group has-validation">
+                      <input type="email" name="email" class="form-control" id="yourUsername" required>
+                      <div class="invalid-feedback">Please enter your Email.</div>
+                    </div>
+                  </div>
+                  <input type="submit" value="Send Code">
                 </form>
-                <a th:href="sendvertifyemail">Send ActiveCode</a>
               </div>
             </div>
           </div>

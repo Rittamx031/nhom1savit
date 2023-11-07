@@ -51,11 +51,13 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     protected String determineTargetUrl(Authentication authentication) {
         String url = "";
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        List<String> roles = new ArrayList();
+        List<String> roles = new ArrayList<String>();
         for (GrantedAuthority a : authorities) {
             roles.add(a.getAuthority());
         }
-        if (roles.contains("NOT_ACCTIVE")) {
+        if (roles.contains("CHANGE_PASSWORD")) {
+            url = "/resetpassword";
+        } else if (roles.contains("NOT_ACCTIVE")) {
             url = "/sendvertifyemail";
         } else if (roles.contains("ADMIN")) {
             url = "/homepage";

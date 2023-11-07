@@ -99,7 +99,10 @@ public class SpringSecurityConfig {
       throws Exception {
     http
         .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("/test/**").permitAll();
+          authorize
+              .requestMatchers("/test/**", "user/signup", "employee/signup", "employee/singin",
+                  "/sendresetpasswordcode")
+              .permitAll();
         })
         .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
@@ -111,7 +114,10 @@ public class SpringSecurityConfig {
           authorize.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN");
         })
         .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("user/signup", "employee/signup", "employee/singin").permitAll();
+          authorize.requestMatchers("/vertifyemail", "/sendvertifyemail").hasRole("NOT_ACCTIVE");
+        })
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("/resetpassword", "/sendresetpassword", "/resetpasswordcode").authenticated();
         })
         .authorizeHttpRequests((authorize) -> {
           authorize.anyRequest().permitAll();
@@ -127,8 +133,6 @@ public class SpringSecurityConfig {
         .logout(
             formLogin -> formLogin
                 .logoutUrl("/signOut")
-                .logoutSuccessUrl("/login")
-                // .deleteCookies("JSESSIONID")
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .permitAll())
         .csrf(AbstractHttpConfigurer::disable)

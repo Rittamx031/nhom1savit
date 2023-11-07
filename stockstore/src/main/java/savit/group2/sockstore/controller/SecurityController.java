@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import jakarta.validation.Valid;
 import savit.group2.sockstore.model.entity.VertifyEmail;
 import savit.group2.sockstore.model.request.EmployeeSignupRequest;
+import savit.group2.sockstore.model.request.ResetPasswordRequest;
 import savit.group2.sockstore.model.request.UserSingupRequest;
 import savit.group2.sockstore.security.service.SercurityService;
 import savit.group2.sockstore.service.AccountService;
@@ -130,7 +131,8 @@ public class SecurityController {
     Object principal = authentication.getPrincipal();
     if (principal instanceof UserDetails) {
       String username = ((UserDetails) principal).getUsername();
-      vertifyEmailsService.createVertifyEmail(username);
+      emailService.activeEmailMessage(
+          vertifyEmailsService.createVertifyEmail(username));
       thRedirectAttributes.addFlashAttribute("message", "Vui lòng kiểm tra email!!!");
       model.addAttribute("vertifyemail", new VertifyEmail());
       return "redirect:/vertifyemail";
@@ -158,4 +160,52 @@ public class SecurityController {
     }
     return "redirect:/vertifyemail";
   }
+
+  @GetMapping("forgotpassword")
+  public String findAccount(Model model, RedirectAttributes thRedirectAttributes) {
+    model.addAttribute("vertifyemail", new VertifyEmail());
+    return "find-account.html";
+  }
+
+  @PostMapping("sendresetpasswordcode")
+  public String sendResetPasswordCode(Model model, RedirectAttributes thRedirectAttributes,
+      @RequestParam("email") String email) {
+    if (emailHelper.isEmailNotExsits(email)) {
+      model.addAttribute("message", "Email Chưa đăng ký tài khoản nào!");
+      return "find-account.html";
+    } else {
+      emailService.resetEmailMessage(vertifyEmailsService.createVertifyEmail(email));
+      securityService.setAuthentichByEmail(email);
+      thRedirectAttributes.addFlashAttribute("message", "Vui lòng kiểm tra email!!!");
+      model.addAttribute("vertifyemail", new VertifyEmail());
+      return "reset-password-code.html";
+    }
+  }
+
+  @PostMapping("/resetpasswordcode")
+  public String resetPasswordCode(
+      Model model,
+      RedirectAttributes thRedirectAttributes,
+      @ModelAttribute("vertifyemail") VertifyEmail vertifyemail) {
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication.getPrincipal() instanceof UserDetails) {
+      UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+      String username = userDetails.getUsername();
+      vertifyemail.setEmail(username);
+      if (vertifyEmailsService.vertifyEmail(vertifyemail)) {
+        thRedirectAttributes.addFlashAttribute("message", "Xác thực thành công nhập mật khẩu mới!!!");
+        return "redirect:/resetpassword";
+      }
+    }
+    thRedirectAttributes.addFlashAttribute("message",
+        "Xác thực không thành công mã kích hoạt không đúng hoặc đã hết hạn vui lòng thử lại !!!");
+    return "redirect:/resetpasswordcode";
+  }
+
+  @GetMapping("resetpassword")
+  public String resetPasswordPage(Model model, RedirectAttributes thRedirectAttributes) {
+    model.addAttribute("requestPasswordRequest", new ResetPasswordRequest());
+    return "reset-password.html";
+  }
+
 }

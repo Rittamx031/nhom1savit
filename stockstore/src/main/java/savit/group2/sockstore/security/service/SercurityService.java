@@ -8,9 +8,13 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -29,6 +33,8 @@ public class SercurityService {
   AuthenticationManager authenticationManager;
   @Autowired
   PasswordEncoder encoder;
+  @Autowired
+  HttpServletRequest request;
 
   EmployeInfoService nhanVienService() {
     return new EmployeInfoService(employeInfoRepository);
@@ -39,19 +45,27 @@ public class SercurityService {
   }
 
   public void setAuthentichByEmail(String email) {
-    UserDetails userDetails;
+    UserDetails userDetails = loadUserDetailsByEmail(email);
+
+    if (userDetails != null) {
+      UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userDetails, null,
+          Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD")));
+      Authentication authentication = authenticationManager.authenticate(authRequest);
+      SecurityContext securityContext = SecurityContextHolder.getContext();
+      securityContext.setAuthentication(authentication);
+      HttpSession session = request.getSession(true);
+      session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+    }
+  }
+
+  private UserDetails loadUserDetailsByEmail(String email) {
+    UserDetails userDetails = null;
     if (employeInfoRepository.hasEmailis(email) != null) {
       userDetails = nhanVienService().loadUserByUsername(email);
     } else if (accountInfoRepository.hasEmailis(email) != null) {
       userDetails = accountService().loadUserByUsername(email);
-    } else {
-      userDetails = null;
-      return;
     }
-    Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, null,
-        Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
-    SecurityContextHolder.getContext().setAuthentication(auth);
-    return;
+    return userDetails;
   }
 
   public void updatePassword(String password) {
