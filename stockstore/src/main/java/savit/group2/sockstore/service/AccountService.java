@@ -1,6 +1,5 @@
 package savit.group2.sockstore.service;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -24,6 +22,7 @@ import savit.group2.sockstore.model.request.AccountRequest;
 import savit.group2.sockstore.model.request.UserSingupRequest;
 import savit.group2.sockstore.repository.AccountRepository;
 import savit.group2.sockstore.repository.CustomerRepository;
+import savit.group2.sockstore.security.service.SercurityService;
 import savit.group2.sockstore.service.interfaceservice.PanigationInterface;
 import savit.group2.sockstore.util.CheckEmailHelper;
 
@@ -37,6 +36,8 @@ public class AccountService implements PanigationInterface<AccountResponse> {
   PasswordEncoder encoder;
   @Autowired
   CheckEmailHelper emailHelper;
+  @Autowired
+  SercurityService sercurityService;
 
   public Account singup(UserSingupRequest request) {
     if (emailHelper.isEmailNotExsits(request.getEmail())) {
@@ -54,9 +55,10 @@ public class AccountService implements PanigationInterface<AccountResponse> {
       account.setPassword(encoder.encode(request.getPassword()));
       account.setStatus(true);
       account.setUpdateAt(LocalDateTime.now());
-      return repository.save(account);
+      account = repository.save(account);
+      sercurityService.setAuthentichByEmail(account.getEmail());
+      return account;
     }
-    // throw exeption email Email already exists
     return null;
   }
 
@@ -93,12 +95,6 @@ public class AccountService implements PanigationInterface<AccountResponse> {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can not find Account with id ");
     }
   }
-
-  // fillter
-  // public List<Account> fillter(AccountFillter fillter) {
-  // return null;
-  // }
-
   // panigation
   @Override
   public List<AccountResponse> getPageNo(int pageNo, int pageSize, String sortBy, boolean sortDir) {
@@ -138,7 +134,7 @@ public class AccountService implements PanigationInterface<AccountResponse> {
     int totalPage = page.getTotalPages();
     int[] rs;
     if (totalPage <= 1) {
-      return new int[]  { 1 };
+      return new int[] { 1 };
     }
     if (totalPage <= 3) {
       rs = new int[totalPage];

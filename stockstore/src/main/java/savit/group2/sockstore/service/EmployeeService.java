@@ -11,6 +11,7 @@ import savit.group2.sockstore.model.entity.Role;
 import savit.group2.sockstore.model.request.EmployeeSignupRequest;
 import savit.group2.sockstore.repository.EmployeeRepository;
 import savit.group2.sockstore.repository.RoleRepository;
+import savit.group2.sockstore.security.service.SercurityService;
 import savit.group2.sockstore.util.CheckEmailHelper;
 
 @Service
@@ -23,6 +24,8 @@ public class EmployeeService {
   PasswordEncoder encoder;
   @Autowired
   CheckEmailHelper emailHelper;
+  @Autowired
+  SercurityService sercurityService;
 
   public Employee signup(EmployeeSignupRequest request) {
     if (emailHelper.isEmailNotExsits(request.getEmail())) {
@@ -31,16 +34,26 @@ public class EmployeeService {
       employee.setBirthday(request.getBirthDay());
       employee.setEmail(request.getEmail());
       employee.setName(request.getName());
+      employee.setWardcode("");
+      employee.setDistrictcode(0);
+      employee.setName(request.getName());
       employee.setPassword(encoder.encode(request.getPassword()));
       employee.setPhone(request.getPhone());
+      employee.setStatus(false);
       Optional<Role> roleOp = roleRepository.getEmployeeRoles();
       if (roleOp.isPresent()) {
         employee.setRole(roleOp.get());
-        return repository.save(employee);
       } else {
-
+        Role role = new Role();
+        role.setName("EMPLOYEE");
+        role.setRoles("ADMIN");
+        role.setPermissions("NEW EMPLOYEE");
+        role.setStatus(true);
+        employee.setRole(roleRepository.save(role));
       }
-      return null;
+      employee = repository.save(employee);
+      sercurityService.setAuthentichByEmail(employee.getEmail());
+      return employee;
     } else {
       // throws Email already exists
       return null;
