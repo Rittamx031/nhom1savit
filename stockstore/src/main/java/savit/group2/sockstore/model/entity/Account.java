@@ -27,6 +27,8 @@ public class Account {
 
     @Column(name = "status")
     private Boolean status;
+    @Column(name = "actived")
+    private Boolean actived;
 
     @ManyToOne
     @JoinColumn(name = "id_customer")

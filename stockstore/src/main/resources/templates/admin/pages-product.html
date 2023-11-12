@@ -1,56 +1,64 @@
 <!DOCTYPE html>
-<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml" layout:decorate="~{admin/layout}">
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+    layout:decorate="~{admin/layout}">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+
 <body>
-<main layout:fragment="content" ng-app="product" ng-controller="product-ctrl">
-    <div class="overlay" ng-show="loading">
-        <div class="spinner-border" role="status" style="position: absolute;left: 50%;top: 50%;">
-            <span class="visually-hidden">Loading...</span>
+    <main layout:fragment="content" ng-app="product" ng-controller="product-ctrl">
+        <div class="overlay" ng-show="loading">
+            <div class="spinner-border" role="status" style="position: absolute;left: 50%;top: 50%;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
-    </div>
-    <div class="pagetitle">
-        <h1>Product</h1>
-        <nav>
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                <li class="breadcrumb-item active">Product</li>
-            </ol>
-        </nav>
-    </div><!-- End Page Title -->
-    <section class="section">
-        <button type="button" class="btn btn-outline-success mb-2" data-bs-toggle="modal" data-bs-target="#modalAdd">
-            Add Product</button>
-        <div class="alert border-success alert-dismissible fade show" role="alert" ng-show="showAlert">
-            {{alertMessage}}
-            <button type="button" class="btn-close" ng-click="closeAlert()" aria-label="Close"></button>
-        </div>
-        <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Create Product</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
+        <div class="pagetitle">
+            <h1>Customer</h1>
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+                    <li class="breadcrumb-item active">Admin</li>
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+        <section class="section">
+            <button type="button" class="btn btn-outline-success mb-2" data-bs-toggle="modal"
+                data-bs-target="#modalAdd">
+                Add Product</button>
+            <div class="alert border-success alert-dismissible fade show" role="alert" ng-show="showAlert">
+                {{alertMessage}}
+                <button type="button" class="btn-close" ng-click="closeAlert()" aria-label="Close"></button>
+            </div>
+            <div class="modal fade" id="modalAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Create Product</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
                                 <form name="formAddProduct" ng-submit="formAddProduct.$valid && create()" novalidate>
                                     <div class="row mb-3">
                                         <label for="inputCode" class="col-sm-3 col-form-label">Code</label>
                                         <div class="col-sm-9">
-                                            <input ng-model="formInput.code" name="code" id="inputCode" type="text" class="form-control" required>
-                                            <span ng-if="formAddProduct.$submitted && formAddProduct.code.$invalid" class="error-message text-danger form-text">
-                                            Code cannot be blank
-                                        </span>
+                                            <input ng-model="formInput.code" name="code" id="inputCode" type="text"
+                                                class="form-control" required>
+                                            <span ng-if="formAddProduct.$submitted && formAddProduct.code.$invalid"
+                                                class="error-message text-danger form-text">
+                                                Code cannot be blank
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="inputName" class="col-sm-3 col-form-label">Name</label>
                                         <div class="col-sm-9">
-                                            <input ng-model="formInput.name" name="name" id="inputName" type="text" class="form-control" required>
-                                            <span ng-if="formAddProduct.$submitted && formAddProduct.name.$invalid" class="error-message text-danger form-text">
+                                            <input ng-model="formInput.name" name="name" id="inputName" type="text"
+                                                class="form-control" required>
+                                            <span ng-if="formAddProduct.$submitted && formAddProduct.name.$invalid"
+                                                class="error-message text-danger form-text">
                                                 Name cannot be blank
                                             </span>
                                         </div>
@@ -58,10 +66,12 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Size</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formInput.size.id" name="size" class="form-select" required>
+                                            <select ng-model="formInput.size.id" name="size" class="form-select"
+                                                required>
                                                 <option ng-repeat="s in sizes" ng-value="s.id">{{s.name}}</option>
                                             </select>
-                                            <span ng-if="formAddProduct.$submitted && formAddProduct.size.$invalid" class="error-message text-danger form-text">
+                                            <span ng-if="formAddProduct.$submitted && formAddProduct.size.$invalid"
+                                                class="error-message text-danger form-text">
                                                 Please choose size
                                             </span>
                                         </div>
@@ -69,10 +79,12 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Category</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formInput.category.id" name="category" class="form-select" required>
+                                            <select ng-model="formInput.category.id" name="category" class="form-select"
+                                                required>
                                                 <option ng-repeat="c in cates" ng-value="c.id">{{c.name}}</option>
                                             </select>
-                                            <span ng-if="formAddProduct.$submitted && formAddProduct.category.$invalid" class="error-message text-danger form-text">
+                                            <span ng-if="formAddProduct.$submitted && formAddProduct.category.$invalid"
+                                                class="error-message text-danger form-text">
                                                 Please choose category
                                             </span>
                                         </div>
@@ -80,7 +92,8 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Producer</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formInput.producer.id" name="producer" class="form-select" aria-label="Default select example">
+                                            <select ng-model="formInput.producer.id" name="producer" class="form-select"
+                                                aria-label="Default select example">
                                                 <option ng-repeat="p in producers" ng-value="p.id">{{p.name}}</option>
                                             </select>
                                         </div>
@@ -88,10 +101,12 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Material</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formInput.material.id" name="material" class="form-select" aria-label="Default select example" required>
+                                            <select ng-model="formInput.material.id" name="material" class="form-select"
+                                                aria-label="Default select example" required>
                                                 <option ng-repeat="m in materials" ng-value="m.id">{{m.name}}</option>
                                             </select>
-                                            <span ng-if="formAddProduct.$submitted && formAddProduct.material.$invalid" class="error-message text-danger form-text">
+                                            <span ng-if="formAddProduct.$submitted && formAddProduct.material.$invalid"
+                                                class="error-message text-danger form-text">
                                                 Please choose material
                                             </span>
                                         </div>
@@ -100,54 +115,66 @@
                                         <label for="inputChecked" class="col-sm-3 col-form-label">Outstanding</label>
                                         <div class="col-sm-9">
                                             <div class="form-check">
-                                                <input ng-model="formInput.outstanding" class="form-check-input" type="checkbox" id="inputChecked">
+                                                <input ng-model="formInput.outstanding" class="form-check-input"
+                                                    type="checkbox" id="inputChecked">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">Save</button>
-                                        <button ng-click="resetFormInput()" type="button" class="btn btn-warning">Reset</button>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button ng-click="resetFormInput()" type="button"
+                                            class="btn btn-warning">Reset</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Modal Update -->
-        <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Update Product</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                                <form name="formUpdateProduct" ng-submit="formUpdateProduct.$valid && update()" novalidate>
+            <!-- Modal Update -->
+            <div class="modal fade" id="modalUpdate" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Update Product</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <form name="formUpdateProduct" ng-submit="formUpdateProduct.$valid && update()"
+                                    novalidate>
                                     <div class="row mb-3">
                                         <label for="updateCode" class="col-sm-3 col-form-label">Code</label>
                                         <div class="col-sm-9">
-                                            <input ng-model="formUpdate.code" id="updateCode" name="code" type="text" class="form-control" required>
-                                            <span ng-if="formUpdateProduct.$submitted && formUpdateProduct.code.$invalid" class="error-message text-danger form-text">
-                                            Code cannot be blank
+                                            <input ng-model="formUpdate.code" id="updateCode" name="code" type="text"
+                                                class="form-control" required>
+                                            <span
+                                                ng-if="formUpdateProduct.$submitted && formUpdateProduct.code.$invalid"
+                                                class="error-message text-danger form-text">
+                                                Code cannot be blank
                                             </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="updateName" class="col-sm-3 col-form-label">Name</label>
                                         <div class="col-sm-9">
-                                            <input ng-model="formUpdate.name" name="name" id="updateName" type="text" class="form-control" required>
-                                            <span ng-if="formUpdateProduct.$submitted && formUpdateProduct.name.$invalid" class="error-message text-danger form-text">
-                                            Name cannot be blank
-                                        </span>
+                                            <input ng-model="formUpdate.name" name="name" id="updateName" type="text"
+                                                class="form-control" required>
+                                            <span
+                                                ng-if="formUpdateProduct.$submitted && formUpdateProduct.name.$invalid"
+                                                class="error-message text-danger form-text">
+                                                Name cannot be blank
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Size</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formUpdate.size.id" class="form-select" aria-label="Default select example" required>
+                                            <select ng-model="formUpdate.size.id" class="form-select"
+                                                aria-label="Default select example" required>
                                                 <option ng-repeat="s in sizes" ng-value="s.id">{{s.name}}</option>
                                             </select>
                                         </div>
@@ -155,7 +182,8 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Category</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formUpdate.category.id" class="form-select" aria-label="Default select example" required>
+                                            <select ng-model="formUpdate.category.id" class="form-select"
+                                                aria-label="Default select example" required>
                                                 <option ng-repeat="c in cates" ng-value="c.id">{{c.name}}</option>
                                             </select>
                                         </div>
@@ -163,7 +191,8 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Producer</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formUpdate.producer.id" class="form-select" aria-label="Default select example">
+                                            <select ng-model="formUpdate.producer.id" class="form-select"
+                                                aria-label="Default select example">
                                                 <option ng-repeat="p in producers" ng-value="p.id">{{p.name}}</option>
                                             </select>
                                         </div>
@@ -171,7 +200,8 @@
                                     <div class="row mb-3">
                                         <label class="col-sm-3 col-form-label">Material</label>
                                         <div class="col-sm-9">
-                                            <select ng-model="formUpdate.material.id" name="material" class="form-select" aria-label="Default select example" required>
+                                            <select ng-model="formUpdate.material.id" name="material"
+                                                class="form-select" aria-label="Default select example" required>
                                                 <option ng-repeat="m in materials" ng-value="m.id">{{m.name}}</option>
                                             </select>
                                         </div>
@@ -180,76 +210,88 @@
                                         <label for="updateChecked" class="col-sm-3 col-form-label">Outstanding</label>
                                         <div class="col-sm-9">
                                             <div class="form-check">
-                                                <input ng-model="formUpdate.outstanding" class="form-check-input" type="checkbox" id="updateChecked">
+                                                <input ng-model="formUpdate.outstanding" class="form-check-input"
+                                                    type="checkbox" id="updateChecked">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">Update</button>
-                                        <button ng-click="resetFormUpdate()" type="button" class="btn btn-warning">Reset</button>
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button ng-click="resetFormUpdate()" type="button"
+                                            class="btn btn-warning">Reset</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
                                     </div>
                                 </form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- End Modal Update -->
-        <div class="row">
-            <div class="col-lg-12">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Code</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Size</th>
-                        <th scope="col">Material</th>
-                        <th scope="col">Producer</th>
-                        <th scope="col">Category</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr ng-repeat="product in paper.items">
-                        <td>{{product.code}}</td>
-                        <td>{{product.name}}</td>
-                        <td>{{product.size.name}}</td>
-                        <td>{{product.material.name}}</td>
-                        <td>{{product.producer.name}}</td>
-                        <td>{{product.category.name}}</td>
-                        <td>
-                            <button ng-click="edit(product)" type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalUpdate"><i class="ri-refresh-line"></i></button>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal"><i class="ri-delete-bin-fill"></i></button>
-                            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa không?</h5>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button ng-click="delete(product)" type="button" class="btn btn-primary" data-bs-dismiss="modal">Delete</button>
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <!-- End Modal Update -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Code</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Size</th>
+                                <th scope="col">Material</th>
+                                <th scope="col">Producer</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="product in paper.items">
+                                <td>{{product.code}}</td>
+                                <td>{{product.name}}</td>
+                                <td>{{product.size.name}}</td>
+                                <td>{{product.material.name}}</td>
+                                <td>{{product.producer.name}}</td>
+                                <td>{{product.category.name}}</td>
+                                <td>
+                                    <button ng-click="edit(product)" type="button" class="btn btn-info"
+                                        data-bs-toggle="modal" data-bs-target="#modalUpdate"><i
+                                            class="ri-refresh-line"></i></button>
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                        data-bs-target="#deleteModal"><i class="ri-delete-bin-fill"></i></button>
+                                    <div class="modal fade" id="deleteModal" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Bạn có chắc muốn xóa
+                                                        không?</h5>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button ng-click="delete(product)" type="button"
+                                                        class="btn btn-primary" data-bs-dismiss="modal">Delete</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination justify-content-center">
-                        <li class="page-item"><button ng-click="paper.first()" class="page-link">First</button></li>
-                        <li class="page-item"><button ng-click="paper.prev()" class="page-link">Previous</button></li>
-                        <li class="page-item"><a class="page-link">{{paper.page + 1}} of {{paper.count}}</a></li>
-                        <li class="page-item"><button ng-click="paper.next()" class="page-link">Next</button></li>
-                        <li class="page-item"><button ng-click="paper.last()" class="page-link">Last</button></li>
-                    </ul>
-                </nav>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item"><button ng-click="paper.first()" class="page-link">First</button></li>
+                            <li class="page-item"><button ng-click="paper.prev()" class="page-link">Previous</button>
+                            </li>
+                            <li class="page-item"><a class="page-link">{{paper.page + 1}} of {{paper.count}}</a></li>
+                            <li class="page-item"><button ng-click="paper.next()" class="page-link">Next</button></li>
+                            <li class="page-item"><button ng-click="paper.last()" class="page-link">Last</button></li>
+                        </ul>
+                    </nav>
+                </div>
             </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
 </body>
+
 </html>

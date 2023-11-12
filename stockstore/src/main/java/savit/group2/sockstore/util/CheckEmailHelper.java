@@ -1,12 +1,8 @@
 package savit.group2.sockstore.util;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import savit.group2.sockstore.model.entity.Account;
-import savit.group2.sockstore.model.entity.Employee;
 import savit.group2.sockstore.repository.AccountRepository;
 import savit.group2.sockstore.repository.EmployeeRepository;
 
@@ -17,19 +13,14 @@ public class CheckEmailHelper {
   @Autowired
   AccountRepository accountRepository;
 
-  public boolean isEmailNotExsits(String Email) {
-    List<Employee> employees = employeeRepository.hasEmailis(Email);
-    List<Account> accounts = accountRepository.hasEmailis(Email);
-    if (employees == null) {
-      if (accounts == null) {
-        return true;
-      }
+  public boolean isEmailNotExsits(String email) {
+    if (!employeeRepository.hasEmailis(email).isEmpty()) {
+      return false;
     }
-    if (employees.size() == 0) {
-      if (accounts.size() == 0) {
-        return true;
-      }
+    if (!accountRepository.hasEmailis(email).isEmpty()) {
+      return false;
     }
-    return false;
+    return true;
   }
+
 }

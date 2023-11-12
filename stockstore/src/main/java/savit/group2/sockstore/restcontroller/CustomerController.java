@@ -9,7 +9,7 @@ import savit.group2.sockstore.service.CustomerService;
 import java.util.List;
 import java.util.UUID;
 
-@RestController
+@RestController("restCustomerController")
 @RequestMapping("/rest/customers")
 public class CustomerController {
   @Autowired

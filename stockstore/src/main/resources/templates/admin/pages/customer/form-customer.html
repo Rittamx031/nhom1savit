@@ -8,9 +8,18 @@
 
 <body>
   <section layout:fragment="content">
+    <div class="pagetitle">
+      <h1>Customer</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Admin</a></li>
+          <li class="breadcrumb-item active">Customer</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
     <div class="container">
       <!-- Form to store new PatternRequest -->
-      <form enctype="multipart/form-data" th:action="@{/test/customer/store}" th:object="${customerRequest}"
+      <form enctype="multipart/form-data" th:action="@{/admin/customer/store}" th:object="${customerRequest}"
         method="post" class="form">
         <!-- <div class="form-floating mb-3"> -->
         <input type="hidden" class="form-control" id="id" th:field="*{id}" placeholder="Pattern ID" />
@@ -37,9 +46,9 @@
           </div>
         </div>
         <div class="form-floating mb-2">
-          <input type="date" class="form-control" id="birthday" th:field="*{birthday}" placeholder="Pattern Name" />
-          <label for="status">birthday:</label>
-          <div th:if="${#fields.hasErrors('birthday')}" class="errors text-danger form-text" th:errors="*{birthday}">
+          <input type="date" class="form-control" id="birthDay" th:field="*{birthDay}" placeholder="Pattern Name" />
+          <label for="status">birthDay:</label>
+          <div th:if="${#fields.hasErrors('birthDay')}" class="errors text-danger form-text" th:errors="*{birthDay}">
           </div>
         </div>
         <div class="row mb-2">
@@ -74,17 +83,25 @@
             </div>
           </div>
           <input type="hidden" id="FullAddress" th:field="*{fulladdress}">
-        </div>
-        <div class="form-floating mb-2">
-          <input type="text" class="form-control" id="phone" th:field="*{address}" placeholder="Pattern Name" />
-          <label for="status">address:</label>
-          <div th:if="${#fields.hasErrors('address')}" class="errors text-danger form-text" th:errors="*{address}">
+          <div class="form-floating mb-2">
+            <input type="text" class="form-control" id="phone" th:field="*{address}" placeholder="Pattern Name" />
+            <label for="status">address:</label>
+            <div th:if="${#fields.hasErrors('address')}" class="errors text-danger form-text" th:errors="*{address}">
+            </div>
           </div>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="btn btn-primary">Submit</button>
-          <button type="reset" class="btn btn-secondary">Reset</button>
-        </div>
+          <div class="form-group mb-2">
+            <label for="status">Status:</label>
+            <input type="radio" value="true" id="statusActive" class="m-2" th:field="*{status}" />
+            <label for="statusActive">Active</label>
+            <input type="radio" value="false" id="statusInactive" class="m-2" th:field="*{status}" />
+            <label for="statusInactive">Inactive</label>
+            <div th:if="${#fields.hasErrors('status')}" class="errors text-danger form-text" th:errors="*{status}">
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="reset" class="btn btn-secondary">Reset</button>
+          </div>
       </form>
     </div>
     <script>
