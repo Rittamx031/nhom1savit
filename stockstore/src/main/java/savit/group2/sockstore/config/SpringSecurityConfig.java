@@ -56,7 +56,7 @@ public class SpringSecurityConfig {
     authenticationProvider.setUserDetailsService(nhanVienService());
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     return authenticationProvider;
-  }
+  } 
 
   @Autowired
   AccountInfoRepository khifrepository;
@@ -97,7 +97,10 @@ public class SpringSecurityConfig {
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager)
       throws Exception {
-    http
+    http.authorizeHttpRequests((authorize) -> {
+      authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "STAFF", "USER");
+    })
+
         .authorizeHttpRequests((authorize) -> {
           authorize
               .requestMatchers("/test/**", "user/signup", "employee/signup", "employee/singin",
@@ -105,8 +108,12 @@ public class SpringSecurityConfig {
               .permitAll();
         })
         .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
+          authorize.requestMatchers("/admin/**", "/rest/**").hasAnyAuthority("ADMIN");
+
         })
+            .authorizeHttpRequests((authorize) -> {
+              authorize.requestMatchers("/admin/customer").hasAnyAuthority("STAFF");
+            })
         .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers("/cart/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
         })
