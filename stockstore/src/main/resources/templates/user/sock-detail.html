@@ -29,8 +29,8 @@
           <div class="single-product-img">
             <img id="main-img" class="img-fluid w-100 pb-1" th:src="${product.sockDetail[0].path}" alt="">
             <div class="small-img-group">
-              <div class="small-img-group">
-                  <div th:each="item: ${product.sockDetail}" class="small-img-col">
+              <div class="owl-carousel owl-theme">
+                  <div th:each="item: ${product.sockDetail}" class="item small-img-col">
                     <img th:src="${item.path}" width="100%" class="small-img" onclick="changeImage(this)" alt="">
                   </div>
               </div>
@@ -41,11 +41,8 @@
           <div class="single-product-content">
             <h3 th:text="${product.name}  + ' ' + ${product.size.name} + ' ' + ${product.material.name}"></h3>
             <p class="single-product-pricing">$50</p>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dicta sint dignissimos, rem commodi cum
-              voluptatem quae reprehenderit repudiandae ea tempora incidunt ipsa, quisquam animi perferendis eos eum
-              modi! Tempora, earum.</p>
-            <div class="single-product-form">
 
+            <div class="single-product-form">
               <form action="index.html">
                 <input type="number" placeholder="0">
               </form>

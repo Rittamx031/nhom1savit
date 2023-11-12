@@ -2920,6 +2920,7 @@ table.order-details tbody td {
 }
 
 .small-img-group {
+  position: relative;
   display: flex;
   justify-content: space-between;
 }
@@ -2927,6 +2928,66 @@ table.order-details tbody td {
 .small-img-col {
   flex-basis: 24%;
   cursor: pointer;
+}
+
+.owl-carousel .owl-nav {
+  overflow: hidden;
+  height: 0px;
+}
+
+.owl-theme .owl-dots .owl-dot.active span,
+.owl-theme .owl-dots .owl-dot:hover span {
+  background: #5110e9;
+}
+
+
+.owl-carousel .item {
+  text-align: center;
+}
+
+.owl-carousel .nav-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 15px;
+  cursor: pointer;
+  position: absolute;
+  top: 40px !important;
+  line-height: 40px;
+}
+
+.owl-carousel .owl-prev.disabled,
+.owl-carousel .owl-next.disabled {
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+.owl-carousel .owl-prev {
+  left: -10px;
+}
+
+.owl-carousel .owl-next {
+  right: -10px;
+}
+
+.owl-theme .owl-nav [class*=owl-] {
+  color: #ffffff;
+  font-size: 30px;
+  background: #000000;
+  border-radius: 3px;
+}
+
+.owl-carousel .prev-carousel:hover {
+  background-position: 0px -53px;
+}
+
+.owl-carousel .next-carousel:hover {
+  background-position: -24px -53px;
+}
+
+.active-img {
+  border: 2px solid orange;
 }
 
 
