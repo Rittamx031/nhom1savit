@@ -28,8 +28,8 @@ public class EmployeInfoService implements UserDetailsService {
     if (!employee.isPresent() || employee == null) {
       throw new UsernameNotFoundException("Not found user with username is" + username);
     }
-    String Roles = employee.get().getRole().getRoles();
-    UserInfo userinfo = new UserInfo(employee.get().getEmail(), employee.get().getPassword(), Roles);
+    UserInfo userinfo = new UserInfo(employee.get().getEmail(), employee.get().getPassword(),
+        employee.get().getRole().getRoles());
     return new UserInfoUserDetails(userinfo);
   }
 }

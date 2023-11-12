@@ -37,6 +37,8 @@ public class EmployeeService {
       if (roleOp.isPresent()) {
         employee.setRole(roleOp.get());
         return repository.save(employee);
+      } else {
+
       }
       return null;
     } else {

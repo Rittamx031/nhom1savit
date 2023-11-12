@@ -102,6 +102,9 @@ public class AccountService implements PanigationInterface<AccountResponse> {
   // panigation
   @Override
   public List<AccountResponse> getPageNo(int pageNo, int pageSize, String sortBy, boolean sortDir) {
+    if (pageNo > this.getPageNumber(pageSize)) {
+
+    }
     List<AccountResponse> ChiTietSanPhams;
     ChiTietSanPhams = new ArrayList<>();
     Sort sort;
@@ -130,10 +133,13 @@ public class AccountService implements PanigationInterface<AccountResponse> {
   // panigation end
   @Override
   public int[] getPanigation(int rowcount, int pageno) {
-    Pageable pageable = PageRequest.of(1, rowcount);
+    Pageable pageable = PageRequest.of(0, rowcount);
     Page<AccountResponse> page = repository.getPageAccountRepose(pageable);
     int totalPage = page.getTotalPages();
     int[] rs;
+    if (totalPage <= 1) {
+      return new int[]  { 1 };
+    }
     if (totalPage <= 3) {
       rs = new int[totalPage];
       for (int i = 1; i <= totalPage; i++) {

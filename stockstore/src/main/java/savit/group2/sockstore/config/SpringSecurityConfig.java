@@ -90,15 +90,19 @@ public class SpringSecurityConfig {
     })
         .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers("/admin/**", "/rest/**").hasAnyAuthority("ADMIN");
+
         })
             .authorizeHttpRequests((authorize) -> {
               authorize.requestMatchers("/admin/customer").hasAnyAuthority("STAFF");
             })
         .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("user/singin", "employee/signin").permitAll();
+          authorize.requestMatchers("/cart/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
         })
         .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("employee/singin").permitAll();
+          authorize.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN");
+        })
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("user/signup", "employee/signup", "employee/singin").permitAll();
         })
         .authorizeHttpRequests((authorize) -> {
           authorize.anyRequest().permitAll();

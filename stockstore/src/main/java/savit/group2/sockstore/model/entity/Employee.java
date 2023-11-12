@@ -31,6 +31,10 @@ public class Employee {
 
     private String address;
 
+    private String wardcode;
+
+    private int districtcode;
+
     @ManyToOne
     @JoinColumn(name = "id_role")
     private Role role;

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html layout:decorate="~{admin/layout}" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <title>Customer Form</title>
+</head>
+
+<body>
+  <section layout:fragment="content">
+    <div class="container">
+      <!-- Form to store new PatternRequest -->
+      <form enctype="multipart/form-data" th:action="@{/test/customer/store}" th:object="${customerRequest}"
+        method="post" class="form">
+        <!-- <div class="form-floating mb-3"> -->
+        <input type="hidden" class="form-control" id="id" th:field="*{id}" placeholder="Pattern ID" />
+        <!-- <label for="id">Pattern ID:</label> -->
+        <!-- <div th:if="${#fields.hasErrors('status')}" class="errors text-danger form-text" th:errors="*{status}"> -->
+        <!-- </div> -->
+        <!-- </div> -->
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Pattern Code" />
+          <label for="name">name:</label>
+          <div th:if="${#fields.hasErrors('name')}" class="errors text-danger form-text" th:errors="*{name}">
+          </div>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="email" th:field="*{email}" placeholder="Pattern Name" />
+          <label for="email">email:</label>
+          <div th:if="${#fields.hasErrors('email')}" class="errors text-danger form-text" th:errors="*{email}">
+          </div>
+        </div>
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="phone" th:field="*{phone}" placeholder="Pattern Name" />
+          <label for="status">phone:</label>
+          <div th:if="${#fields.hasErrors('phone')}" class="errors text-danger form-text" th:errors="*{phone}">
+          </div>
+        </div>
+        <div class="form-floating mb-2">
+          <input type="date" class="form-control" id="birthday" th:field="*{birthday}" placeholder="Pattern Name" />
+          <label for="status">birthday:</label>
+          <div th:if="${#fields.hasErrors('birthday')}" class="errors text-danger form-text" th:errors="*{birthday}">
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-4">
+            <div class=" form-floating">
+              <select id="Provinces" class="form-select" onchange="getDistricts()">
+                <option disabled selected value="-1">Chọn tỉnh thành</option>
+              </select>
+              <label for="Provinces">Chọn tỉnh thành</label>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class=" form-floating">
+              <select id="Districts" class="form-select" onchange="getWards()" th:field="*{districtcode}">
+                <option disabled selected value="-1">Chọn Quận/ Huyện</option>
+              </select>
+              <label for="Districts">Chọn Quận/ Huyện</label>
+              <div th:if="${#fields.hasErrors('districtcode')}" class="errors text-danger form-text"
+                th:errors="*{districtcode}">
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class=" form-floating">
+              <select id="Wards" class="form-select" th:field="*{wardcode}" onchange="setFullAdress()">
+                <option disabled selected value="-1">Chọn Thị Trấn/ Xã/ Phường</option>
+              </select>
+              <label for="Wards">Chọn Thị Trấn/ Xã/ Phường</label>
+              <div th:if="${#fields.hasErrors('wardcode')}" class="errors text-danger form-text"
+                th:errors="*{wardcode}">
+              </div>
+            </div>
+          </div>
+          <input type="hidden" id="FullAddress" th:field="*{fulladdress}">
+        </div>
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="phone" th:field="*{address}" placeholder="Pattern Name" />
+          <label for="status">address:</label>
+          <div th:if="${#fields.hasErrors('address')}" class="errors text-danger form-text" th:errors="*{address}">
+          </div>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="reset" class="btn btn-secondary">Reset</button>
+        </div>
+      </form>
+    </div>
+    <script>
+      const token = "234a71c7-7b2c-11ee-af43-6ead57e9219a";
+      const shop_id = 4676018;
+      const districtform = 3440; // quận nam từ liêm
+      const districtto = 3308; // huyện trực ninh
+      const WardCodeninhcuong = "800083";
+      const provinceSelect = document.getElementById("Provinces");
+      const districtSelect = document.getElementById("Districts");
+      const wardSelect = document.getElementById("Wards");
+      const shipServiceSelect = document.getElementById("shipService");
+      const giaship = document.getElementById("giaship");
+      function getProvinces() {
+        fetch("https://online-gateway.ghn.vn/shiip/public-api/master-data/province",{
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            const defaultOption = document.createElement("option");
+            defaultOption.value = ""; // Set the value as needed
+            defaultOption.textContent = "Chọn Tỉnh"; // Set the text content
+            // Set the 'disabled' and 'selected' attributes to make it the default option
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            provinceSelect.appendChild(defaultOption);
+            const options = data.data;
+            for (let i = 0; i < options.length; i++) {
+              const option = document.createElement("option");
+              option.value = options[i].ProvinceID; // Set the value of the option (you can change this to any value you want)
+              option.text = options[i].ProvinceName; // Set the text of the option
+              option.setAttribute("providecode",options[i].ProvinceID);
+              provinceSelect.appendChild(option); // Add the option to the select element
+            }
+          })
+          .catch((error) => console.error("Error:",error));
+      }
+      function getDistricts() {
+        const selectedOption = provinceSelect.options[provinceSelect.selectedIndex];
+        const customAttribute = selectedOption.getAttribute("providecode");
+        const provinceid = parseInt(customAttribute);
+        fetch("https://online-gateway.ghn.vn/shiip/public-api/master-data/district",{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+          body: JSON.stringify({ province_id: provinceid }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            //remove all child
+            resetDistrict();
+            const options = data.data;
+            for (let i = 0; i < options.length; i++) {
+              const option = document.createElement("option");
+              option.value = options[i].DistrictID; // Set the value of the option (you can change this to any value you want)
+              option.text = options[i].DistrictName; // Set the text of the option
+              option.setAttribute("districtcode",options[i].DistrictID);
+              districtSelect.appendChild(option); // Add the option to the select element
+            }
+          })
+          .catch((error) => console.error("Error:",error));
+      }
+      function getWards() {
+        const selectedOption = districtSelect.options[districtSelect.selectedIndex];
+        const customAttribute = selectedOption.getAttribute("districtcode");
+        const districtid = parseInt(customAttribute);
+        fetch("https://online-gateway.ghn.vn/shiip/public-api/master-data/ward",{
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            token: token,
+          },
+          body: JSON.stringify({ district_id: districtid }),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            //remove all child
+            resetWard();
+            const options = data.data;
+            for (let i = 0; i < options.length; i++) {
+              const option = document.createElement("option");
+              option.value = options[i].WardCode; // Set the value of the option (you can change this to any value you want)
+              option.text = options[i].WardName;
+              // Set the text of the option
+              wardSelect.appendChild(option); // Add the option to the select element
+            }
+          })
+          .catch((error) => console.error("Error:",error));
+      }
+      function setFullAdress() {
+        const proselect = provinceSelect.options[provinceSelect.selectedIndex];
+        const proname = proselect.text;
+        const districselect = districtSelect.options[districtSelect.selectedIndex];
+        const distname = districselect.text;
+        const wardName = wardSelect.options[wardSelect.selectedIndex];
+        const wardname = wardName.text;
+        const fullAdress = wardname + ", " + distname + " ," + proname;
+        document.getElementById("FullAddress").value = String(fullAdress);
+        console.log(fullAdress)
+      }
+      function resetDistrict() {
+        while (districtSelect.firstChild) {
+          districtSelect.removeChild(districtSelect.firstChild);
+        }
+        const defaultOption = document.createElement("option");
+        defaultOption.value = ""; // Set the value as needed
+        defaultOption.textContent = "Chọn Quận/ Huyện"; // Set the text content
+
+        // Set the 'disabled' and 'selected' attributes to make it the default option
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+
+        districtSelect.appendChild(defaultOption);
+        resetWard();
+      }
+      function resetWard() {
+        while (wardSelect.firstChild) {
+          wardSelect.removeChild(wardSelect.firstChild);
+        }
+        const defaultOption = document.createElement("option");
+        defaultOption.value = ""; // Set the value as needed
+        defaultOption.textContent = "Chọn Thị Trấn/ Xã/ Phường"; // Set the text content
+
+        // Set the 'disabled' and 'selected' attributes to make it the default option
+        defaultOption.disabled = true;
+        defaultOption.selected = true;
+
+        wardSelect.appendChild(defaultOption);
+      }
+      getProvinces();
+    </script>
+  </section>
+</body>
+
+</html>
