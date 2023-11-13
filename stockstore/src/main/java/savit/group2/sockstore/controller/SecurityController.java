@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -24,8 +25,6 @@ import savit.group2.sockstore.service.EmailService;
 import savit.group2.sockstore.service.EmployeeService;
 import savit.group2.sockstore.service.VertifyEmailService;
 import savit.group2.sockstore.util.CheckEmailHelper;
-
-import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class SecurityController {
@@ -42,6 +41,8 @@ public class SecurityController {
   @Autowired
   EmailService emailService;
 
+  String emailResetPassword = "";
+
   @GetMapping("/login")
   public String loginPage(Model model, @RequestParam(value = "error", required = false) Boolean error) {
     if (error != null) {
@@ -55,10 +56,11 @@ public class SecurityController {
     return "redirect:/admin";
   }
 
-  // @GetMapping("/signOut")
-  // public String signOutPage() {
-  // return "signOut";
-  // }
+  @GetMapping("/signOut")
+  public String signOutPage(RedirectAttributes thRedirectAttributes) {
+    thRedirectAttributes.addFlashAttribute("message", "Đăng xuất thành công !!");
+    return "redirect:/login";
+  }
 
   @GetMapping("user/signup")
   public String signUpUser(Model model) {
@@ -86,6 +88,7 @@ public class SecurityController {
       return "user/user-sigup.html";
 
     }
+    redirAttrs.addFlashAttribute("message", "Tạo Tài Khoản Thành Công !!!");
     return "redirect:/login";
   }
 
@@ -114,17 +117,16 @@ public class SecurityController {
       model.addAttribute("message", "Email already exists");
       return "admin/pages-singup.html";
     }
+    redirAttrs.addFlashAttribute("message", "Tạo Tài Khoản Thành Công !!!");
     return "redirect:/login";
   }
 
-  @Secured("NOT_ACCTIVE")
   @GetMapping("vertifyemail")
   public String vertifyPage(Model model, RedirectAttributes thRedirectAttributes) {
     model.addAttribute("vertifyemail", new VertifyEmail());
     return "active-email.html";
   }
 
-  @Secured("NOT_ACCTIVE")
   @GetMapping("sendvertifyemail")
   public String sendVertifyAcc(Model model, RedirectAttributes thRedirectAttributes) {
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -140,7 +142,6 @@ public class SecurityController {
     return "redirect:/signOut";
   }
 
-  @Secured("NOT_ACCTIVE")
   @PostMapping("vertifyemail")
   public String vertifyAccount(Model model, RedirectAttributes thRedirectAttributes,
       @ModelAttribute("vertifyemail") VertifyEmail vertifyemail) {
@@ -158,6 +159,8 @@ public class SecurityController {
             "Xác thực không thành công mã kích hoạt không đúng hoặc đã hết hạn vui lòng thử lại !!!");
       }
     }
+    thRedirectAttributes.addFlashAttribute("message",
+        "Xác thực không thành công mã kích hoạt không đúng hoặc đã hết hạn vui lòng thử lại !!!");
     return "redirect:/vertifyemail";
   }
 
@@ -174,12 +177,19 @@ public class SecurityController {
       model.addAttribute("message", "Email Chưa đăng ký tài khoản nào!");
       return "find-account.html";
     } else {
+      emailResetPassword = email;
       emailService.resetEmailMessage(vertifyEmailsService.createVertifyEmail(email));
-      securityService.setAuthentichByEmail(email);
       thRedirectAttributes.addFlashAttribute("message", "Vui lòng kiểm tra email!!!");
-      model.addAttribute("vertifyemail", new VertifyEmail());
-      return "reset-password-code.html";
+      return "redirect:/resetpasswordcode";
     }
+  }
+
+  @GetMapping("resetpasswordcode")
+  public String getResetPasscode(Model model) {
+    VertifyEmail emailVertifyEmail = new VertifyEmail();
+    emailVertifyEmail.setEmail(emailResetPassword);
+    model.addAttribute("vertifyemail", emailVertifyEmail);
+    return "reset-password-code.html";
   }
 
   @PostMapping("/resetpasswordcode")
@@ -187,19 +197,14 @@ public class SecurityController {
       Model model,
       RedirectAttributes thRedirectAttributes,
       @ModelAttribute("vertifyemail") VertifyEmail vertifyemail) {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication.getPrincipal() instanceof UserDetails) {
-      UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-      String username = userDetails.getUsername();
-      vertifyemail.setEmail(username);
-      if (vertifyEmailsService.vertifyEmail(vertifyemail)) {
-        thRedirectAttributes.addFlashAttribute("message", "Xác thực thành công nhập mật khẩu mới!!!");
-        return "redirect:/resetpassword";
-      }
+    vertifyemail.setEmail(emailResetPassword);
+    if (vertifyEmailsService.vertifyEmail(vertifyemail)) {
+      thRedirectAttributes.addFlashAttribute("message", "Xác thực thành công nhập mật khẩu mới!!!");
+      return "redirect:/resetpassword";
     }
     thRedirectAttributes.addFlashAttribute("message",
         "Xác thực không thành công mã kích hoạt không đúng hoặc đã hết hạn vui lòng thử lại !!!");
-    return "redirect:/resetpasswordcode";
+    return "redirect:/forgotpassword";
   }
 
   @GetMapping("resetpassword")
@@ -208,4 +213,17 @@ public class SecurityController {
     return "reset-password.html";
   }
 
+  @PostMapping("resetpassword")
+  public String resetPassword(Model model, RedirectAttributes thRedirectAttributes,
+      @Valid @ModelAttribute("requestPasswordRequest") ResetPasswordRequest request, BindingResult bindResult) {
+    if (bindResult.hasErrors()) {
+      return "reset-password.html";
+    } else if (bindResult.hasErrors()) {
+      model.addAttribute("message", request.ValidateError());
+      return "reset-password.html";
+    }
+    securityService.updatePassword(emailResetPassword, request.getPassword());
+    thRedirectAttributes.addFlashAttribute("message", "Đổi mật khẩu thành công vui lòng đăng nhập lại!!!");
+    return "redirect:/login";
+  }
 }

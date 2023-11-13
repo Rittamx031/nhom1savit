@@ -56,7 +56,6 @@ public class AccountService implements PanigationInterface<AccountResponse> {
       account.setStatus(true);
       account.setUpdateAt(LocalDateTime.now());
       account = repository.save(account);
-      sercurityService.setAuthentichByEmail(account.getEmail());
       return account;
     }
     return null;

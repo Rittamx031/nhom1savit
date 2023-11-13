@@ -52,7 +52,6 @@ public class EmployeeService {
         employee.setRole(roleRepository.save(role));
       }
       employee = repository.save(employee);
-      sercurityService.setAuthentichByEmail(employee.getEmail());
       return employee;
     } else {
       // throws Email already exists

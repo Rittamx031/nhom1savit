@@ -56,7 +56,7 @@ public class SpringSecurityConfig {
     authenticationProvider.setUserDetailsService(nhanVienService());
     authenticationProvider.setPasswordEncoder(passwordEncoder());
     return authenticationProvider;
-  } 
+  }
 
   @Autowired
   AccountInfoRepository khifrepository;
@@ -97,23 +97,22 @@ public class SpringSecurityConfig {
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authManager)
       throws Exception {
-    http.authorizeHttpRequests((authorize) -> {
-      authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "STAFF", "USER");
-    })
-
+    http
         .authorizeHttpRequests((authorize) -> {
           authorize
               .requestMatchers("/test/**", "user/signup", "employee/signup", "employee/singin",
-                  "/sendresetpasswordcode")
+                  "/sendresetpasswordcode", "/resetpassword", "/sendresetpassword", "/resetpasswordcode")
               .permitAll();
         })
         .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("/admin/**", "/rest/**").hasAnyAuthority("ADMIN");
-
+          authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "STAFF", "USER");
         })
-            .authorizeHttpRequests((authorize) -> {
-              authorize.requestMatchers("/admin/customer").hasAnyAuthority("STAFF");
-            })
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("/admin/**", "/rest/**").hasAnyAuthority("ADMIN");
+        })
+        .authorizeHttpRequests((authorize) -> {
+          authorize.requestMatchers("/admin/customer").hasAnyAuthority("STAFF");
+        })
         .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers("/cart/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN", "USER");
         })
@@ -121,10 +120,7 @@ public class SpringSecurityConfig {
           authorize.requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "SUPER_ADMIN");
         })
         .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("/vertifyemail", "/sendvertifyemail").hasRole("NOT_ACCTIVE");
-        })
-        .authorizeHttpRequests((authorize) -> {
-          authorize.requestMatchers("/resetpassword", "/sendresetpassword", "/resetpasswordcode").authenticated();
+          authorize.requestMatchers("/vertifyemail", "/sendvertifyemail").hasAuthority("NOT_ACCTIVE");
         })
         .authorizeHttpRequests((authorize) -> {
           authorize.anyRequest().permitAll();
