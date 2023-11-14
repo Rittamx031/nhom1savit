@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
@@ -40,7 +41,6 @@ public class SecurityController {
   VertifyEmailService vertifyEmailsService;
   @Autowired
   EmailService emailService;
-
   String emailResetPassword = "";
 
   @GetMapping("/login")
@@ -86,7 +86,6 @@ public class SecurityController {
     } else {
       model.addAttribute("message", "Email already exists");
       return "user/user-sigup.html";
-
     }
     redirAttrs.addFlashAttribute("message", "Tạo Tài Khoản Thành Công !!!");
     return "redirect:/login";

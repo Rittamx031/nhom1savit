@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 import savit.group2.sockstore.security.repo.AccountInfoRepository;
@@ -131,7 +132,7 @@ public class SpringSecurityConfig {
             .failureUrl("/login?error=true")
             .usernameParameter("username")
             .passwordParameter("password")
-            .successHandler(new CustomAuthenticationSuccessHandler())
+            .successHandler(new CustomAuthenticationSuccessHandler(khachHangService(), nhanVienService()))
             .permitAll())
         .logout(
             formLogin -> formLogin
@@ -140,8 +141,10 @@ public class SpringSecurityConfig {
                 .permitAll())
         .csrf(AbstractHttpConfigurer::disable)
         .rememberMe((remember) -> remember.key("fefe").tokenValiditySeconds(maxAge)
+            .rememberMeCookieName("remember-token")
             .userDetailsService(khachHangService()))
         .rememberMe((remember) -> remember.key("faewfaewf").tokenValiditySeconds(maxAge)
+            .rememberMeCookieName("remember-admin-token")
             .userDetailsService(nhanVienService()))
         .httpBasic(Customizer.withDefaults())
         .authenticationManager(authManager);

@@ -18,18 +18,29 @@ import org.springframework.util.StringUtils;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import savit.group2.sockstore.model.entity.Account;
+import savit.group2.sockstore.model.entity.Employee;
+import savit.group2.sockstore.security.service.AccountInforService;
+import savit.group2.sockstore.security.service.EmployeInfoService;
 
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
     protected final Log logger = LogFactory.getLog(this.getClass());
     private RequestCache requestCache = new HttpSessionRequestCache();
 
-    public CustomAuthenticationSuccessHandler() {
+    public CustomAuthenticationSuccessHandler(AccountInforService userService, EmployeInfoService employeeService) {
+        this.employeeService = employeeService;
+        this.userService = userService;
         setUseReferer(true); // use referer
     }
+
+    AccountInforService userService;
+    EmployeInfoService employeeService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws ServletException, IOException {
+        setSessionAuthenLogin(request, response, authentication);
         SavedRequest savedRequest = this.requestCache.getRequest(request, response);
         if (savedRequest == null) {
             String targetUrl = determineTargetUrl(authentication);
@@ -65,5 +76,17 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
             url = "/sock";
         }
         return url;
+    }
+
+    public void setSessionAuthenLogin(HttpServletRequest request, HttpServletResponse response,
+            Authentication authentication) {
+        HttpSession session = request.getSession();
+        session.setAttribute("authenusername", authentication.getName());
+
+        Account user = userService.getAccountByEmail(authentication.getName());
+        Employee employee = employeeService.getEmployeeByEmail(authentication.getName());
+
+        session.setAttribute("authenuser", user);
+        session.setAttribute("authenemployee", employee);
     }
 }

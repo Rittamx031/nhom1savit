@@ -38,4 +38,13 @@ public class AccountInforService implements UserDetailsService {
     UserInfo UserInfo = new UserInfo(account.get().getEmail(), account.get().getPassword(), Roles);
     return new UserInfoUserDetails(UserInfo);
   }
+
+  public Account getAccountByEmail(String email) {
+    Optional<Account> accouOptional = repository.findByEmail(email);
+    if (accouOptional.isPresent()) {
+      return accouOptional.get();
+    }
+    return null;
+  }
+
 }

@@ -13,6 +13,10 @@ import savit.group2.sockstore.model.entity.Employee;
 public interface EmployeeInfoRepository extends JpaRepository<Employee, UUID> {
   @Query("SELECT emp from Employee emp WHERE emp.email = :username")
   Optional<Employee> getuser(@Param("username") String username);
+
   @Query(value = "SELECT emp FROM Employee emp WHERE emp.email LIKE :email")
   List<Employee> hasEmailis(@Param("email") String email);
+
+  @Query(value = "SELECT emp FROM Employee emp WHERE emp.email = :email")
+  Optional<Employee> findByEmail(String email);
 }

@@ -37,4 +37,13 @@ public class EmployeInfoService implements UserDetailsService {
       return new UserInfoUserDetails(userinfo);
     }
   }
+
+  public Employee getEmployeeByEmail(String email) {
+    Optional<Employee> empOptional = repository.findByEmail(email);
+    if (empOptional.isPresent()) {
+      return empOptional.get();
+    }
+    return null;
+  }
+
 }

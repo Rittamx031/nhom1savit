@@ -19,4 +19,7 @@ public interface AccountInfoRepository extends JpaRepository<Account, UUID> {
 
   @Query(value = "SELECT acc FROM Account acc WHERE acc.email LIKE :email")
   List<Account> hasEmailis(@Param("email") String email);
+
+  @Query(value = "SELECT acc FROM Account acc WHERE acc.email = :email")
+  Optional<Account> findByEmail(@Param("email") String email);
 }
