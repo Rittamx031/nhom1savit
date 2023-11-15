@@ -1,3 +1,16 @@
 account , security
-Sock_Detail : 
+Sock_Detail :
 Pattern,Size:
+
+
+
+add table
+@Table(name = "Vertify_Email")
+  @Id
+  String email;
+  int code;
+  LocalDateTime requestAt;
+add column
+ fulladdress
+ image
+  into Employee;
