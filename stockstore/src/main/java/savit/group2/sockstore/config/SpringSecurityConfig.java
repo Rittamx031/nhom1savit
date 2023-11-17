@@ -108,6 +108,9 @@ public class SpringSecurityConfig {
         .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers("/sock/**").hasAnyAuthority("ADMIN", "STAFF", "USER");
         })
+        // hasRoles  "ROLE_"
+        // admin roles "ADMIN,STAFF"
+        // staff "STAFF"
         .authorizeHttpRequests((authorize) -> {
           authorize.requestMatchers("/admin/**", "/rest/**").hasAnyAuthority("ADMIN");
         })

@@ -225,4 +225,9 @@ public class SecurityController {
     thRedirectAttributes.addFlashAttribute("message", "Đổi mật khẩu thành công vui lòng đăng nhập lại!!!");
     return "redirect:/login";
   }
+
+  @GetMapping("/access-denied")
+  public String getAccessDenied() {
+    return "/error/accessDenied";
+  }
 }
