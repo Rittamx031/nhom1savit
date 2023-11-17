@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 @Builder
 public class UserInfo {
-  private String email;
+  private String name;
   private String password;
   private String roles;
 }
