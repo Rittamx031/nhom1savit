@@ -1,5 +1,8 @@
 package savit.group2.sockstore.controller;
 
+import java.io.IOException;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -10,12 +13,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
+
 import jakarta.validation.Valid;
+import savit.group2.sockstore.model.entity.Employee;
 import savit.group2.sockstore.model.entity.VertifyEmail;
 import savit.group2.sockstore.model.request.EmployeeSignupRequest;
 import savit.group2.sockstore.model.request.ResetPasswordRequest;
@@ -229,5 +237,25 @@ public class SecurityController {
   @GetMapping("/access-denied")
   public String getAccessDenied() {
     return "/error/accessDenied";
+  }
+
+  // update exiting profile
+  @GetMapping("updateprofile/employee/{id}")
+  public String getUpdateEmp(Model model, @PathVariable("id") UUID idEmp) {
+    model.addAttribute("employeeRequest", employeeService.getEmployee(idEmp));
+    return "admin/pages/employee/update-employee.html";
+  }
+
+  @PostMapping("updateprofile/employee")
+  public String updateYourProfile(Model model, @Valid @ModelAttribute("employeeRequest") Employee employee,
+      @RequestParam("imagefile") MultipartFile image,
+      BindingResult theBindingResult, RedirectAttributes redirAttrs) throws IOException {
+    if (theBindingResult.hasErrors()) {
+      return "admin/pages/employee/update-employee.html";
+    } else {
+      employeeService.updateInfo(employee, image);
+      redirAttrs.addFlashAttribute("message", "Cập nhật thông tin thành công !!!");
+      return "redirect:/admin";
+    }
   }
 }

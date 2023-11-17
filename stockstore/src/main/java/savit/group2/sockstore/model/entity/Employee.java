@@ -3,6 +3,8 @@ package savit.group2.sockstore.model.entity;
 import java.time.LocalDate;
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -31,10 +33,10 @@ public class Employee {
     private UUID id;
 
     private String name;
-
+    private String image;
     private String email;
     private String password;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     private String phone;
@@ -42,6 +44,9 @@ public class Employee {
     private String address;
 
     private String wardcode;
+
+    private String fulladdress;
+
 
     private int districtcode;
 

@@ -7,6 +7,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -30,6 +32,7 @@ public class Customer {
     private String phone;
 
     @Column(name = "birthday")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
 
     @Column(name = "address")
