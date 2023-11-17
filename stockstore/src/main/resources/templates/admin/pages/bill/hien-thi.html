@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{admin/layout}">
+<head>
+    <title>Home</title>
+</head>
+
+<body>
+<section layout:fragment="content">
+    <h1>Material</h1>
+    <a th:href="@{/admin/pages/material/view-add}" class="btn btn-primary mb-3">New</a>
+    <table class="table table-bordered">
+        <thead class="">
+        <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Code</th>
+            <th scope="col">Name</th>
+            <th scope="col">Function</th>
+        </tr>
+        </thead>
+        <tbody th:each="material: ${listMaterial}">
+        <tr>
+            <th scope="row"></th>
+            <td th:text="${material.code}"></td>
+            <td th:text="${material.name}"></td>
+            <td>
+                <a th:href="@{/admin/pages/material/delete(id=${material.id})}" class="btn btn-danger">Delete</a>
+                <a th:href="@{/admin/pages/material/view-update(id=${material.id})}" class="btn btn-success">Update</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+
+</html>
